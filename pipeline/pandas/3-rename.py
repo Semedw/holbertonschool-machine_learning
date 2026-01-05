@@ -10,6 +10,6 @@ def rename(df):
     """
     inside the function
     """
-    df.rename(columns={"Timestamp": "Datetime"})
-    df = df.loc[["Datetime", "Close"]]
-    return df
+    modified_df = df.rename(columns={"Timestamp": "Datetime"})
+    modified_df = modified_df[["Datetime", "Close"]]
+    return modified_df

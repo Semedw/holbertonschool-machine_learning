@@ -8,6 +8,7 @@ def array(df):
     """
     inside the func
     """
-    df = df.tail(10)[['High', 'Close']]
+    df = df.tail(10)
+    df = df[['High', 'Close']]
     numpay_array = df.to_numpy()
     return numpy_array

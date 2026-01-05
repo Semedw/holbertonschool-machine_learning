@@ -8,6 +8,7 @@ def slice(df):
     """
     inside the func
     """
-    df = df[['High', 'Low', 'Close', 'Volume_BTC']]
+    cols = ['High', 'Low', 'Close', 'Volume_BTC']
+    df = df[cols]
     df_sliced = df.iloc[::60]
     return df_sliced

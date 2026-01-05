@@ -12,5 +12,5 @@ def from_numpy(array):
     """
     df = pd.DataFrame(array)
     for i in range(len(df.columns)):
-        df.columns = chr[65+i]
+        df.columns = chr(65+i)
     return df

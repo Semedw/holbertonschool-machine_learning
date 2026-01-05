@@ -11,5 +11,5 @@ def rename(df):
     inside the function
     """
     df.rename(columns={"Timestamp": "Datetime"})
-    df = df[["Datetime", "Close"]]
+    df = df.loc[["Datetime", "Close"]]
     return df

@@ -4,12 +4,11 @@ from numpy
 """
 
 import pandas as pd
-import string
+
 
 def from_numpy(array):
     """
     inside the function
     """
-    labels = string.ascii_uppercase
-    df = pd.DataFrame({labels : array})
+    df = pd.DataFrame(array)
     return df

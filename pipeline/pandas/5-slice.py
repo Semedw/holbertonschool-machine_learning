@@ -9,4 +9,4 @@ def slice(df):
     inside the func
     """
     df = df[["High", "Low", "Close", "Volume_BTC"]]
-    return df.iloc[60]
+    return df

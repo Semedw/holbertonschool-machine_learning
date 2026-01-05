@@ -4,7 +4,7 @@ flip it and switch it
 """
 
 
-def flip(df):
+def flip_switch(df):
     """
     inside the func
     """

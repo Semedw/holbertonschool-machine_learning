@@ -8,5 +8,5 @@ def prune(df):
     """
     removing(filtering) close entries with NaN values
     """
-    df = df[df["Close"] != None]
+    df = df[df["Close"] != float('nan')]
     return df

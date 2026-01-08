@@ -8,5 +8,5 @@ def high(df):
     """
     sorting the dataframe by high values
     """
-    sorted_df = df.sort_values(by="High", ascending = False)
+    sorted_df = df.sort_values(by="High", ascending=False)
     return sorted_df

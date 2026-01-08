@@ -8,5 +8,5 @@ def prune(df):
     """
     removing(filtering) close entries with NaN values
     """
-    df_removed = df.dropna(subset="Close")
+    df_removed = df.dropna(subset=['Close'])
     return df

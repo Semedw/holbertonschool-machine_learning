@@ -18,5 +18,5 @@ def hierarchy(df1, df2):
     df2 = df2.loc[1417411980:1417417980]
     concatenated_df = pd.concat([df2, df1], keys=['bitstamp', 'coinbase'], names = ['exchange'])
     concatenated_df = concatenated_df.reorder_levels(['Timestamp', 'exchange']
-    concatenated_df = concatenated_df.sort_index()
+    concatenated_df = concatenated_df.sort_index(axis=0, ignore_index=True)
     return concatenated_df

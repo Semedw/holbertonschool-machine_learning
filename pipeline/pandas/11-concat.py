@@ -11,7 +11,7 @@ def concat(df1, df2):
     """
     concatenating dataframes
     """
-    df1 = df1.set_index('Timestamp')
-    df2 = df2.set_index('Timestamp')
+    df1 = index(df1)
+    df2 = index(df2)
     concatenated_df = pd.concat([df2, df1], keys=['bitstamp', 'coinbase'])
     return concatenated_df

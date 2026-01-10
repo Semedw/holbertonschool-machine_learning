@@ -10,5 +10,5 @@ def line():
     # your code here
     x = np.arange(0, 11)
     plt.plot(x, y, color='red')
-    plt.xticks(x, step=2)
+    plt.xticks(x)
     plt.show()

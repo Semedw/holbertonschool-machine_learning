@@ -8,7 +8,7 @@ def line():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    x = np.arange(0, 11, 2)
+    x = np.arange(0, 11)
     plt.plot(x, y, color='red')
-    plt.xticks(x)
+    plt.xticks(np.arange(0, 11, 2))
     plt.show()

@@ -10,6 +10,10 @@ def line():
     # your code here
     x = np.arange(0, 11)
     plt.plot(x, y, color='#FF0000')
-    plt.xlim(left=0, right=0)
+    plt.xlim(0, 10)
     plt.xticks(np.arange(0, 11, 2))
+    plt.savefig('my_plot.png')
+    plt.close()
     plt.show()
+
+line()

@@ -9,6 +9,6 @@ def line():
 
     # your code here
     x = np.arange(0, 11)
-    plt.plot(x, y, color='red')
+    plt.plot(x, y, color='#FF0000')
     plt.xticks(np.arange(0, 11, 2))
     plt.show()

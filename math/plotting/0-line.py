@@ -12,7 +12,4 @@ def line():
     plt.plot(x, y, color='#FF0000')
     plt.xlim(left=0, right=0)
     plt.xticks(np.arange(0, 11, 2))
-    plt.savefig("my_plot.png")   # write it to disk
-    plt.close()
-
-line()
+    plt.show()

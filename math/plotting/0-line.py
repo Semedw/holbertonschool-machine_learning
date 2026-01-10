@@ -9,5 +9,5 @@ def line():
 
     # your code here
     x = np.arange(0, 11)
-    plt.plot(x, y, linecolor='red')
+    plt.plot(x, y, color='red')
     plt.show()

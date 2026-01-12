@@ -23,3 +23,5 @@ def change_scale():
     plt.ylabel('Exponential Decay of C-14')
     plt.yscale('log')
     plt.xlim(0, 28650)
+    plt.xticks(np.arange(0, 28650, 5000))
+    plt.show()

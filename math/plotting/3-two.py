@@ -30,7 +30,4 @@ def two():
     plt.legend(loc='upper right')
     plt.xticks(np.arange(0, 21000, 2500))
     plt.yticks(np.arange(0, 1.01, 0.2))
-    plt.savefig('my_plot.png')
-    plt.close()
-
-two()
+    plt.show()

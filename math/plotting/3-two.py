@@ -29,3 +29,4 @@ def two():
     plt.ylim(0, 1)
     plt.legend(loc='upper right')
     plt.xticks(np.arange(0, 20000, 2500))
+    plt.yticks(np.arange(0, 1, 0.2))

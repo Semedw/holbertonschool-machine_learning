@@ -20,7 +20,7 @@ def two():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    plt.plot(x, y1, linestyle='dashed', label='C-14')
+    plt.plot(x, y1, linestyle='dashed', color='red', label='C-14')
     plt.plot(x, y2, color='green', label='Ra-226')
     plt.xlabel('Time (years)')
     plt.ylabel('Fraction Remaining')
@@ -28,5 +28,9 @@ def two():
     plt.xlim(0, 20000)
     plt.ylim(0, 1)
     plt.legend(loc='upper right')
-    plt.xticks(np.arange(0, 20000, 2500))
-    plt.yticks(np.arange(0, 1, 0.2))
+    plt.xticks(np.arange(0, 21000, 2500))
+    plt.yticks(np.arange(0, 1.01, 0.2))
+    plt.savefig('my_plot.png')
+    plt.close()
+
+two()

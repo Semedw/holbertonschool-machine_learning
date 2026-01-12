@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+"""
+bunda niye docs olmur
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 def scatter():
-
+    """
+    salam necesiz
+    """
     mean = [69, 0]
     cov = [[15, 8], [8, 15]]
     np.random.seed(5)

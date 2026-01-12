@@ -6,6 +6,7 @@ bunda niye docs olmur
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def scatter():
     """
     salam necesiz

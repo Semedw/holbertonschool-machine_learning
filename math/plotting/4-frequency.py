@@ -24,6 +24,6 @@ def frequency():
     plt.xticks(np.arange(0, 101, 10))
     plt.ylim(0, 30)
     plt.yticks(np.arange(0, 31, 5))
-    #plt.savefig('my_plot.png')
-    #plt.close()
+    # plt.savefig('my_plot.png')
+    # plt.close()
     plt.show()

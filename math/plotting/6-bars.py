@@ -24,7 +24,8 @@ def bars():
     # Stack bars
     bottom = np.zeros(len(cats))
     for i in range(fruit.shape[0]):
-        plt.bar(x, fruit[i], width, bottom=bottom, label=labels[i], color=colors[i])
+        plt.bar(x, fruit[i], width, bottom=bottom, label=labels[i],
+                color=colors[i])
         bottom += fruit[i]  # increment bottom for next fruit
 
     # Axis labels, limits, ticks

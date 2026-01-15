@@ -5,6 +5,7 @@ frequency histogram
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def frequency():
     """
     inside the func
@@ -14,7 +15,7 @@ def frequency():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    bins = [0, 40, 50, 60, 70, 80, 90, 100]
+    bins = np.arange(0, 101, 10)
     plt.hist(student_grades, bins=bins, align='mid', edgecolor='black')
     plt.xlabel('Grades')
     plt.ylabel('Number of Students')
@@ -23,4 +24,8 @@ def frequency():
     plt.xticks(np.arange(0, 101, 10))
     plt.ylim(0, 30)
     plt.yticks(np.arange(0, 31, 5))
+    plt.savefig('my_plot.png')
+    plt.close()
     plt.show()
+
+frequency()

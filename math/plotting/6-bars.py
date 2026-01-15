@@ -19,10 +19,10 @@ def bars():
     cats = ['Farrah', 'Fred', 'Felicia']
     x = np.arange(len(cats))
     w = 0.5
-    plt.bar(x, fruit[0], w, label='apples', color='red')
-    plt.bar(x, fruit[1], w, bottom=fruit[0], label='bananas', color='yellow')
-    plt.bar(x, fruit[2], w, bottom=fruit[1]+fruit[0], label='oranges', color='#ff8000')
-    plt.bar(x, fruit[3], w, bottom=fruit[2]+fruit[1]+fruit[0], label='peaches', color='#ffe5b4')
+    plt.bar(x, fruit[0], width=w, label='apples', color='red')
+    plt.bar(x, fruit[1], width=w, bottom=fruit[0], label='bananas', color='yellow')
+    plt.bar(x, fruit[2], width=w, bottom=fruit[1]+fruit[0], label='oranges', color='#ff8000')
+    plt.bar(x, fruit[3], width=w, bottom=fruit[2]+fruit[1]+fruit[0], label='peaches', color='#ffe5b4')
 
     plt.xticks(x, cats)
     plt.ylabel('Quantity of Fruit')

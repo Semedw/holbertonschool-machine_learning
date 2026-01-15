@@ -14,7 +14,8 @@ def frequency():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    plt.hist(student_grades, bins=10, align='left', edgecolor='black')
+    bins = [0, 40, 50, 60, 70, 80, 90, 100]
+    plt.hist(student_grades, bins=bins, align='mid', edgecolor='black')
     plt.xlabel('Grades')
     plt.ylabel('Number of Students')
     plt.title('Project A')

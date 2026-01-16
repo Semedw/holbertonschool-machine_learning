@@ -8,7 +8,7 @@ def poly_derivative(poly):
     """
     calculating the derivative
     """
-    if not isinstance(poly, int):
+    if not isinstance(poly, list):
         return None
     if len(poly) == 0:
         return None

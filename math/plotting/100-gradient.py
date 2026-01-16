@@ -32,5 +32,3 @@ def gradient():
     plt.ylim(-40, 40)
     plt.title('Mountain Elevation')
     plt.show()
-
-gradient()

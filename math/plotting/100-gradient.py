@@ -19,11 +19,8 @@ def gradient():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    data = z.reshape(40, 50) 
-    plt.scatter(x, y, c=z, cmap='viridis')
-    im = plt.imshow(data, cmap='viridis')
-    im.set_visible(False)
-    plt.colorbar(im, label='elevation (m)')
+    scatter = plt.scatter(x, y, c=z)
+    plt.colorbar(scatter, label='elevation (m)')
     plt.xlabel('x coordinate (m)')
     plt.xticks(np.arange(-30, 31, 10))
     plt.xlim(-40, 40)

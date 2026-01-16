@@ -25,7 +25,9 @@ def gradient():
     plt.xticks(np.arange(-30, 31, 10))
     plt.xlim(-40, 40)
     plt.ylabel('y coordinate (m)')
-    plt.yticks(np.arange(-30, 31, -10))
+    plt.yticks(np.arange(-30, 31, 10))
     plt.ylim(-40, 40)
     plt.title('Mountain Elevation')
     plt.show()
+
+gradient()

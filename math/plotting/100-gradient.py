@@ -23,7 +23,7 @@ def gradient():
     plt.scatter(x, y, c=z, cmap='viridis')
     im = plt.imshow(data, cmap='viridis')
     im.set_visible(False)
-    plt.colorbar(im)
+    plt.colorbar(im, label='elevation (m)')
     plt.xlabel('x coordinates (m)')
     plt.xticks(np.arange(-30, 31, 10))
     plt.xlim(-40, 40)
@@ -32,3 +32,5 @@ def gradient():
     plt.ylim(-40, 40)
     plt.title('Mountain Elevation')
     plt.show()
+
+gradient()

@@ -12,6 +12,8 @@ def poly_integral(poly, C=0):
         return None
     if len(poly) == 0:
         return None
+    if poly == [0]:
+        return [C]
     result = [C]
     for i in range(len(poly)):
         k = poly[i] / (i+1)

@@ -19,11 +19,10 @@ def gradient():
     plt.figure(figsize=(6.4, 4.8))
 
     # your code here
-    
+    data = z.reshape(40, 50) 
     plt.scatter(x, y, c=z, cmap='viridis')
-    
-    data_2d = z.reshape(40, 50)
-    im = plt.imshow(data_2d, cmap='viridis')
+    im = plt.imshow(data, cmap='viridis')
+    im.set_visible(False)
     plt.colorbar(im)
     plt.xlabel('x coordinates (m)')
     plt.xticks(np.arange(-30, 31, 10))

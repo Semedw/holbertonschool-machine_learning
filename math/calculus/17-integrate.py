@@ -12,7 +12,7 @@ def poly_integral(poly, C=0):
         return None
     if len(poly) == 0:
         return None
-    result = [0]
+    result = [C]
     for i in range(len(poly)):
         k = poly[i] / (i+1)
         if int(k) == k:

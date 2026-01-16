@@ -16,7 +16,7 @@ def gradient():
     x = np.random.randn(2000) * 10
     y = np.random.randn(2000) * 10
     z = np.random.rand(2000) + 40 - np.sqrt(np.square(x) + np.square(y))
-    plt.figure(figsize=(6.4, 4.8))
+    # plt.figure(figsize=(6.4, 4.8))
 
     # your code here
     data = z.reshape(40, 50) 
@@ -32,5 +32,3 @@ def gradient():
     plt.ylim(-40, 40)
     plt.title('Mountain Elevation')
     plt.show()
-
-gradient()

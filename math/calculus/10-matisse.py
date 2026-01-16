@@ -8,6 +8,8 @@ def poly_derivative(poly):
     """
     calculating the derivative
     """
+    if not isinstance(poly, int):
+        return None
     if len(poly) == 0:
         return None
     if len(poly) == 1:

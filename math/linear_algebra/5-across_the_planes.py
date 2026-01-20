@@ -4,7 +4,7 @@ adding 2d matrices
 """
 
 
-def add_matrices(mat1, mat2):
+def add_matrices2D(mat1, mat2):
     """
     adding matrices
     """
@@ -17,4 +17,3 @@ def add_matrices(mat1, mat2):
             s.append(mat1[i][j] + mat2[i][j])
         result.append(s)
     return result
-print(add_matrices([[1, 2], [3, 4]], [[5, 6], [7, 8]]))

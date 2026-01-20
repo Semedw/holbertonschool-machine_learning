@@ -24,7 +24,3 @@ def mat_mul(mat1, mat2):
             s.append(result[i][j] + result[i+1][j])
         last.append(s)
     return last
-print(mat_mul([[1, 2],
-        [3, 4],
-        [5, 6]], [[1, 2, 3, 4],
-        [5, 6, 7, 8]]))

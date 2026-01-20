@@ -6,8 +6,6 @@ getting cozy
 
 def cat_matrices2D(mat1, mat2, axis=0):
     if axis == 0:
-        if len(mat1) != len(mat2):
-            return None
         result = mat1 + mat2
     else:
         result = []

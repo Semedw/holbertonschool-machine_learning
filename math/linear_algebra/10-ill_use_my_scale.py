@@ -8,5 +8,5 @@ def np_shape(matrix):
     """
     calculating the shape of matrix
     """
-    shape = matrix.shape()
+    shape = matrix.shape
     return shape

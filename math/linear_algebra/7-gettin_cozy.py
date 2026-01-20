@@ -5,6 +5,9 @@ getting cozy
 
 
 def cat_matrices2D(mat1, mat2, axis=0):
+    """
+    concating matrices
+    """
     if axis == 0:
         result = mat1 + mat2
     else:

@@ -3,13 +3,14 @@
 sizing the matrix
 """
 
-import numpy as np
-
 
 def matrix_shape(matrix):
     """
     matrix shape
     """
-    matrix = np.array(matrix)
-    shape = matrix.shape
-    return list(shape)
+    m = matrix
+    shape = [len(m)]
+    while isinstance(m[0], list):
+        shape.append(len(m[0]))
+        m = m[0]
+    return shape

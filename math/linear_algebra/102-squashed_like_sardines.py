@@ -11,8 +11,8 @@ def same_shape(mat1, mat2):
     if isinstance(mat1, list) != isinstance(mat2, list):
         return False
 
-    #if not isinstance(mat1, list):
-    #   return True
+    if not isinstance(mat1, list):
+       return True
 
     if len(mat1) != len(mat2):
         return False

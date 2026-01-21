@@ -32,5 +32,5 @@ def cat_matrices(mat1, mat2, axis=0):
     """
     if not same_shape(mat1, mat2):
         return None
-    concat = np.concatenate((mat1, mat2), axis=axis)
+    concat = mat1 + mat2
     return concat

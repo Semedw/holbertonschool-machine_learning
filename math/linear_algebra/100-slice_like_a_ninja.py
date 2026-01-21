@@ -2,6 +2,7 @@
 """
 slice like a ninja
 """
+# import numpy as np
 
 
 def np_slice(matrix, axes={}):
@@ -11,13 +12,9 @@ def np_slice(matrix, axes={}):
     newMat = matrix
     result = []
     for key, value in axes.items(): 
-        sec = slice(*value)
-        if key == 0:
-            newMat = newMat[sec]
-        elif key == 1:
-            newMat = newMat[:, sec]
-            #result = matrix[:][sec]
-        else:
-            newMat = newMat[:, :, sec]
-            #result = matrix[:][:][sec]
+        # sec = slice(*value)
+        newMat = newMat.take(indices=range(*value), axis=key)
     return newMat
+
+# mat1 = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+# print(np_slice(mat1, axes={1: (1, 3)}))

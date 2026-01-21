@@ -12,7 +12,7 @@ def np_slice(matrix, axes={}):
     newMat = matrix
     result = []
     idx = [slice(None)] * matrix.ndim
-    for key, value in axes.items(): 
+    for key, value in axes.items():
         sec = slice(*value)
         idx[key] = slice(*value)
     return newMat[tuple(idx)]

@@ -5,6 +5,9 @@ the whole barn
 
 
 def same_shape(a, b):
+    """
+    checks if the matrices are the same shape
+    """
     if isinstance(a, list) != isinstance(b, list):
         return False
 

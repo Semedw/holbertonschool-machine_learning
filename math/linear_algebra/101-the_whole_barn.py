@@ -10,7 +10,7 @@ def add_matrices(mat1, mat2):
     """
     matrix1 = mat1
     matrix2 = mat2
-    result = mat1 + mat2
+    result = [a+b for a, b in zip(mat1, mat2)]
     return result
     
 

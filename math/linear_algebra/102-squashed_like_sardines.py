@@ -30,4 +30,5 @@ def cat_matrices(mat1, mat2, axis=0):
     """
     if not same_shape(mat1, mat2):
         return None
-    return mat1 + mat2
+    concat = mat1 + mat2
+    return concat

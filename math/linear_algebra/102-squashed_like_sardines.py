@@ -38,7 +38,7 @@ def cat_matrices(mat1, mat2, axis=0):
         if ax == 0:
             return m1 + m2
         else:
-            return [concat_recursive(m1[i], m2[i], ax-1) 
+            return [concat_recursive(m1[i], m2[i], ax-1)
                     for i in range(len(m1))]
 
     return concat_recursive(mat1, mat2, axis)

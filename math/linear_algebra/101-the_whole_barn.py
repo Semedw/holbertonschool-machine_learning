@@ -4,13 +4,27 @@ the whole barn
 """
 
 
+def same_shape(a, b):
+    if isinstance(a, list) != isinstance(b, list):
+        return False
+
+    if not isinstance(a, list):
+        return True
+
+    if len(a) != len(b):
+        return False
+
+    for x, y in zip(a, b):
+        if not same_shape(x, y):
+            return False
+
+    return True
+
 def add_matrices(mat1, mat2):
     """
     adding matrices
     """
-    if isinstance(mat1, list) != isinstance(mat2, list):
-        return None
-    if len(mat1) != len(mat2):
+    if not same_shape(mat1, mat2):
         return None
     if not isinstance(mat1, list):
         return mat1 + mat2

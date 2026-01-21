@@ -3,8 +3,6 @@
 squashed like sardines
 """
 
-import numpy as np
-
 
 def same_shape(mat1, mat2):
     """'

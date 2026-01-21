@@ -3,6 +3,8 @@
 squashed like sardines
 """
 
+import numpy as np
+
 
 def same_shape(mat1, mat2):
     """'
@@ -30,5 +32,5 @@ def cat_matrices(mat1, mat2, axis=0):
     """
     if not same_shape(mat1, mat2):
         return None
-    concat = mat1 + mat2
+    concat = np.concatenate((mat1, mat2), axis=axis)
     return concat

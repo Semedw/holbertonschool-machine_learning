@@ -12,10 +12,10 @@ def determinant(matrix):
         for i in matrix:
             if not isinstance(i, list):
                 raise TypeError('matrix must be a list of lists')
-        if len(matrix[0][0]) == 0:
-            return 1
         k = len(matrix)
         for i in matrix:
+            if len(i) == 0:
+                return 1
             if len(i) != k:
                 raise ValueError('matrix must be a square matrix')
         if len(matrix) == 1:

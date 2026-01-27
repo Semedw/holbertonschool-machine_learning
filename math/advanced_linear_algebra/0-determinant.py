@@ -1,4 +1,4 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 """
 finding determinant
 """
@@ -18,7 +18,7 @@ def determinant(matrix):
                 return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
 
 
-            
+
 
     else:
         raise TypeError('matrix must be a list of lists')

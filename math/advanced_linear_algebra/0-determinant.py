@@ -10,8 +10,10 @@ def determinant(matrix):
     """
     if isinstance(matrix, list):
         if isinstance(matrix[0], list):
-            if len(matrix) != len(matrix[0]):
-                raise ValueError('matrix must be a square')
+            k = len(matrix)
+            for i in matrix:
+                if len(i) != k:
+                    raise ValueError('matrix must be a square matrix')
             else:
                 if len(matrix) == 1:
                     return matrix[0][0]

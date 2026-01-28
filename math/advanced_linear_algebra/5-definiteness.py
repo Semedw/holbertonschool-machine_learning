@@ -7,6 +7,11 @@ import numpy as np
 
 
 def definiteness(matrix):
+    """
+    Docstring for definiteness
+
+    :param matrix: salam
+    """
     if not isinstance(matrix, np.ndarray):
         raise TypeError('matrix must be a numpy.ndarray')
     k = len(matrix[0])

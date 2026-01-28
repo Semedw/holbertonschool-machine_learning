@@ -24,9 +24,9 @@ def determinant(matrix):
             det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
             return det
         det = 0
-        for row in range(len(matrix)):
-            sub = [row[:c] + row[c+1:] for row in matrix[1:]]
-            det += ((-1)**c * m[0][c] * determinant(sub))
+        for col in range(len(matrix)):
+            sub = [row[:col] + row[col+1:] for row in matrix[1:]]
+            det += ((-1)**col * m[0][col] * determinant(sub))
         return det
     else:
         raise TypeError('matrix must be a list of lists')

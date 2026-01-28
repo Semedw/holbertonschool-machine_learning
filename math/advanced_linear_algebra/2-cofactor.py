@@ -73,11 +73,12 @@ def cofactor(matrix):
     finding cofactor matrice of matrices
     """
     new_matrix = minor(matrix)
+    
     cof = []
     for row in range(len(new_matrix)):
         new_row = []
         for col in range(row):
-            new_row.append((-1)**(row+col)*new_matrix[row][column])
+            new_row.append(((-1)**(row+col))*new_matrix[row][column])
         cof.append(new_row)
         
     return cof

@@ -5,25 +5,13 @@ finding definiteness of matrix
 
 import numpy as np
 
-def transpose(matrix):
-    """
-    Docstring for transpose
-
-    :param matrix: matrix
-    """
-    new_mat = [[0 for i in range(len(matrix[0]))] for i in range(len(matrix))]
-    for row in range(len(matrix)):
-        for col in range(len(matrix[0])):
-            new_mat[col][row] = matrix[row][col]
-    return new_mat
-
 
 def definiteness(matrix):
     if not isinstance(matrix, np.ndarray):
         raise TypeError('matrix must be a numpy.ndarray')
-    k = len(matrix[0])
-    if transpose(matrix) != matrix:
+    if matrix.T != matrix:
         return None
+    k = len(matrix[0])
     for i in matrix:
         if len(i) != k:
             return None

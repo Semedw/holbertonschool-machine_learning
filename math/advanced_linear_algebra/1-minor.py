@@ -5,7 +5,7 @@ function for finding minor
 
 
 def determinant(matrix):
-    """ 
+    """
     finding the determinant of matrix
     """
     if isinstance(matrix, list):

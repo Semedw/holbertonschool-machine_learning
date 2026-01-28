@@ -26,7 +26,7 @@ def determinant(matrix):
         det = 0
         for col in range(len(matrix)):
             sub = [row[:col] + row[col+1:] for row in matrix[1:]]
-            det += ((-1)**col * m[0][col] * determinant(sub))
+            det += ((-1)**col * matrix[0][col] * determinant(sub))
         return det
     else:
         raise TypeError('matrix must be a list of lists')

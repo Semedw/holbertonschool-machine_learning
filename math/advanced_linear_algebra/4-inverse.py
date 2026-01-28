@@ -17,7 +17,7 @@ def determinant(matrix):
             if len(i) == 0:
                 return 1
             if len(i) != k:
-                raise ValueError('matrix must be a non-empty square matrix')
+                raise ValueError('matrix must be a square matrix')
         if len(matrix) == 1:
             return matrix[0][0]
         if len(matrix) == 2:
@@ -104,7 +104,7 @@ def inverse(matrix):
     """
     calculating inversion of matrix
     """
-    new_matrix = matrix
+    new_matrix = adjugate(matrix)
     det = determinant(matrix)
     if det == 0:
         return None

@@ -88,6 +88,7 @@ def transpose(matrix):
             new_mat[col][row] = matrix[row][col]
     return new_mat
 
+
 def adjugate(matrix):
     """
     Docstring for adjugate

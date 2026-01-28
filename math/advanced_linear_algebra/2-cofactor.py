@@ -61,12 +61,12 @@ def minor(matrix):
     else:
         raise TypeError('matrix must be a list of lists')
 
+
 def cofactor(matrix):
     """
     finding cofactor matrice of matrices
     """
     new_matrix = minor(matrix)
-    
     cof = []
     for row in range(len(new_matrix)):
         new_row = []

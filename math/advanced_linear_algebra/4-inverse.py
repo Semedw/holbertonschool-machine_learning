@@ -104,9 +104,15 @@ def inverse(matrix):
     """
     calculating inversion of matrix
     """
-    new_matrix = adjugate(matrix)
     det = determinant(matrix)
     if det == 0:
         return None
-    inversion = new_matrix/det
-    return inversion
+    inversed_mat = []
+    for row in matrix:
+        new_row = []
+        for num in row:
+            num /= det
+            new_row.append(num)
+        inversed_mat.append(new_row)
+
+    return inversed_mat

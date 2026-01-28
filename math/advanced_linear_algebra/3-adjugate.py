@@ -79,7 +79,7 @@ def cofactor(matrix):
 def transpose(matrix):
     """
     Docstring for transpose
-    
+
     :param matrix: matrix
     """
     new_mat = [[0 for i in range(len(matrix[0]))] for i in range(len(matrix))]
@@ -91,7 +91,7 @@ def transpose(matrix):
 def adjugate(matrix):
     """
     Docstring for adjugate
-    
+
     :param matrix: Description
     """
     new_mat = cofactor(matrix)

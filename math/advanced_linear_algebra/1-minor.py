@@ -22,12 +22,12 @@ def determinant(matrix):
             return matrix[0][0]
         if len(matrix) == 2:
             det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
-            return det 
-        det = 0 
+            return det
+        det = 0
         for col in range(len(matrix)):
             sub = [row[:col] + row[col+1:] for row in matrix[1:]]
             det += ((-1)**col * matrix[0][col] * determinant(sub))
-        return det 
+        return det
     else:
         raise TypeError('matrix must be a list of lists')
 

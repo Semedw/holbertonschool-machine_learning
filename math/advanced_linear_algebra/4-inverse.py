@@ -104,11 +104,12 @@ def inverse(matrix):
     """
     calculating inversion of matrix
     """
+    new_matrix = matrix
     det = determinant(matrix)
     if det == 0:
         return None
     inversed_mat = []
-    for row in matrix:
+    for row in new_matrix:
         new_row = []
         for num in row:
             num /= det

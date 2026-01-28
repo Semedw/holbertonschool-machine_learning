@@ -61,7 +61,6 @@ def minor(matrix):
     else:
         raise TypeError('matrix must be a list of lists')
 
-
 def cofactor(matrix):
     """
     finding cofactor matrice of matrices

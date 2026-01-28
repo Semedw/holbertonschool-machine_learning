@@ -78,7 +78,7 @@ def cofactor(matrix):
     for row in range(len(new_matrix)):
         new_row = []
         for col in range(len(matrix[0])):
-            new_row.append(((-1)**(row+col))*new_matrix[row][column])
+            new_row.append(((-1)**(row+col))*new_matrix[row][col])
         cof.append(new_row)
         
     return cof

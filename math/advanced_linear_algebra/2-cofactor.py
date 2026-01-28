@@ -4,12 +4,6 @@ making cofactor of matrix
 """
 
 
-#!/usr/bin/env python3
-"""
-function for finding minor
-"""
-
-
 def determinant(matrix):
     """
     finding the determinant of matrix
@@ -80,5 +74,4 @@ def cofactor(matrix):
         for col in range(len(matrix[0])):
             new_row.append(((-1)**(row+col))*new_matrix[row][col])
         cof.append(new_row)
-        
     return cof

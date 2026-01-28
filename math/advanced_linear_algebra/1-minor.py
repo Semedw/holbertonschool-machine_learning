@@ -45,6 +45,8 @@ def minor(matrix):
         rows = len(matrix)
         cols = len(matrix[0])
         minor = []
+        if len(matrix) == 1:
+            return [[1]]
         for r in range(rows):
             new = []
             for c in range(cols):

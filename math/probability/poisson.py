@@ -54,6 +54,7 @@ class Poisson:
         calculating cdf
         """
         k = int(k)
+        s = 0
         if k < 0:
             return 0
         for i in range(k+1):

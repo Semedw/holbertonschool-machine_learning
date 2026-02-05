@@ -10,6 +10,8 @@ def fac(a):
         s *= i
     return s
 
+e = 2.7182818285
+
 
 class Poisson:
     """
@@ -37,5 +39,5 @@ class Poisson:
             k = int(k)
             if k > len(self.data):
                 return 0
-            p = self.lambtha**k/fac(k)
+            p = e**(-self.lambtha)*self.lambtha**k/fac(k)
             return p

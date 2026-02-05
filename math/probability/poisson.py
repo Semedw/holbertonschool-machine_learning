@@ -34,7 +34,7 @@ class Poisson:
                 raise ValueError('data must contain multiple values')
             self.lambtha = sum(data) / len(data)
         
-        @staticmethod
+        @classmethod
         def pmf(self, k):
             k = int(k)
             if k > len(self.data):

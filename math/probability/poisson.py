@@ -5,6 +5,9 @@ poisson distribution
 
 
 def fac(a):
+    '''
+    calculating factorial
+    '''
     s = 1
     for i in range(1, a+1):
         s *= i

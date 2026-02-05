@@ -4,6 +4,13 @@ poisson distribution
 """
 
 
+def fac(a):
+    s = 1
+    for i in range(1, a+1):
+        s *= i
+    return s
+
+
 class Poisson:
     """
     poisson class
@@ -24,3 +31,11 @@ class Poisson:
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
             self.lambtha = sum(data) / len(data)
+        
+        @staticmethod
+        def pmf(self, k):
+            k = int(k)
+            if k > len(self.data):
+                return 0
+            p = self.lambtha**k/fac(k)
+            return p

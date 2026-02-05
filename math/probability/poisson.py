@@ -43,7 +43,7 @@ class Poisson:
         """
         calculating pmf
         """
-p = e**(-self.lambtha)*self.lambtha**k/fac(k)        k = int(k)
+        k = int(k)
         if k < 0:
             return 0
         p = e**(-self.lambtha)*self.lambtha**k/fac(k)

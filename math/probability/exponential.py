@@ -12,7 +12,6 @@ class Exponential:
     exponential class
     """
 
-
     def __init__(self, data=None, lambtha=1.):
         """
         initializing the class

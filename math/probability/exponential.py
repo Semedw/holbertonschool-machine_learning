@@ -18,7 +18,6 @@ class Exponential:
         initializing the class
         """
         self.data = data
-        lambtha = float(lambtha)
         self.lambtha = lambtha
         if data is None:
             if lambtha < 0:
@@ -30,3 +29,5 @@ class Exponential:
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
             self.lambtha = 1 / (sum(data) / len(data))
+            if lambtha < 0:
+                raise ValueError('lambtha must be a positive value')

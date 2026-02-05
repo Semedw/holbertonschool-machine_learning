@@ -23,6 +23,7 @@ class Poisson:
         initializing the object
         """
         self.data = data
+        self.lambtha = lambtha
         if data is None:
             if lambtha <= 0:
                 raise ValueError('lambtha must be a positive value')
@@ -37,7 +38,7 @@ class Poisson:
     @classmethod
     def pmf(self, k):
         k = int(k)
-        # if k > len(self.data):
-            # return 0
+        if k < 0:
+            return 0
         p = e**(-self.lambtha)*self.lambtha**k/fac(k)
         return p

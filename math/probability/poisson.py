@@ -37,7 +37,7 @@ class Poisson:
     @classmethod
     def pmf(self, k):
         k = int(k)
-        if k > len(self.data):
-            return 0
+        # if k > len(self.data):
+            # return 0
         p = e**(-self.lambtha)*self.lambtha**k/fac(k)
         return p

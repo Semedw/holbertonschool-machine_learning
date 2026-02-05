@@ -21,7 +21,7 @@ class Exponential:
         self.lambtha = lambtha
         if data is None:
             if lambtha <= 0:
-                raise ValueError('lambtha must be a positive integer')
+                raise ValueError('lambtha must be a positive value')
             self.lambtha = lambtha
         else:
             if not isinstance(data, list):

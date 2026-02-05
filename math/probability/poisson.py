@@ -22,7 +22,7 @@ class Poisson:
         """
         initializing the object
         """
-
+        self.data = data
         if data is None:
             if lambtha <= 0:
                 raise ValueError('lambtha must be a positive value')

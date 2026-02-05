@@ -10,6 +10,7 @@ def fac(a):
         s *= i
     return s
 
+
 e = 2.7182818285
 
 
@@ -36,6 +37,9 @@ class Poisson:
             self.lambtha = sum(data) / len(data)
 
     def pmf(self, k):
+        """
+        calculating pmf
+        """
         k = int(k)
         if k < 0:
             return 0

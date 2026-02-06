@@ -56,6 +56,7 @@ class Binomial:
         k = int(k)
         if k < 0:
             return 0
-        res = fac(self.n)/(fac(k)*fac(self.n-k))*
-        (self.p**k)*((1-self.p)**(self.n-k))
+        n = self.n
+        pi = self.p
+        res = fac(n)/(fac(k)*fac(n-k))*(pi**k)*((1-pi)**(n-k))
         return res

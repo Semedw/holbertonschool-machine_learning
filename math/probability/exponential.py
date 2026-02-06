@@ -7,6 +7,16 @@ initial exponential
 e = 2.7182818285
 
 
+def fac(x):
+    """
+    calculating factorial
+    """
+    s = 1
+    for i in range(1, x+1):
+        s *= i
+    return s
+
+
 class Exponential:
     """
     exponential class
@@ -30,3 +40,11 @@ class Exponential:
             self.lambtha = 1 / (sum(data) / len(data))
             if lambtha < 0:
                 raise ValueError('lambtha must be a positive value')
+
+    def pdf(self, x):
+        """
+        calculating pdf of exponential in given time period
+        x - time period
+        """
+        res = self.lambtha*e**(-self.lambtha*x)
+        return res

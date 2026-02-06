@@ -4,6 +4,10 @@ initializing normal dist class
 """
 
 
+pi = 3.1415926536
+e = 2.7182818285
+
+
 class Normal:
     """
     inside the normal class
@@ -46,3 +50,9 @@ class Normal:
         """
         x = z*self.stddev + self.mean
         return x
+
+    def pdf(self, x):
+        """
+        calculating pdf
+        """
+        f_x = (1/(self.stddev*2*pi))*e**((-1/2)*((x-self.mean)/self.stddev)**2)

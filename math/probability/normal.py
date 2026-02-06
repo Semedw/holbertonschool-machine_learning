@@ -60,20 +60,28 @@ class Normal:
     
     def cdf(self, x):
         """
-        calculating cdf using numerical integration
+        calculating the cdf
         """
-        # start far in the left tail
-        lower = self.mean - 10 * self.stddev
-        upper = x
+        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
 
-        # number of slices (more = more accurate)
-        n = 10000
-        h = (upper - lower) / n
+        # Abramowitz and Stegun approximation
+        t = 1 / (1 + 0.3275911 * abs(z))
+        a1 = 0.254829592
+        a2 = -0.284496736
+        a3 = 1.421413741
+        a4 = -1.453152027
+        a5 = 1.061405429
 
-        area = 0.0
-        for i in range(n):
-            x1 = lower + i * h
-            x2 = x1 + h
-            area += 0.5 * (self.pdf(x1) + self.pdf(x2)) * h
+        erf = 1 - (
+            (a1 * t +
+             a2 * t**2 +
+             a3 * t**3 +
+             a4 * t**4 +
+             a5 * t**5) *
+            e ** (-z**2)
+        )
 
-        return area
+        if z < 0:
+            erf = -erf
+
+        return 0.5 * (1 + erf)

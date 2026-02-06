@@ -28,4 +28,7 @@ class Normal:
             if len(data) < 2:
                 raise ValueError('data must contain multiple values')
             self.mean = sum(data) / len(data)
-            
+            sq = 0
+            for value in data:
+                sq += (value - self.mean)**2
+            self.stddev = (sq/len(data))**(1/2)

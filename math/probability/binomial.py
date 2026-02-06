@@ -50,5 +50,5 @@ class Binomial:
         """
         calculating pmf
         """
-        res = fac(self.n)/(fac(k)*fac(self.n-k))*(pi**k)*(1-pi)**(self.n-x)
+        res = fac(self.n)/(fac(k)*fac(self.n-k))*(pi**k)*(1-pi)**(self.n-k)
         return res

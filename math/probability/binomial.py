@@ -4,6 +4,16 @@ initializing binomial
 """
 
 
+pi = 3.1415926536
+
+
+def fac(x):
+    s = 1
+    for i in range(1, x+1):
+        s *= i
+    return s
+
+
 class Binomial:
     """
     inside the binomial class
@@ -35,3 +45,10 @@ class Binomial:
             p = 1 - (variance / mean)
             self.n = int(round(mean/p))
             self.p = float(mean/self.n)
+
+    def pmf(self, k):
+        """
+        calculating pmf
+        """
+        res = fac(self.n)/(fac(k)*fac(self.n-k))*(pi**k)*(1-pi)**(self.n-x)
+        return res

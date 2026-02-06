@@ -32,3 +32,17 @@ class Normal:
             for value in data:
                 sq += (value - self.mean)**2
             self.stddev = (sq/len(data))**(1/2)
+
+    def z_score(self, x):
+        """
+        calculating z_score
+        """
+        z = x - self.mean/self.stddev
+        return z
+
+    def x_value(self, z):
+        """
+        calculatin x-value
+        """
+        x = z*self.stddev + self.mean
+        return x

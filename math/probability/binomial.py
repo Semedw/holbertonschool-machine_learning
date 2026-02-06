@@ -19,12 +19,12 @@ class Binomial:
         if data is None:
             if n <= 0:
                 raise ValueError('n must be a positive value')
-            if not(p>0 and p<1):
+            if not(p > 0 and p < 1):
                 raise ValueError('p must be greater than 0 and less than 1')
         else:
             if n <= 0:
                 raise ValueError('n must be a positive value')
-            if not(p>0 and p<1):
+            if not(p > 0 and p < 1):
                 raise ValueError('p must be greater than 0 and less than 1')
             if not isinstance(data, list):
                 raise TypeError('data must be a list')

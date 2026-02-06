@@ -19,7 +19,7 @@ class Binomial:
         if data is None:
             if n < 0:
                 raise ValueError('n must be a positive value')
-            if not(p>=0 and p<i=1):
+            if not(p>=0 and p<=1):
                 raise ValueError('p must be greater than 0 and less than 1')
         else:
             if not isinstance(data, list):

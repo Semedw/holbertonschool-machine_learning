@@ -57,31 +57,21 @@ class Normal:
         """
         f_x = (1/(((2*pi)**0.5)*self.stddev))*e**(-0.5*((self.z_score(x))**2))
         return f_x
-    
+
     def cdf(self, x):
         """
-        calculating the cdf
+        calculating cdf
         """
-        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
-
-        # Abramowitz and Stegun approximation
-        t = 1 / (1 + 0.3275911 * abs(z))
-        a1 = 0.254829592
-        a2 = -0.284496736
-        a3 = 1.421413741
-        a4 = -1.453152027
-        a5 = 1.061405429
-
-        erf = 1 - (
-            (a1 * t +
-             a2 * t**2 +
-             a3 * t**3 +
-             a4 * t**4 +
-             a5 * t**5) *
-            e ** (-z**2)
-        )
-
-        if z < 0:
-            erf = -erf
-
-        return 0.5 * (1 + erf)
+        v = (x - self.mean) / (self.stddev * (2**0.5))
+        t = 1 / (1 + 0.5 * abs(v))
+        ans = t * e**(-v**2 - 1.26551223 + t * (1.00002368 + t * (0.37409196 + 
+              t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + 
+              t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + 
+              t * 0.17087277)))))))))
+        
+        if v >= 0:
+            res = 1 - ans
+        else:
+            res = ans - 1
+            
+        return 0.5 * (1 + res)

@@ -46,5 +46,7 @@ class Exponential:
         calculating pdf of exponential in given time period
         x - time period
         """
+        if x < 0:
+            return 0
         res = self.lambtha*e**(-self.lambtha*x)
         return res

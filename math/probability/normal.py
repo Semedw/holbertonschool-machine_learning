@@ -9,7 +9,7 @@ class Normal:
     inside the normal class
     """
 
-    def __init__(self, data=None, mean=0, stddev=1.):
+    def __init__(self, data=None, mean=0., stddev=1.):
         """
         initializing the object
         """

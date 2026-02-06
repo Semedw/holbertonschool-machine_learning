@@ -55,4 +55,4 @@ class Normal:
         """
         calculating pdf
         """
-        f_x = (1/(self.stddev*2*pi))*e**(-0.5*((x-self.mean)/self.stddev)**2)
+        f_x = (1/(2*pi))*e**(-0.5*((x-self.mean)/self.stddev)**2)

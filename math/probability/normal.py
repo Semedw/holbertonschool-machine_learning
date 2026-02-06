@@ -60,24 +60,20 @@ class Normal:
     
     def cdf(self, x):
         """
-        calculating cdf
+        calculating cdf using numerical integration
         """
-        # We need the value to pass into the error function (erf)
-        # This is (x - mu) / (sigma * sqrt(2))
-        val = (x - self.mean) / (self.stddev * (2**0.5))
-        
-        # Numerical approximation of erf(x)
-        # Constants for the approximation
-        t = 1 / (1 + 0.5 * abs(val))
-        
-        # This polynomial approximates the erf function
-        erf = 1 - t * e**(-val**2 - 1.26551223 + t * (1.00002368 + 
-              t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + 
-              t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + 
-              t * (-0.82215223 + t * 0.17087277)))))))))
-        
-        # If val is negative, erf(val) is -erf(abs(val))
-        if val < 0:
-            erf = -erf
-            
-        return 0.5 * (1 + erf)
+        # start far in the left tail
+        lower = self.mean - 10 * self.stddev
+        upper = x
+
+        # number of slices (more = more accurate)
+        n = 10000
+        h = (upper - lower) / n
+
+        area = 0.0
+        for i in range(n):
+            x1 = lower + i * h
+            x2 = x1 + h
+            area += 0.5 * (self.pdf(x1) + self.pdf(x2)) * h
+
+        return area

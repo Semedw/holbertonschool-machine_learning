@@ -60,3 +60,15 @@ class Binomial:
         pi = self.p
         res = fac(n)/(fac(k)*fac(n-k))*(pi**k)*((1-pi)**(n-k))
         return res
+
+    def cdf(self, k):
+        """
+        calculating cdf
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+        res = 0
+        for i in range(k+1):
+            res += self.pmf(k)
+        return self

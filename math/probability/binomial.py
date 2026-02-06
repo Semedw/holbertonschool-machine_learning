@@ -8,6 +8,9 @@ pi = 3.1415926536
 
 
 def fac(x):
+    '''
+    calculating factorial
+    '''
     s = 1
     for i in range(1, x+1):
         s *= i
@@ -53,5 +56,6 @@ class Binomial:
         k = int(k)
         if k < 0:
             return 0
-        res = fac(self.n)/(fac(k)*fac(self.n-k))*(self.p**k)*((1-self.p)**(self.n-k))
+        res = fac(self.n)/(fac(k)*fac(self.n-k))*
+        (self.p**k)*((1-self.p)**(self.n-k))
         return res

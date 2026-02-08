@@ -24,5 +24,5 @@ def likelihood(x, n, P):
             raise ValueError('All values in P must be in the range [0, 1]')
     for i in P:
         lk = i * n / x
-        res.append(lk)
+        np.append(res, lk)
     return res

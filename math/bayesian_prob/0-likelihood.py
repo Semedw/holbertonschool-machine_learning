@@ -20,7 +20,7 @@ def likelihood(x, n, P):
     for i in P:
         if i < 0 or i > 1:
             raise ValueError('All values in P must be in the range [0, 1]')
-    if not isinstance(P, np.ndarray) or P.shape != 1:
+    if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         raise TypeError('P must be a 1D numpy.ndarray')
     for i in P:
         lk = i * n / x

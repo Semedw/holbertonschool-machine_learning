@@ -23,6 +23,6 @@ def likelihood(x, n, P):
         if i < 0 or i > 1:
             raise ValueError('All values in P must be in the range [0, 1]')
     for i in P:
-        lk = i * n / x
+        lk = i * x / n
         res = np.append(res, lk)
     return res

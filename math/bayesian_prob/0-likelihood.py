@@ -10,7 +10,7 @@ def likelihood(x, n, P):
     """
     inside the function
     """
-    res = np.ndarray([])
+    res = np.array([])
     if not isinstance(n, int) or  n<=0:
         raise ValueError('n must be a positive integer')
     if not isinstance(x, int) or x < 0:
@@ -24,5 +24,5 @@ def likelihood(x, n, P):
             raise ValueError('All values in P must be in the range [0, 1]')
     for i in P:
         lk = i * n / x
-        np.append(res, lk)
+        res = np.append(res, lk)
     return res

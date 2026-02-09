@@ -40,8 +40,7 @@ def likelihood(x, n, P):
         raise ValueError('x cannot be greater than n')
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         raise TypeError('P must be a 1D numpy.ndarray')
-    for i in P:
-        if i < 0 or i > 1:
-            raise ValueError('All values in P must be in the range [0, 1]')
+    if np.any((P > 0) | (P < 1)):
+        raise ValueError('All values in P must be in the range [0, 1]')
     res = combination(n, x) * (P ** x) * ((1-x)**(n-x))
     return res

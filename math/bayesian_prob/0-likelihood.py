@@ -43,5 +43,5 @@ def likelihood(x, n, P):
     P = P.astype(float)
     if np.any((P < 0) | (P > 1)):
         raise ValueError('All values in P must be in the range [0, 1]')
-    res = combination(n, x) * (P ** x) * ((1-x)**(n-x))
+    res = combination(n, x) * (P ** x) * ((1 - P) ** (n - x))
     return res

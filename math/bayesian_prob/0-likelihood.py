@@ -45,6 +45,3 @@ def likelihood(x, n, P):
             raise ValueError('All values in P must be in the range [0, 1]')
     res = combination(n, x) * (P ** x) * ((1-x)**(n-x))
     return res
-
-P = np.linspace(0, 1, 11)
-print(likelihood(26, 130, P))

@@ -19,7 +19,6 @@ def fac(x):
 def combination(a, b):
     '''
     Docstring for combination
-    
     :param a: a
     :param b: b
     calculation kombinezon
@@ -32,10 +31,11 @@ def likelihood(x, n, P):
     """
     inside the function
     """
-    if not isinstance(n, int) or  n<=0:
+    if not isinstance(n, int) or n <= 0:
         raise ValueError('n must be a positive integer')
     if not isinstance(x, int) or x < 0:
-        raise ValueError('x must be an integer that is greater than or equal to 0')
+        raise ValueError('x must be an integer that is greater ' \
+        'than or equal to 0')
     if x > n:
         raise ValueError('x cannot be greater than n')
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:

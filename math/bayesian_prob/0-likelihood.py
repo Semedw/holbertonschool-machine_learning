@@ -6,11 +6,32 @@ finding likelihood
 import numpy as np
 
 
+def fac(x):
+    """
+    calculating factorial
+    """
+    s = 1
+    for i in range(1, x+1):
+        s *= i
+    return s
+
+
+def combination(a, b):
+    '''
+    Docstring for combination
+    
+    :param a: a
+    :param b: b
+    calculation kombinezon
+    '''
+    res = fac(a)/(fac(b) * fac(a-b))
+    return res
+
+
 def likelihood(x, n, P):
     """
     inside the function
     """
-    res = np.array([])
     if not isinstance(n, int) or  n<=0:
         raise ValueError('n must be a positive integer')
     if not isinstance(x, int) or x < 0:
@@ -22,7 +43,8 @@ def likelihood(x, n, P):
     for i in P:
         if i < 0 or i > 1:
             raise ValueError('All values in P must be in the range [0, 1]')
-    for i in P:
-        lk = P / (x/n)
-        res = np.append(res, lk)
+    res = combination(n, x) * (P ** x) * ((1-x)**(n-x))
     return res
+
+P = np.linspace(0, 1, 11)
+print(likelihood(26, 130, P))

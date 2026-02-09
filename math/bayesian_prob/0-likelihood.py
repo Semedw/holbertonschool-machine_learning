@@ -32,7 +32,6 @@ def likelihood(x, n, P):
     """
     inside the function
     """
-    P = P.astype(float)
     if not isinstance(n, int) or  n<=0:
         raise ValueError('n must be a positive integer')
     if not isinstance(x, int) or x < 0:
@@ -41,6 +40,7 @@ def likelihood(x, n, P):
         raise ValueError('x cannot be greater than n')
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         raise TypeError('P must be a 1D numpy.ndarray')
+    P = P.astype(float)
     if np.any((P < 0) | (P > 1)):
         raise ValueError('All values in P must be in the range [0, 1]')
     res = combination(n, x) * (P ** x) * ((1-x)**(n-x))

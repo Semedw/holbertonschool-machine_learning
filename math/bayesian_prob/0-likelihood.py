@@ -32,6 +32,7 @@ def likelihood(x, n, P):
     """
     inside the function
     """
+    P = P.astype(float)
     if not isinstance(n, int) or  n<=0:
         raise ValueError('n must be a positive integer')
     if not isinstance(x, int) or x < 0:

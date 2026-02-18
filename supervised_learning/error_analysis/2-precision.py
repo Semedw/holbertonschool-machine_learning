@@ -13,6 +13,6 @@ def precision(confusion):
     res = []
     for c in range(len(confusion)):
         tp = confusion[c, c]
-        fp = sum(confusion[:,c]) - confusion[c,c]
+        fp = sum(confusion[:, c]) - confusion[c, c]
         res.append(tp / (tp + fp))
     return np.array(res)

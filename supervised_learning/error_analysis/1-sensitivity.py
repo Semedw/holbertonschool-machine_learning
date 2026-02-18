@@ -15,4 +15,4 @@ def sensitivity(confusion):
         tp = confusion[c, c]
         fn = sum(confusion[c,:]) - confusion[c,c]
         res.append(tp/(tp+fn))
-    return np.ndarray(res)
+    return np.ndarray(res, dtype=float)

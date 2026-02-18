@@ -11,4 +11,4 @@ def create_confusion_matrix(labels, logits):
     '''
     inside the func
     '''
-    return np.matmul(labels, logits)
+    return np.matmul(labels.T, logits)

@@ -13,6 +13,6 @@ def sensitivity(confusion):
     res = []
     for c in range(len(confusion)):
         tp = confusion[c, c]
-        fn = sum(confusion[c,:]) - confusion[c,c]
-        res.append(tp/(tp+fn))
+        fn = sum(confusion[c, :]) - confusion[c, c]
+        res.append(tp / (tp + fn))
     return np.array(res)

@@ -13,5 +13,5 @@ def sensitivity(confusion):
 
     for c in range(len(confusion)):
         tp = confusion[c, c]
-        fn = sum(confisuon[c,:]) - confusion[c,c]
+        fn = sum(confusion[c,:]) - confusion[c,c]
     return tp/(tp+fn)

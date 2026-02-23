@@ -13,9 +13,12 @@ class Node:
         self.sub_population = None
         self.depth = depth
 
-    def max_depth_below(self) :
-
-            ####### FILL IN THIS METHOD
+    def max_depth_below(self):
+        left_depth = self.left_child.max_depth_below() \
+                if self.left_child else self.depth
+        right_depth = self.right_child.max_depth_below() \
+                if self.right_child else self.depth
+        return max(left_depth, right_depth)
 
 class Leaf(Node):
     def __init__(self, value, depth=None):
@@ -25,11 +28,8 @@ class Leaf(Node):
         self.depth = depth
 
     def max_depth_below(self) :
-        left_depth = self.left_child.max_depth_below() \
-                if self.left_child else self.depth
-        right_depth = self.right_child.max_depth_below() \
-                if self.right_child else self.depth
-        return max(left_depth, right_depth)
+        return self.depth
+
 class Decision_Tree():
     def __init__(self, max_depth=10, min_pop=1, seed=0, split_criterion="random", root=None):
         self.rng = np.random.default_rng(seed)

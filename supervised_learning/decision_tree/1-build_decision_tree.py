@@ -105,10 +105,10 @@ class Leaf(Node):
         """
         return self.depth
     
-    def count_nodes(self, only_leaves=False) :
-        '''
-        salam necesiz
-        '''
+    def count_nodes_below(self, only_leaves=False):
+        """
+        Returns 1 because a leaf counts as one node.
+        """
         return 1
 
 

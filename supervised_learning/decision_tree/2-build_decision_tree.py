@@ -18,17 +18,24 @@ the maximum depth found in the subtree below a node.
 import numpy as np
 
 
+def left_child_add_prefix(text):
+    '''
+    left child
+    '''
+    lines = text.split("\n")
+    prefixed = ["+---> " + lines[0]]
+    prefixed += ["| " + line for line in lines[1:]]
+    return "\n".join(prefixed)
+
+
 def right_child_add_prefix(text):
     '''
-    right child add prefix
+    right child
     '''
     lines = text.split("\n")
-    return "\n".join(["    " + line for line in lines])
-
-
-def left_child_add_prefix(text):
-    lines = text.split("\n")
-    return "\n".join(["|   " + line for line in lines])
+    prefixed = ["+---> " + lines[0]]
+    prefixed += ["  " + line for line in lines[1:]]
+    return "\n".join(prefixed)
 
 
 class Node:
@@ -90,18 +97,20 @@ class Node:
         return 1 + left_count + right_count
     
     def __str__(self):
-        node_repr = f"-> node [feature={self.feature}, threshold={self.threshold}]"
+        if self.is_root:
+            node_repr = f"root [feature={self.feature}, threshold={self.threshold}]"
+        else:
+            node_repr = f"node [feature={self.feature}, threshold={self.threshold}]"
 
-        if self.left_child is None and self.right_child is None:
-            return node_repr
+        children = []
 
-        left_str = left_child_add_prefix(str(self.left_child)) \
-            if self.left_child else ""
+        if self.left_child:
+            children.append(left_child_add_prefix(str(self.left_child)))
 
-        right_str = right_child_add_prefix(str(self.right_child)) \
-            if self.right_child else ""
+        if self.right_child:
+            children.append(left_child_add_prefix(str(self.right_child)))
 
-        return "\n".join([node_repr, left_str, right_str])
+        return "\n".join([node_repr] + children)
 
 
 class Leaf(Node):

@@ -4,6 +4,7 @@ import numpy as np
 
 def left_child_add_prefix(self, text):
     lines = text.split("\n")
+    lines[0] = lines[0].replace("-> ", "")
     new_text = "    +---> " + lines[0] + "\n"
     for x in lines[1:]:
         new_text += ("    |  " + x) + "\n"
@@ -12,6 +13,7 @@ def left_child_add_prefix(self, text):
 
 def right_child_add_prefix(self, text):
     lines = text.split("\n")
+    lines[0] = lines[0].replace("-> ", "")
     new_text = "    +---> " + lines[0] + "\n"
     for x in lines[1:]:
         new_text += ("           " + x) + "\n"

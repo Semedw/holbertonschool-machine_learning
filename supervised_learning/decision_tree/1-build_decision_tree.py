@@ -102,6 +102,12 @@ class Leaf(Node):
             int: Depth of the leaf.
         """
         return self.depth
+    
+    def count_nodes(self, only_leaves=False) :
+        '''
+        salam necesiz
+        '''
+        return 1
 
 
 class Decision_Tree:
@@ -142,3 +148,9 @@ class Decision_Tree:
                  in the decision tree.
         """
         return self.root.max_depth_below()
+    
+    def count_nodes(self, only_leaves=False) :
+        '''
+        salam necesiz
+        '''
+        return self.root.count_nodes_below(only_leaves=only_leaves)

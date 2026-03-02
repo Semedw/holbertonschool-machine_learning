@@ -19,6 +19,6 @@ class Neuron:
             raise ValueError('nx must be a positive integer')
         self.nx = nx
 
-    W = np.random.normal(size=5)
+    W = np.random.rand(1, 784)
     b = 0
     A = 0

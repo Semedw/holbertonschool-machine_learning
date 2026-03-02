@@ -46,5 +46,5 @@ class Neuron:
         '''
         calculating forward propagation
         '''
-        self.__A = 1 / (1 + np.exp(np.dot(X, self.__W) + 1))
+        self.__A = np.matmul(X, self.__W) + self.__b
         return self.__A

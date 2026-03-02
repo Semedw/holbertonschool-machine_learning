@@ -56,6 +56,6 @@ class Neuron:
         '''
         m = Y.shape[1]
         sq = (Y - A) ** 2
-        loss = -(Y * np.log(A) + (1 - Y) * np.log(1.00000001-A))
+        loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
         cost = (1 / m) * np.sum(loss)
         return cost

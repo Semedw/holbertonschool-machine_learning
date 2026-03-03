@@ -75,7 +75,7 @@ class Neuron:
 
         error = A - Y
 
-        m = len(Y)
+        m = Y.shape[1]
         gradient_weight  = (1 / m) * np.matmul(error, X.T)
         gradient_bias = (1 / m) * np.sum(error)
         self.__W = self.__W - alpha * gradient_weight

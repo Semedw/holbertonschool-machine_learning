@@ -5,6 +5,7 @@ writing neural network
 
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Neuron:
@@ -101,12 +102,35 @@ class Neuron:
             raise TypeError('alpha must be a float')
         if alpha <= 0:
             raise ValueError('alpha must be positive')
-        
-        for i in range(iterations):
+        k = 0
+        x = []
+        y = []
+        for i in range(iterations+1):
             A = self.forward_prop(X)
-            self.gradient_descent(X, Y, A, alpha)
+            cost = self.cost(Y, A)
 
-        cost = self.cost(Y, A)
+            if verbose == True:
+                if not isinstance(step, int):
+                    raise TypeError('step must be an integer')
+                if step <= 0 or step > iterations:
+                    raise ValueError('step must be positive and <= iterations')
+                if k % step == 0:
+                    print(f'Cost after {k} iterations: {cost}')
+                    x.append(k)
+                    y.append(cost)
+            k += 1
+            if i < iterations:
+                self.gradient_descent(X, Y, A, alpha)
 
-        if verbose == True:
-            print(f'Cost after {iterations} iterations: {cost}')
+        if graph == True:
+            if not isinstance(step, int):
+                raise TypeError('step must be an integer')
+            if step <= 0 or step > iterations:
+                raise ValueError('step must be positive and <= iterations')
+            plt.figure(figsize=(6.4, 10))
+            plt.plot(x, y)
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.title('Training cost')
+            plt.show()
+        return self.evaluate(X, Y)

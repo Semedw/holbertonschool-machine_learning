@@ -72,11 +72,11 @@ class Neuron:
         '''
         this function calculates one pass of gradient descent
         '''
-        h = np.dot(X, A.T)
 
-        error = h - Y
+        error = A - Y
 
         m = len(Y)
-        gradient = np.dot(X.T, error) / m
-        self.__W = self.__W - alpha * gradient
-        self.__b = self.__b - alpha * gradient
+        gradient_weight  = (1 / m) * np.matmul(error, X.T)
+        gradient_bias = (1 / m) * np.sum(error)
+        self.__W = self.__W - alpha * gradient_weight
+        self.__b = self.__b - alpha * gradient_bias

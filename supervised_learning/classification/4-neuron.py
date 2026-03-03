@@ -63,8 +63,10 @@ class Neuron:
         '''
         Evaluates the neuron's predictions
         '''
-        acc = np.mean(X == Y)
+        m = Y.shape[1]
+        cost = (1 / m) * np.sum((Y-X)**2)
+        cost = np.squeeze(cost)
         x = np.array(X)
         x[x >= 0.5] = 1
         x[x < 0.5] = 0
-        return x, acc
+        return x, cost

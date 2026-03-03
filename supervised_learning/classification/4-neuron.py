@@ -63,10 +63,7 @@ class Neuron:
         '''
         Evaluates the neuron's predictions
         '''
-        m = Y.shape[1]
-        cost = (1 / m) * np.sum((Y-X)**2)
-        cost = np.squeeze(cost)
-        x = np.array(X)
-        x[x >= 0.5] = 1
-        x[x < 0.5] = 0
-        return x, cost
+        A = self.forward_prop(X)
+        prediction = np.where(A >= 0.5, 1, 0)
+        cost = self.cost(Y, A)
+        return prediction, cost

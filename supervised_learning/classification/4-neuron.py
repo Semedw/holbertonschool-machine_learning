@@ -55,7 +55,6 @@ class Neuron:
         loss (cost) function
         '''
         m = Y.shape[1]
-        sq = (Y - A) ** 2
         loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
         cost = (1 / m) * np.sum(loss)
         return cost
@@ -64,4 +63,8 @@ class Neuron:
         '''
         Evaluates the neuron's predictions
         '''
-        
+        acc = np.mean(X == Y)
+        x = np.array(X)
+        x[x >= 0.5] = 1
+        x[x < 0.5] = 0
+        return x, acc

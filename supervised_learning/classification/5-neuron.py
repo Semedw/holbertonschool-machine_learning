@@ -77,6 +77,6 @@ class Neuron:
         error = h - Y
 
         m = len(Y)
-        gradient = np.dot(X.T, alpha) / m
+        gradient = np.dot(X.T, error) / m
         self.__W = self.__W - alpha * gradient
         self.__b = self.__b - alpha * gradient

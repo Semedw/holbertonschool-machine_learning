@@ -87,7 +87,8 @@ class Neuron:
         self.__W = self.__W - alpha * gradient_weight
         self.__b = self.__b - alpha * gradient_bias
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         '''
         trains the neurons
         '''
@@ -100,7 +101,12 @@ class Neuron:
             raise TypeError('alpha must be a float')
         if alpha <= 0:
             raise ValueError('alpha must be positive')
-        A = self.forward_prop(X)
+        
         for i in range(iterations):
+            A = self.forward_prop(X)
             self.gradient_descent(X, Y, A, alpha)
-        return self.evaluate(X, Y)
+
+        cost = self.cost(Y, A)
+
+        if verbose == True:
+            print(f'Cost after {iterations} iterations: {cost}')

@@ -116,7 +116,7 @@ class NeuralNetwork:
         m = Y.shape[1]
         # __W1, __b1
         gradient_weight1 = (1 / m) * np.matmul(error1, X.T)
-        gradient_bias1 = (1 / m) * np.sum(error1, axis=1)
+        gradient_bias1 = (1 / m) * np.sum(error1, axis=1, keepdims=True)
         self.__W1 = self.__W1 - alpha * gradient_weight1
         self.__b1 = self.__b1 - alpha * gradient_bias1
         # __W2, __b2

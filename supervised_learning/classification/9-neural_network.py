@@ -41,7 +41,7 @@ class NeuralNetwork:
         w1 getter
         '''
         return self.__W2
-    
+
     @property
     def b1(self):
         '''
@@ -62,7 +62,7 @@ class NeuralNetwork:
         w1 getter
         '''
         return self.__A1
-    
+
     @property
     def A2(self):
         '''

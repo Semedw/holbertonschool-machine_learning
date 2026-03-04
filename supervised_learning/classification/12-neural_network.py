@@ -100,7 +100,7 @@ class NeuralNetwork:
         '''
         evaluetes the neural network's predictions
         '''
-        A = self.forward_prop(X)
+        A = self.forward_prop(X)[0]
         prediction = np.where(A >= 0.5, 1, 0)
         cost = self.cost(Y, A)
         return prediction, cost

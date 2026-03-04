@@ -122,5 +122,5 @@ class NeuralNetwork:
         #
         gradient_weight2 = (1 / m) * np.matmul(error2, X.T)
         gradient_bias2 = (1 / m) * np.sum(error2)
-        self.__W2 = self.__W2 - alpha * gradient_weight2
+        self.__W2 = self.__W1 - alpha * gradient_weight2
         self.__b2 = self.__b2 - alpha * gradient_bias2

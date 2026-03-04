@@ -69,7 +69,7 @@ class NeuralNetwork:
         w1 getter
         '''
         return self.__A2
-    
+
     @staticmethod
     def sigmoid(x):
         '''

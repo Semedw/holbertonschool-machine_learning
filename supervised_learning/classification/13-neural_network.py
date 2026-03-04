@@ -110,17 +110,17 @@ class NeuralNetwork:
         calculating one pass of gradient descent
         '''
 
-        error1 = Y - A1
-        error2 = Y - A2
+        error2 = A2 - Y
+        error1 = np.dot(self.__W2.T, error2) * (A1 * (1.0000001 - A1))
 
         m = Y.shape[1]
         # __W1, __b1
         gradient_weight1 = (1 / m) * np.matmul(error1, X.T)
-        gradient_bias1 = (1 / m) * np.sum(error1)
+        gradient_bias1 = (1 / m) * np.sum(error1, axis=1)
         self.__W1 = self.__W1 - alpha * gradient_weight1
         self.__b1 = self.__b1 - alpha * gradient_bias1
-        #
-        gradient_weight2 = (1 / m) * np.matmul(error2, X.T)
-        gradient_bias2 = (1 / m) * np.sum(error2)
-        self.__W2 = self.__W1 - alpha * gradient_weight2
+        # __W2, __b2
+        gradient_weight2 = (1 / m) * np.matmul(error2, A1.T)
+        gradient_bias2 = (1 / m) * np.sum(error2, axis=1)
+        self.__W2 = self.__W2 - alpha * gradient_weight2
         self.__b2 = self.__b2 - alpha * gradient_bias2

@@ -70,6 +70,7 @@ class NeuralNetwork:
         '''
         return self.__A2
     
+    @staticmethod
     def sigmoid(x):
         '''
         sigmoid function
@@ -81,6 +82,7 @@ class NeuralNetwork:
         calculating forward propagation(output)
         '''
         Z1 = np.matmul(self.__W1, X) + self.__b1
-        Z2 = np.matmul(self.__W2, X) + self.__b2
         self.__A1 = self.sigmoid(Z1)
+        Z2 = np.matmul(self.__W2, self.__A1) + self.__b2
         self.__A2 = self.sigmoid(Z2)
+        return self.__A1, self.__A2

@@ -24,6 +24,6 @@ class NeuralNetwork:
         self.W1 = np.random.randn(1, nx)
         self.b1 = 0
         self.A1 = 0
-        self.W2 = np.random.randn(1, nx)
+        self.W2 = np.random.randn(1, nodes)
         self.b2 = 0
         self.A2 = 0

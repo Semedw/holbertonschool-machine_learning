@@ -111,7 +111,7 @@ class NeuralNetwork:
         '''
 
         error2 = A2 - Y
-        error1 = np.dot(self.W2.T, error2) * (A1 * (1.0000001 - A1))
+        error1 = np.dot(self.W2.T, error2) * (A1 * (1 - A1))
 
         m = Y.shape[1]
         # __W1, __b1

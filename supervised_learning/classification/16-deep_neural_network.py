@@ -40,7 +40,7 @@ class DeepNeuralNetwork:
             if l == 0:
                 n_prev = nx
             else:
-                n_prev = layers[l-1]
+                n_prev = layers[l - 1]
             
             # Key for the dictionary (1-indexed based on your prompt)
             layer_num = l + 1

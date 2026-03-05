@@ -30,23 +30,15 @@ class DeepNeuralNetwork:
         self.L = len(layers) # the number of layers in the neural network
         self.cache = {} # a dict to hold all intermediary values of the network
         self.weights = {}
-        for l in range(self.L):
-            
-            if not isinstance(layers[l], int) or layers[l] < 1:
-                raise TypeError('layers must be a list of positive integers')
-            
-            # Determine the input size for the current layer (n_{l-1})
-            # For the first layer, it's nx. For others, it's the previous layer's size.
-            if l == 0:
-                n_prev = nx
-            else:
-                n_prev = layers[l - 1]
-            
-            # Key for the dictionary (1-indexed based on your prompt)
-            layer_num = l + 1
-            
-            # He et al. Initialization: W = randn * sqrt(2 / n_prev)
-            self.weights[f'W{layer_num}'] = np.random.randn(layers[l], n_prev) * np.sqrt(2 / n_prev)
-            
-            # Bias Initialization: Zeros
-            self.weights[f'b{layer_num}'] = np.zeros((layers[l], 1))
+        for lay in range(self.L):
+            if layers[lay] < 1 or type(layers[lay]) is not int:
+                raise TypeError("layers must be a list of positive integers")
+            self.weights["b" + str(lay + 1)] = np.zeros((layers[lay], 1))
+            if lay == 0:
+                He_val = np.random.randn(layers[lay], nx) * np.sqrt(2 / nx)
+                self.weights["W" + str(lay + 1)] = He_val
+            if lay > 0:
+                He_val1 = np.random.randn(layers[lay], layers[lay - 1])
+                He_val2 = np.sqrt(2 / layers[lay - 1])
+                He_val3 = He_val1 * He_val2
+                self.weights["W" + str(lay + 1)] = He_val3

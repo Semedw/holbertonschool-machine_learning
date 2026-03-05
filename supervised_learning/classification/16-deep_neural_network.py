@@ -1,52 +1,38 @@
-#!/usr/bin/env python3
-'''
-deep neural network
-'''
-
-
 import numpy as np
 
-
 class DeepNeuralNetwork:
-    '''
-    building a deep neural network
-    '''
+    """Defines a deep neural network for binary classification"""
 
     def __init__(self, nx, layers):
-        '''
-        nx - the number of input features -> int
-        layers - the number of nodes in eahc layer of the network -> List
-        e.g. layers[0] represents the the number of nodes in the first layer
-        '''
-
+        """
+        Initializes the Deep Neural Network
+        nx: number of input features
+        layers: list representing the number of nodes in each layer
+        """
+        # Validate nx
         if not isinstance(nx, int):
-            raise TypeError('nx must be an integer')
+            raise TypeError("nx must be an integer")
         if nx < 1:
-            raise ValueError('nx must be a positive integer')
+            raise ValueError("nx must be a positive integer")
         
+        # Validate layers
         if not isinstance(layers, list) or len(layers) == 0:
-            raise TypeError('layers must be a list of positive integers')
+            raise TypeError("layers must be a list of positive integers")
         
-        self.L = len(layers) # the number of layers in the neural network
-        self.cache = {} # a dict to hold all intermediary values of the network
+        self.L = len(layers)
+        self.cache = {}
         self.weights = {}
+
         for l in range(self.L):
+            # Validate layer elements
+            if not isinstance(layers[l], int) or layers[l] <= 0:
+                raise TypeError("layers must be a list of positive integers")
             
-            if not isinstance(layers[l], int) or layers[l] < 1:
-                raise TypeError('layers must be a list of positive integers')
+            # Determine input size for the current layer
+            # If it's the first layer, input size is nx, else it's nodes in previous layer
+            prev_layer_size = nx if l == 0 else layers[l-1]
             
-            # Determine the input size for the current layer (n_{l-1})
-            # For the first layer, it's nx. For others, it's the previous layer's size.
-            if l == 0:
-                n_prev = nx
-            else:
-                n_prev = layers[l - 1]
-            
-            # Key for the dictionary (1-indexed based on your prompt)
-            layer_num = l + 1
-            
-            # He et al. Initialization: W = randn * sqrt(2 / n_prev)
-            self.weights[f'W{layer_num}'] = np.random.randn(layers[l], n_prev) * np.sqrt(2 / n_prev)
-            
-            # Bias Initialization: Zeros
-            self.weights[f'b{layer_num}'] = np.zeros((layers[l], 1))
+            # He et al. initialization
+            self.weights[f"W{l + 1}"] = np.random.randn(layers[l], prev_layer_size) * np.sqrt(2 / prev_layer_size)
+            # Bias initialized to zeros
+            self.weights[f"b{l + 1}"] = np.zeros((layers[l], 1))

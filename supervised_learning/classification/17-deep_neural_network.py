@@ -56,7 +56,7 @@ class DeepNeuralNetwork:
         cache getter
         '''
         return self.__cache
-    
+
     @property
     def weights(self):
         '''

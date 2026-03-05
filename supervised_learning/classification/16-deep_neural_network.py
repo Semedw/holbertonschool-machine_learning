@@ -1,4 +1,10 @@
+#!/usr/bin/env python3
+'''
+deep neural network
+'''
+
 import numpy as np
+
 
 class DeepNeuralNetwork:
     """Defines a deep neural network for binary classification"""

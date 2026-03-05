@@ -23,12 +23,12 @@ class DeepNeuralNetwork:
             raise TypeError('nx must be an integer')
         if nx < 1:
             raise ValueError('nx must be a positive integer')
-        
+
         if not isinstance(layers, list) or len(layers) == 0:
             raise TypeError('layers must be a list of positive integers')
-        
-        self.L = len(layers) # the number of layers in the neural network
-        self.cache = {} # a dict to hold all intermediary values of the network
+
+        self.L = len(layers)  # the number of layers in the neural network
+        self.cache = {}  # a dict to hold all intermediary values of the network
         self.weights = {}
         for lay in range(self.L):
             if layers[lay] < 1 or type(layers[lay]) is not int:

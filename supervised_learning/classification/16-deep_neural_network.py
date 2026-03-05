@@ -27,9 +27,9 @@ class DeepNeuralNetwork:
         if not isinstance(layers, list) or len(layers) == 0:
             raise TypeError('layers must be a list of positive integers')
         
-        L = len(layers) # the number of layers in the neural network
-        cache = {} # a dict to hold all intermediary values of the network
-        weights = {}
+        self.L = len(layers) # the number of layers in the neural network
+        self.cache = {} # a dict to hold all intermediary values of the network
+        self.weights = {}
         for l in range(self.L):
             
             if not isinstance(layers[l], int) or layers[l] < 1:

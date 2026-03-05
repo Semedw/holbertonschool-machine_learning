@@ -37,7 +37,10 @@ class DeepNeuralNetwork:
             
             # Determine the input size for the current layer (n_{l-1})
             # For the first layer, it's nx. For others, it's the previous layer's size.
-            n_prev = nx if l == 0 else layers[l - 1]
+            if l == 0:
+                n_prev = nx
+            else:
+                n_prev = layers[l-1]
             
             # Key for the dictionary (1-indexed based on your prompt)
             layer_num = l + 1

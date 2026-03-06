@@ -83,5 +83,5 @@ class DeepNeuralNetwork:
             Z = np.matmul(W, self.__cache[f'A{lay}']) + b
             A = 1 / (1 + self.sigmoid(-Z))
             self.__cache[f'A{lay+1}'] = A
-        return self.cache[f'A{self.__L}'], self.__cache
+        return self.cache[f'A{self.__L+1}'], self.__cache
 

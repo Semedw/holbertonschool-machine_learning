@@ -84,3 +84,16 @@ class DeepNeuralNetwork:
             A = self.sigmoid(Z)
             self.__cache[f'A{lay+1}'] = A
         return self.__cache[f'A{self.__L}'], self.__cache
+
+
+    def cost(self, Y, A):
+        '''
+        calculates the cost of model using logistic regression
+        Y - correct labels
+        A - activated outputs
+        '''
+
+        m = Y.shape[1]
+        loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
+        cost = (1 / m) * np.sum(loss)
+        return cost

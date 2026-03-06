@@ -77,11 +77,11 @@ class DeepNeuralNetwork:
         '''
         self.__cache['A0'] = X
 
-        for lay in range(self.L):
+        for lay in range(self.__L):
             W = self.__weights[f'W{lay+1}']
             b = self.__weights[f'b{lay+1}']
-            Z = np.matmul(W, self.cache[f'A{lay}']) + b
+            Z = np.matmul(W, self.__cache[f'A{lay}']) + b
             A = 1 / (1 + self.sigmoid(-Z))
-            self.cache[f'A{lay+1}'] = A
-        return self.cache[f'A{self.L}'], self.cache
+            self.__cache[f'A{lay+1}'] = A
+        return self.cache[f'A{self.__L}'], self.__cache
 

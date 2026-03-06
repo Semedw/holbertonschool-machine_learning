@@ -121,7 +121,7 @@ class DeepNeuralNetwork:
         # Assumes Softmax/Cross-Entropy or Sigmoid/MSE derivative
         dz = cache[f'A{self.__L}'] - Y 
 
-        for lay in reversed(range(1, self.__L + 1)):
+        for lay in range(self.__L, 0, -1):
             # 1. Calculate Gradients
             # A{lay-1} is the input to the current layer
             dW = np.matmul(dz, cache[f'A{lay-1}'].T) / m

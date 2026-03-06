@@ -107,4 +107,4 @@ class DeepNeuralNetwork:
         A = self.forward_prop(X)[0]
         prediction = np.where(A >= 0.5, 1, 0)
         cost = self.cost(Y, A)
-        return cost, prediction
+        return prediction, cost

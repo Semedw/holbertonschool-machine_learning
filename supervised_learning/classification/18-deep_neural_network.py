@@ -81,7 +81,7 @@ class DeepNeuralNetwork:
             W = self.__weights[f'W{lay+1}']
             b = self.__weights[f'b{lay+1}']
             Z = np.matmul(W, self.__cache[f'A{lay}']) + b
-            A = 1 / (1 + self.sigmoid(-Z))
+            A = 1 / (1 + self.sigmoid(Z))
             self.__cache[f'A{lay+1}'] = A
-        return self.cache[f'A{self.__L+1}'], self.__cache
+        return self.__cache[f'A{self.__L}'], self.__cache
 

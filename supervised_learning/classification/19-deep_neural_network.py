@@ -85,7 +85,6 @@ class DeepNeuralNetwork:
             self.__cache[f'A{lay+1}'] = A
         return self.__cache[f'A{self.__L}'], self.__cache
 
-
     def cost(self, Y, A):
         '''
         calculates the cost of model using logistic regression

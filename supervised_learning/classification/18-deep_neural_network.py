@@ -63,7 +63,7 @@ class DeepNeuralNetwork:
         weights getter
         '''
         return self.__weights
-    
+
     @staticmethod
     def sigmoid(x):
         '''
@@ -84,4 +84,3 @@ class DeepNeuralNetwork:
             A = self.sigmoid(Z)
             self.__cache[f'A{lay+1}'] = A
         return self.__cache[f'A{self.__L}'], self.__cache
-

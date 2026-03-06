@@ -117,24 +117,29 @@ class DeepNeuralNetwork:
         alpha - learning rate
         '''
         m = Y.shape[1]
-        # Start the error (dz) with the output layer
-        # Assumes Softmax/Cross-Entropy or Sigmoid/MSE derivative
+
+        # 1. Initialize the error at the output layer
+        # This is the derivative of the cost function with respect to the last activation
         dz = cache[f'A{self.__L}'] - Y 
 
+        # 2. The ONLY loop needed: Iterating backwards from the last layer to the first
         for lay in range(self.__L, 0, -1):
-            # 1. Calculate Gradients
-            # A{lay-1} is the input to the current layer
-            dW = np.matmul(dz, cache[f'A{lay-1}'].T) / m
+            # A_prev is the output of the layer before the current one
+            # For layer 1, A0 is the original input data (X)
+            A_prev = cache[f'A{lay-1}']
+
+            # Calculate gradients for the current layer
+            dW = np.matmul(dz, A_prev.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
-            # 2. Backpropagate the error to the previous layer (if not at the input)
+            # Before updating weights, calculate dz for the NEXT iteration (the previous layer)
             if lay > 1:
+                W_curr = self.weights[f'W{lay}']
                 # Derivative of Sigmoid: a * (1 - a)
-                # We use the activation of the PREVIOUS layer to prep for the next loop
-                a_prev = cache[f'A{lay-1}']
-                da_prev = a_prev * (1 - a_prev)
-                dz = np.matmul(self.weights[f'W{lay}'].T, dz) * da_prev
+                # This "backpropagates" the error through the activation function
+                da_prev = A_prev * (1 - A_prev)
+                dz = np.matmul(W_curr.T, dz) * da_prev
 
-            # 3. Update Weights
+            # Update the weights and biases
             self.weights[f'W{lay}'] -= alpha * dW
             self.weights[f'b{lay}'] -= alpha * db

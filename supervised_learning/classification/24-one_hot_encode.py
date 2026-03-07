@@ -14,9 +14,9 @@ def one_hot_encode(Y, classes):
     classes - the maximum number of classes found in Y
     '''
     try:
-        samples = Y.shape[0]
-        one_hot_matrix = np.zeros((samples, classes), dtype=float)
-        one_hot_matrix[np.arange(samples), Y] = 1.0
+        m = Y.shape[0]
+        one_hot_matrix = np.zeros((classes, m), dtype=float)
+        one_hot_matrix[Y, np.arange(m)] = 1.0
         return one_hot_matrix
     except Exception as e:
         return None

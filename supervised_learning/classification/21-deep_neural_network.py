@@ -117,29 +117,26 @@ class DeepNeuralNetwork:
         alpha - learning rate
         '''
         m = Y.shape[1]
+        # Initial dz for the output layer (A[L] - Y)
+        dz = cache[f'A{self.__L}'] - Y
 
-        # 1. Initialize the error at the output layer
-        # This is the derivative of the cost function with respect to the last activation
-        dz = cache[f'A{self.__L}'] - Y 
-
-        # 2. The ONLY loop needed: Iterating backwards from the last layer to the first
+        # Iterate backwards from the last layer to the first
         for lay in range(self.__L, 0, -1):
-            # A_prev is the output of the layer before the current one
-            # For layer 1, A0 is the original input data (X)
             A_prev = cache[f'A{lay-1}']
+            W_key = f'W{lay}'
+            b_key = f'b{lay}'
 
-            # Calculate gradients for the current layer
+            # 1. Calculate the gradients for the current layer
             dW = np.dot(dz, A_prev.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
-            # Before updating weights, calculate dz for the NEXT iteration (the previous layer)
+            # 2. Update dz for the next (previous) layer BEFORE updating current W
+            # Only needed if we haven't reached the first layer
             if lay > 1:
-                W_curr = self.__weights[f'W{lay}']
-                # Derivative of Sigmoid: a * (1 - a)
-                # This "backpropagates" the error through the activation function
-                da_prev = A_prev * (1 - A_prev)
-                dz = np.dot(W_curr.T, dz) * da_prev
+                W_curr = self.__weights[W_key]
+                # dz_prev = (W_curr.T @ dz_curr) * (A_prev * (1 - A_prev))
+                dz = np.dot(W_curr.T, dz) * (A_prev * (1 - A_prev))
 
-            # Update the weights and biases
-            self.weights[f'W{lay}'] = self.weights[f'W{lay}'] - alpha * dW
-            self.weights[f'b{lay}'] = self.weights[f'b{lay}'] - alpha * db
+            # 3. Update the weights and biases in the private dictionary
+            self.__weights[W_key] = self.__weights[W_key] - (alpha * dW)
+            self.__weights[b_key] = self.__weights[b_key] - (alpha * db)

@@ -7,6 +7,7 @@ deep neural network
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+import os
 
 
 class DeepNeuralNetwork:
@@ -203,6 +204,11 @@ class DeepNeuralNetwork:
 
     @staticmethod
     def load(filename):
+        '''
+        loading the deep neural network object
+        '''
+        if not os.path.exists(filename):
+            return None
         try:
             with open(filename, mode='rb') as file:
                 k = pickle.load(file)

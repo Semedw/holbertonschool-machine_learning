@@ -116,27 +116,30 @@ class DeepNeuralNetwork:
         cache - a dict containing all the intermediary values of the network
         alpha - learning rate
         '''
-        m = Y.shape[1]
-        # Initial dz for the output layer (A[L] - Y)
-        dz = cache[f'A{self.__L}'] - Y
+        m = len(Y[0])
 
-        # Iterate backwards from the last layer to the first
-        for lay in range(self.__L, 0, -1):
-            A_prev = cache[f'A{lay-1}']
-            W_key = f'W{lay}'
-            b_key = f'b{lay}'
+        # Activation of the final layer, aka the output:
+        A_final = cache['A{}'.format(self.L)]
 
-            # 1. Calculate the gradients for the current layer
-            dW = np.dot(dz, A_prev.T) / m
-            db = np.sum(dz, axis=1, keepdims=True) / m
+        dzh = A_final - Y
 
-            # 2. Update dz for the next (previous) layer BEFORE updating current W
-            # Only needed if we haven't reached the first layer
-            if lay > 1:
-                W_curr = self.__weights[W_key]
-                # dz_prev = (W_curr.T @ dz_curr) * (A_prev * (1 - A_prev))
-                dz = np.dot(W_curr.T, dz) * (A_prev * (1 - A_prev))
+        for layer in range(self.L, 0, -1):
 
-            # 3. Update the weights and biases in the private dictionary
-            self.__weights[W_key] = self.__weights[W_key] - (alpha * dW)
-            self.__weights[b_key] = self.__weights[b_key] - (alpha * db)
+            # Activation of the previous layer:
+            A_prev = cache['A{}'.format(layer - 1)]
+
+            dwh = dzh @ A_prev.T / m
+
+            dbh = np.mean(dzh, axis=1, keepdims=True)
+
+            # Weights of the current layer:
+            A = self.weights['W{}'.format(layer)]
+
+            dzl = A.T @ dzh * A_prev * (1 - A_prev)
+
+            # Bias of the current layer:
+            b = self.weights['b{}'.format(layer)]
+
+            A -= alpha * dwh
+            b -= alpha * dbh
+            dzh = dzl

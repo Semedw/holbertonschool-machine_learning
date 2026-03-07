@@ -129,17 +129,17 @@ class DeepNeuralNetwork:
             A_prev = cache[f'A{lay-1}']
 
             # Calculate gradients for the current layer
-            dW = np.matmul(dz, A_prev.T) / m
+            dW = np.dot(dz, A_prev.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
             # Before updating weights, calculate dz for the NEXT iteration (the previous layer)
             if lay > 1:
-                W_curr = self.weights[f'W{lay}']
+                W_curr = self.__weights[f'W{lay}']
                 # Derivative of Sigmoid: a * (1 - a)
                 # This "backpropagates" the error through the activation function
                 da_prev = A_prev * (1 - A_prev)
-                dz = np.matmul(W_curr.T, dz) * da_prev
+                dz = np.dot(W_curr.T, dz) * da_prev
 
             # Update the weights and biases
-            self.weights[f'W{lay}'] -= alpha * dW
-            self.weights[f'b{lay}'] -= alpha * db
+            self.weights[f'W{lay}'] = self.weights[f'W{lay}'] - alpha * dW
+            self.weights[f'b{lay}'] = self.weights[f'b{lay}'] - alpha * db

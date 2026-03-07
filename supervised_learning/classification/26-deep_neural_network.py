@@ -193,25 +193,55 @@ class DeepNeuralNetwork:
             plt.show()
         return self.evaluate(X, Y)
 
+    # def save(self, filename):
+    #     '''
+    #     saves the instance object to a file in pickle format
+    #     '''
+    #     if not filename.endswith('.pkl'):
+    #         filename += '.pkl'
+    #     with open(filename, mode='wb') as file:
+    #         pickle.dump(self, file)
+
+    # @staticmethod
+    # def load(filename):
+    #     '''
+    #     loading the deep neural network object
+    #     '''
+    #     if not os.path.exists(filename):
+    #         return None
+    #     try:
+    #         with open(filename, mode='rb') as file:
+    #             k = pickle.load(file)
+    #             return k
+    #     except FileNotFoundError:
+    #         return None
+
     def save(self, filename):
-        '''
-        saves the instance object to a file in pickle format
-        '''
-        if not filename.endswith('.pkl'):
+        """
+        Saves a neural network instance to a file in pickle format.
+
+        Args:
+            filename: The name of the file to which the object should be saved.
+        """
+        if filename[-4:] != '.pkl':
             filename += '.pkl'
-        with open(filename, mode='wb') as file:
+        with open(filename, 'wb') as file:
             pickle.dump(self, file)
 
     @staticmethod
     def load(filename):
-        '''
-        loading the deep neural network object
-        '''
-        if not os.path.exists(filename):
-            return None
+        """
+        Loads a pickled `DeepNeuralNetwork` object.
+
+        Args:
+            filename: The name of the file from which the object should be
+                loaded.
+
+        Returns: The loaded object, or None if filename doesn't exist.
+        """
         try:
-            with open(filename, mode='rb') as file:
-                k = pickle.load(file)
-                return k
+            with open(filename, 'rb') as file:
+                DeepNeuralNetwork_instance = pickle.load(file)
+            return DeepNeuralNetwork_instance
         except FileNotFoundError:
             return None

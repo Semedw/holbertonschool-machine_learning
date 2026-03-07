@@ -192,62 +192,23 @@ class DeepNeuralNetwork:
             plt.show()
         return self.evaluate(X, Y)
 
-    # def save(self, filename):
-    #     '''
-    #     saves the instance object to a file in pickle format
-    #     '''
-    #     if not filename.endswith('.pkl'):
-    #         filename += '.pkl'
-    #     with open(filename, mode='wb') as file:
-    #         pickle.dump(self, file)
-
-    # @staticmethod
-    # def load(filename):
-    #     '''
-    #     loading the deep neural network object
-    #     '''
-    #     if not os.path.exists(filename):
-    #         return None
-    #     try:
-    #         with open(filename, mode='rb') as file:
-    #             k = pickle.load(file)
-    #             return k
-    #     except FileNotFoundError:
-    #         return None
-
     def save(self, filename):
-        """
+        '''
         saves the instance object to a file in pickle format
-
-        parameters:
-            filename [string]: file to save the object to
-                If filename does not have extension .pkl, add it.
-        """
-        import pickle
-        if type(filename) is not str:
-            return
-        if filename[-4:] != ".pkl":
-            filename = filename[:] + ".pkl"
-        with open(filename, 'wb') as f:
-            pickle.dump(self, f)
-            f.close()
+        '''
+        if not filename.endswith('.pkl'):
+            filename += '.pkl'
+        with open(filename, mode='wb') as file:
+            pickle.dump(self, file)
 
     @staticmethod
     def load(filename):
-        """
-        loads a pickled DeepNeuralNetwork object from a file
-
-        parameters:
-            filename [string]: file to load object from
-
-        returns:
-            the loaded object,
-                or None if filename doesn't exist
-        """
-        import pickle
+        '''
+        loading the deep neural network object
+        '''
         try:
-            with open(filename, 'rb') as f:
-                obj = pickle.load(f)
-                return obj
+            with open(filename, mode='rb') as file:
+                k = pickle.load(file)
+                return k
         except FileNotFoundError:
             return None

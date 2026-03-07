@@ -13,6 +13,11 @@ def one_hot_encode(Y, classes):
     Y - ndarray with shape (m, ) containing numeric label class
     classes - the maximum number of classes found in Y
     '''
-    samples = Y.size
-    one_hot_matrix = np.zeros((samples, classes), dtype=float)
-    one_hot_matrix[np.arange(samples), Y] = 1.0
+    try:
+        samples = Y.size
+        one_hot_matrix = np.zeros((samples, classes), dtype=float)
+        one_hot_matrix[np.arange(samples), Y] = 1.0
+        return one_hot_matrix
+    except Exception as e:
+        return None
+    

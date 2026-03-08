@@ -108,7 +108,7 @@ class DeepNeuralNetwork:
         Y - correct labels
         A - activated outputs
         '''
-        Y = one_hot_encode(Y)
+        Y = one_hot_encode(Y, Y.shape[0])
         m = Y.shape[1]
         loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
         cost = (1 / m) * np.sum(loss)
@@ -120,7 +120,7 @@ class DeepNeuralNetwork:
         X - input data
         Y - correct labels
         '''
-        Y = one_hot_encode(Y)
+        Y = one_hot_encode(Y, Y.shape[0])
         A = self.forward_prop(X)[0]
         prediction = np.where(A >= 0.5, 1, 0)
         cost = self.cost(Y, A)

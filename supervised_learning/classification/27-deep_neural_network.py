@@ -108,19 +108,19 @@ class DeepNeuralNetwork:
         """
         self.__cache["A0"] = X
 
-        for l in range(self.__L):
-            W = self.__weights["W{}".format(l + 1)]
-            b = self.__weights["b{}".format(l + 1)]
+        for lay in range(self.__L):
+            W = self.__weights["W{}".format(lay + 1)]
+            b = self.__weights["b{}".format(lay + 1)]
 
-            Z = np.matmul(W, self.__cache["A{}".format(l)]) + b
+            Z = np.matmul(W, self.__cache["A{}".format(lay)]) + b
 
-            if l == self.__L - 1:
+            if lay == self.__L - 1:
                 e = np.exp(Z)
                 A = e / np.sum(e, axis=0, keepdims=True)
             else:
                 A = self.sigmoid(Z)
 
-            self.__cache["A{}".format(l + 1)] = A
+            self.__cache["A{}".format(lay + 1)] = A
 
         return A, self.__cache
 
@@ -171,19 +171,19 @@ class DeepNeuralNetwork:
         m = Y.shape[1]
         dZ = cache["A{}".format(self.__L)] - Y
 
-        for l in range(self.__L, 0, -1):
-            A_prev = cache["A{}".format(l - 1)]
-            W = self.__weights["W{}".format(l)]
+        for lay in range(self.__L, 0, -1):
+            A_prev = cache["A{}".format(lay - 1)]
+            W = self.__weights["W{}".format(lay)]
 
             dW = np.matmul(dZ, A_prev.T) / m
             db = np.sum(dZ, axis=1, keepdims=True) / m
 
-            if l > 1:
-                A_curr = cache["A{}".format(l - 1)]
+            if lay > 1:
+                A_curr = cache["A{}".format(lay - 1)]
                 dZ = np.matmul(W.T, dZ) * A_curr * (1 - A_curr)
 
-            self.__weights["W{}".format(l)] -= alpha * dW
-            self.__weights["b{}".format(l)] -= alpha * db
+            self.__weights["W{}".format(lay)] -= alpha * dW
+            self.__weights["b{}".format(lay)] -= alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):

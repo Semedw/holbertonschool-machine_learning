@@ -9,21 +9,6 @@ import matplotlib.pyplot as plt
 import pickle
 
 
-def one_hot_encode(Y, classes):
-    '''
-    converts a numeric label vector to one hot matrix
-    Y - ndarray with shape (m, ) containing numeric label class
-    classes - the maximum number of classes found in Y
-    '''
-    try:
-        m = Y.shape[0]
-        one_hot_matrix = np.zeros((classes, m), dtype=float)
-        one_hot_matrix[Y, np.arange(m)] = 1.0
-        return one_hot_matrix
-    except Exception as e:
-        return None
-
-
 class DeepNeuralNetwork:
     '''
     building a deep neural network
@@ -98,7 +83,11 @@ class DeepNeuralNetwork:
             W = self.__weights[f'W{lay+1}']
             b = self.__weights[f'b{lay+1}']
             Z = np.matmul(W, self.__cache[f'A{lay}']) + b
-            A = self.sigmoid(Z)
+            if lay == self.__L - 1 :
+                e = np.exp(Z)
+                A = e / np.sum(e, axis=0, keepdims=True)
+            else:
+                A = self.sigmoid(Z)
             self.__cache[f'A{lay+1}'] = A
         return self.__cache[f'A{self.__L}'], self.__cache
 
@@ -108,10 +97,9 @@ class DeepNeuralNetwork:
         Y - correct labels
         A - activated outputs
         '''
-        Y = one_hot_encode(Y, Y.shape[0])
         m = Y.shape[1]
-        loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
-        cost = (1 / m) * np.sum(loss)
+        # loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
+        cost = - (1 / m) * np.sum(Y * np.log(A + 1e-7))
         return cost
 
     def evaluate(self, X, Y):
@@ -120,10 +108,11 @@ class DeepNeuralNetwork:
         X - input data
         Y - correct labels
         '''
-        Y = one_hot_encode(Y, Y.shape[0])
         A = self.forward_prop(X)[0]
-        prediction = np.where(A >= 0.5, 1, 0)
         cost = self.cost(Y, A)
+        max_indices = np.argmax(A, axis=0)
+        prediction = np.zeros_like(A)
+        prediction[max_indices, np.arange(len(max_indices))] = 1
         return prediction, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):

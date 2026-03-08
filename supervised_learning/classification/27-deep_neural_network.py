@@ -99,7 +99,7 @@ class DeepNeuralNetwork:
         '''
         m = Y.shape[1]
         # loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
-        cost = - np.sum(Y * np.log(A)) / m
+        cost = - np.sum(Y * np.log(A), axis=0) / m
         return cost
 
     def evaluate(self, X, Y):
@@ -110,9 +110,7 @@ class DeepNeuralNetwork:
         '''
         A = self.forward_prop(X)[0]
         cost = self.cost(Y, A)
-        max_indices = np.argmax(A, axis=0)
-        prediction = np.zeros_like(A)
-        prediction[max_indices, np.arange(len(max_indices))] = 1
+        prediction = np.eye(A.shape[0])[np.argmax(A, axis=0)].T
         return prediction, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):

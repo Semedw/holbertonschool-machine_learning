@@ -14,18 +14,11 @@ class DeepNeuralNetwork:
     """
 
     def __init__(self, nx, layers):
-        """
-        Initializes the DeepNeuralNetwork instance.
-
-        Args:
-            nx (int): Number of input features.
-            layers (list): List containing the number of nodes in each layer.
-
-        Raises:
-            TypeError: If nx is not an integer or layers is not a list of
-                       positive integers.
-            ValueError: If nx is less than 1.
-        """
+        '''
+        nx - the number of input features -> int
+        layers - the number of nodes in eahc layer of the network -> List
+        e.g. layers[0] represents the the number of nodes in the first layer
+        '''
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
         if nx < 1:

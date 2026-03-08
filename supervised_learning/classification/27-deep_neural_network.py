@@ -99,7 +99,7 @@ class DeepNeuralNetwork:
         '''
         m = Y.shape[1]
         # loss = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001-A))
-        cost = - (1 / m) * np.sum(Y * np.log(A + 1e-7))
+        cost = - np.sum(Y * np.log(A + 1e-7)) / m
         return cost
 
     def evaluate(self, X, Y):

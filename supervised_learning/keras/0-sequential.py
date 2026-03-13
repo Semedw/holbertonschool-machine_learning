@@ -4,7 +4,7 @@ building neural network with keras library
 '''
 
 
-import keras as K
+import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):

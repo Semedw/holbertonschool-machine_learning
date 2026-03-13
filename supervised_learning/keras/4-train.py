@@ -35,6 +35,13 @@ def train_model(network, data, labels, batch_size, epochs,
     History object generated after training model.
 
     '''
+
+    network.compile(
+        optimizer='adam',
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
+
     return network.fit(x=data,
                        y=labels,
                        batch_size=batch_size,

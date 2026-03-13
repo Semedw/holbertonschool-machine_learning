@@ -38,7 +38,7 @@ def train_model(network, data, labels, batch_size, epochs,
 
     network.compile(
         optimizer='adam',
-        loss='sparse_categorical_crossentropy',
+        loss='categorical_crossentropy',
         metrics=['accuracy']
     )
 

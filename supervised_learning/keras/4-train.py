@@ -7,6 +7,9 @@ training the data
 import tensorflow.keras as K
 
 
+K.utils.set_random_seed(0)
+
+
 def train_model(network, data, labels, batch_size, 
                 epochs, verbose=True, shuffle=False):
     '''

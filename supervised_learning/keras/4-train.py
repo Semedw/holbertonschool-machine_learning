@@ -16,7 +16,7 @@ def train_model(network, data, labels, batch_size,
     batch_size - is the size of the batch used for mini-batch gradient descent
     epochs - the number of passes through data for mini-batch gradient descent
     verbose - the boolean that determines if output should be printed
-    
+
     shuffle - a boolean that determines whether to shullfe batches every epoch
     Normally, it is a good idea to shuffle, but for reproducibility, 
     we have chosen to set the default to False
@@ -32,5 +32,5 @@ def train_model(network, data, labels, batch_size,
         verbose=verbose,
         shuffle=shuffle
     )
-    
+
     return history

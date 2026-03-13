@@ -1,44 +1,43 @@
 #!/usr/bin/env python3
 '''
-training the data
+Modulus that trins a model using mini-batch gradien descent
 '''
-
-
 import tensorflow.keras as K
 
 
-K.utils.set_random_seed(0)
-
-
-def train_model(network, data, labels, batch_size, 
-                epochs, verbose=True, shuffle=False):
+def train_model(network, data, labels, batch_size, epochs,
+                verbose=True, shuffle=False):
     '''
-    network - the model to train
-    data - ndarray of shape (m, nx) containing the input data
-    labels - one-hot ndarray of chape (m, classes) containing labels of data
-    batch_size - is the size of the batch used for mini-batch gradient descent
-    epochs - the number of passes through data for mini-batch gradient descent
-    verbose - the boolean that determines if output should be printed
-    
-    shuffle - a boolean that determines whether to shullfe batches every epoch
-    Normally, it is a good idea to shuffle, but for reproducibility, 
-    we have chosen to set the default to False
+    Function that trains a model using mini-batch gradient descent
 
-    returns: History object generated after training the model
+    Parameters
+    ----------
+    network : TYPE model
+        DESCRIPTION. Model to be train
+    data : TYPE numpy.ndarray
+        DESCRIPTION. data is a numpy.ndarray of shape (m, nx) containing
+        the input data
+    labels : TYPE numpy.ndarray
+        DESCRIPTION. (m, classes) containing the labels of data
+    batch_size : TYPE int
+        DESCRIPTION. Batch size used for mini-batch gradient descent
+    epochs : TYPE int
+        DESCRIPTION. Number of passes through data for mini-batch g.d.
+    verbose : TYPE, optional
+        DESCRIPTION. The default is True. Determines if output should be
+        printed during the training
+    shuffle : TYPE, optional
+        DESCRIPTION. The default is False. Determines if shuffle the batches
+        every epoch
+
+    Returns
+    -------
+    History object generated after training model.
+
     '''
-    network.compile(
-        optimizer='adam', 
-        loss='categorical_crossentropy', 
-        metrics=['accuracy']
-    )
-
-    history = network.fit(
-        x=data,
-        y=labels,
-        batch_size=batch_size,
-        epochs=epochs,
-        verbose=verbose,
-        shuffle=shuffle
-    )
-    
-    return history
+    return network.fit(x=data,
+                       y=labels,
+                       batch_size=batch_size,
+                       epochs=epochs,
+                       verbose=verbose,
+                       shuffle=shuffle)

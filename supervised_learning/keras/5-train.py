@@ -33,5 +33,6 @@ def train_model(network, data, labels, batch_size,
             validation_data=validation_data,
             shuffle=shuffle
     )
-    print("accuracy", history.history['accuracy'])
+
+    print("accuracy", history['accuracy'])
     return history

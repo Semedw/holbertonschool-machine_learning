@@ -11,5 +11,5 @@ def one_hot(labels, classes=None):
     '''
     one-hot encoding matrix
     '''
-    mat = K.utils.to_categorical(labels-1, classes)
+    mat = K.utils.to_categorical(labels-1, classes, axis=-1)
     return mat

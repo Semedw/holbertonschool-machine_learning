@@ -24,13 +24,11 @@ def train_model(network, data, labels, batch_size,
     returns: History object generated after training the model
     '''
 
-    network.compile(
-        optimizer=K.optimizers.Adam(),
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
+    
 
-    history = network.fit(data, labels, batch_size=batch_size,
-                          epochs=epochs, verbose=verbose, shuffle=shuffle)
-
-    return history
+    return network.fit(data,
+                       labels,
+                       batch_size=batch_size,
+                        epochs=epochs,
+                        verbose=verbose,
+                        shuffle=shuffle)

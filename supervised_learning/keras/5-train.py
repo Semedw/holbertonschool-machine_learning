@@ -24,7 +24,7 @@ def train_model(network, data, labels, batch_size,
     returns: History object generated after training the model
     '''
 
-    history.compile(
+    network.compile(
         optimizer='adam',
         loss='categorical_crossentropy',
         metrics=['accuracy']

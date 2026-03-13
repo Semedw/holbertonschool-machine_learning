@@ -29,7 +29,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         )(x)
 
         if i < len(layers) - 1:
-            x = K.layers.Dropout((1 - keep_prob))
+            x = K.layers.Dropout(1 - keep_prob)(x)
 
     model = K.models.Model(inputs=inputs, outputs=x)
     return model

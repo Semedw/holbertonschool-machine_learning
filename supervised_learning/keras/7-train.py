@@ -11,7 +11,8 @@ def train_model(network, data, labels, batch_size,
                 epochs, verbose=True, shuffle=False,
                 validation_data=None, early_stopping=False,
                 patience=0, learning_rate_decay=False,
-                alpha=0.01, decay_rate=1):
+                alpha=0.01, decay_rate=1, save_best=False,
+                filepath=None):
     '''
     network - the model to train
     data - ndarray of shape (m, nx) containing the input data
@@ -49,6 +50,10 @@ def train_model(network, data, labels, batch_size,
             scheduler,
             verbose=1
         ))
+
+    if save_best:
+        callbacks.append(K.callbacks.ModelCheckpoint(filepath=filepath))
+    
     optimizer = K.optimizers.SGD(learning_rate=alpha)
 
     network.compile(

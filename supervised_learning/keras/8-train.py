@@ -53,7 +53,7 @@ def train_model(network, data, labels, batch_size,
 
     if save_best:
         callbacks.append(K.callbacks.ModelCheckpoint(filepath=filepath))
-    
+
     optimizer = K.optimizers.SGD(learning_rate=alpha)
 
     network.compile(

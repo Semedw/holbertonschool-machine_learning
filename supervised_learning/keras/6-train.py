@@ -8,7 +8,9 @@ import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, 
-                epochs, verbose=True, shuffle=False, validation_data=None):
+                epochs, verbose=True, shuffle=False,
+                validation_data=None, early_stopping=False,
+                patience=0):
     '''
     network - the model to train
     data - ndarray of shape (m, nx) containing the input data
@@ -23,15 +25,17 @@ def train_model(network, data, labels, batch_size,
 
     returns: History object generated after training the model
     '''
-
-    history = network.fit(
-            x=data,
-            y=labels,
-            batch_size=batch_size,
-            epochs=epochs,
-            verbose=2 if verbose else 0,
-            validation_data=validation_data,
-            shuffle=shuffle
-    )
+    if validation_data:
+        history = network.fit(
+                x=data,
+                y=labels,
+                batch_size=batch_size,
+                epochs=epochs,
+                verbose=1 if verbose else 0,
+                validation_data=validation_data,
+                shuffle=shuffle
+        )
+    else:
+        
 
     return history

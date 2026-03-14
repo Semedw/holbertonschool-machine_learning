@@ -25,23 +25,26 @@ def train_model(network, data, labels, batch_size,
 
     returns: History object generated after training the model
     '''
-    
+
+    callbacks = []
+
+    if validation_data and early_stopping:
+        early_stop = K.callbacks.EarlyStopping(
+            monitor='val_loss',
+            patience=patience,
+            verbose=verbose
+        )
+        callbacks.append(early_stop)
+
     history = network.fit(
                 x=data,
                 y=labels,
                 batch_size=batch_size,
                 epochs=epochs,
                 verbose=1 if verbose else 0,
+                callbacks=callbacks,
                 validation_data=validation_data,
                 shuffle=shuffle
         )
-    
-    if validation_data and early_stopping:
-        K.callbacks.EarlyStopping(
-            monitor='val_loss',
-            patience=patience,
-            verbose=verbose
-        )
-
 
     return history

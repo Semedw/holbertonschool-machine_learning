@@ -39,8 +39,14 @@ def train_model(network, data, labels, batch_size,
 
     if learning_rate_decay and validation_data:
 
+        def scheduler(epoch):
+            '''
+            implement inverse time decay
+            '''
+            return alpha / (1 + decay_rate * epoch)
+
         callbacks.append(K.callbacks.LearningRateScheduler(
-            alpha / (1 + decay_rate * epochs),
+            scheduler,
             verbose=1
         ))
     optimizer = K.optimizers.SGD(learning_rate=alpha)

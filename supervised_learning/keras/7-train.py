@@ -38,9 +38,10 @@ def train_model(network, data, labels, batch_size,
         callbacks.append(early_stop)
 
     if learning_rate_decay and validation_data:
+        steps_per_epoch = data.shape[0] // batch_size
         lr_schedule = K.optimizers.schedules.ExponentialDecay(
             alpha,
-            decay_steps=1,
+            decay_steps=steps_per_epoch,
             decay_rate=decay_rate,
             staircase=True
         )

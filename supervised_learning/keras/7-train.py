@@ -43,9 +43,15 @@ def train_model(network, data, labels, batch_size,
             decay_rate=decay_rate,
             staircase=True
         )
-        network.compile(optimizer=K.optimizers.SGD(learning_rate=lr_schedule),
-                        loss='sparse_categorical_crossentropy',
-                        metrics=['accuracy'])
+        optimizer = K.optimizers.SGD(learning_rate=lr_schedule)
+    else:
+        optimizer = K.optimizers.SGD(learning_rate=alpha)
+
+    network.compile(
+        optimizer=optimizer,
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
 
     history = network.fit(
                 x=data,

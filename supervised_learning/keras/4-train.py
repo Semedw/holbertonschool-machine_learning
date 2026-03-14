@@ -29,8 +29,9 @@ def train_model(network, data, labels, batch_size,
             y=labels,
             batch_size=batch_size,
             epochs=epochs,
-            verbose=2 if verbose else 0,
+            verbose=1 if verbose else 0,
             shuffle=shuffle
     )
 
+    print(history.history['val_accuracy'])
     return history

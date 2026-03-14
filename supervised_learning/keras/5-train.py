@@ -7,7 +7,7 @@ training the data
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, 
+def train_model(network, data, labels, batch_size,
                 epochs, verbose=True, shuffle=False, validation_data=None):
     '''
     network - the model to train
@@ -18,7 +18,7 @@ def train_model(network, data, labels, batch_size,
     verbose - the boolean that determines if output should be printed
 
     shuffle- a boolean that determines whether to shullfe batches every epoch
-    Normally, it is a good idea to shuffle, but for reproducibility, 
+    Normally, it is a good idea to shuffle, but for reproducibility,
     we have chosen to set the default to False
 
     returns: History object generated after training the model

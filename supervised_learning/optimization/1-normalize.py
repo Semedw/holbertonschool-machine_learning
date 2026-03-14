@@ -17,5 +17,5 @@ def normalize(X, m, s):
         the standard deviation of all features of X
     '''
 
-    norm = np.linalg.norm(X)
-    return norm
+    X_normalized = (X - m) / s
+    return X_normalized

@@ -17,7 +17,7 @@ def save_config(network, filename):
 
 def load_config(filename):
     '''
-    filename - the path of the file that the configuration should be loaded from
+    filename - the file that the configuration should be loaded from
     Returns: the loaded model
     '''
     with open(filename, 'r') as f:

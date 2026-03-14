@@ -37,10 +37,11 @@ def train_model(network, data, labels, batch_size,
         )
         callbacks.append(early_stop)
 
-    if learning_rate_decay:
+    if learning_rate_decay and validation_data:
         lr_schedule = K.optimizers.schedules.ExponentialDecay(
             alpha,
-            decay_rate=decay_rate
+            decay_rate=decay_rate,
+            staircase=True
         )
         network.compile(optimizer=K.optimizers.SGD(learning_rate=lr_schedule),
                         loss='sparse_categorical_crossentropy',

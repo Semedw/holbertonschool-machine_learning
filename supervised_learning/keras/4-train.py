@@ -1,35 +1,28 @@
-#!/usr/bin/env python3
+#!/usr/bib/env python3
 '''
-training the data
+training the model
 '''
 
 
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, 
-                epochs, verbose=True, shuffle=False):
+def train_model(network, data, labels, 
+                batch_size, epochs, verbose=True, shuffle=False):
     '''
-    network - the model to train
-    data - ndarray of shape (m, nx) containing the input data
-    labels - one-hot ndarray of chape (m, classes) containing labels of data
-    batch_size - is the size of the batch used for mini-batch gradient descent
-    epochs - the number of passes through data for mini-batch gradient descent
-    verbose - the boolean that determines if output should be printed
-
-    shuffle - a boolean that determines whether to shullfe batches every epoch
-    Normally, it is a good idea to shuffle, but for reproducibility, 
-    we have chosen to set the default to False
-
-    returns: History object generated after training the model
+    trains a model using mini-batch gradient descent
+    network is the model to train
+    data is the input data
+    labels are the one-hot labels of data
+    batch_size is the number of data points in a batch
+    epochs is the number of times the training should pass through
+           the whole dataset
+    verbose is a boolean that determines if output should be printed
+            during training
+    shuffle is a boolean that determines whether to shuffle the batches
+    every epoch. Normally, it is a good idea to shuffle, but for
+    reproducibility, we have chosen to set the default to False.
+    Returns: the History object generated after training the model
     '''
-
-    history = network.fit(
-        data,
-        labels,
-        batch_size=batch_size,
-        epochs=epochs,
-        verbose=verbose,
-        shuffle=shuffle
-    )
-    return history
+    return network.fit(x=data, y=labels, batch_size=batch_size,
+                       epochs=epochs, verbose=verbose, shuffle=shuffle)

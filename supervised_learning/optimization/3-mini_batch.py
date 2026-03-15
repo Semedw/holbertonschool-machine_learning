@@ -28,7 +28,7 @@ def create_mini_batches(X, Y, batch_size):
     m = X.shape[0]
     mini_batches = []
     for i in range(0, m, batch_size):
-        X_batch = X_shuffled[i:i + batch_size]
-        Y_batch = Y_shuffled[i:i + batch_size]
+        X_batch = X_shuffled[i + batch_size]
+        Y_batch = Y_shuffled[i + batch_size]
         mini_batches.append((X_batch, Y_batch))
     return mini_batches

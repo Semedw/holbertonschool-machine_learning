@@ -20,26 +20,33 @@ def create_batch_norm_layer(prev, n, activation):
     The activated output of the batch normalization layer
     '''
     initializer = tf.keras.initializers.VarianceScaling(
-            scale=2.0, mode='fan_in')
+        scale=2.0, 
+        mode='fan_avg'
+    )
 
-    # Create a dense layer with no activation function and the specified
-    # initializer
+    # Base Dense layer
+    # Note: use_bias=True is default, but BN will effectively 
+    # override the Dense bias via its own 'beta' parameter.
     dense_layer = tf.keras.layers.Dense(
-            n,
-            activation=None,
-            use_bias=False,
-            kernel_initializer=initializer)
-
-    # Apply the dense layer to the input
+        units=n,
+        kernel_initializer=initializer,
+        use_bias=True
+    )
+    
     Z = dense_layer(prev)
 
-    # Create a batch normalization layer and apply it to Z
-    batch_norm_layer = tf.keras.layers.BatchNormalization()
-    Z_norm = batch_norm_layer(Z, training=True)
+    # Batch Normalization layer
+    # gamma_initializer='ones' and beta_initializer='zeros' are defaults
+    batch_norm_layer = tf.keras.layers.BatchNormalization(
+        epsilon=1e-7,
+        gamma_initializer='ones',
+        beta_initializer='zeros'
+    )
+    
+    Z_norm = batch_norm_layer(Z)
 
-    # Apply the specified activation function to the normalized output
+    # Apply activation function if provided
     if activation is not None:
-        activated_output = tf.keras.activations.get(activation)(Z_norm)
-        return activated_output
+        return activation(Z_norm)
 
     return Z_norm

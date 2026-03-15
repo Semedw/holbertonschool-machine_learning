@@ -22,7 +22,8 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     t: time step
 
     Returns:
-    Updated variable, new moving average of the first moment, new moving average of the second moment
+    Updated variable, new moving average of the first moment,
+    new moving average of the second moment
     '''
     # Update biased first moment estimate
     v = beta1 * v + (1 - beta1) * grad

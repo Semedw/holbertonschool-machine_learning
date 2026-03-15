@@ -35,7 +35,7 @@ def create_batch_norm_layer(prev, n, activation):
 
     # Create a batch normalization layer and apply it to Z
     batch_norm_layer = tf.keras.layers.BatchNormalization()
-    Z_norm = batch_norm_layer(Z)
+    Z_norm = batch_norm_layer(Z, training=True)
 
     # Apply the specified activation function to the normalized output
     if activation is not None:

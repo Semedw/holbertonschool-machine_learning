@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+'''
+momentum optimization
+'''
+
+
+import tensorflow as tf
+import numpy as np
+
+
+def create_momentum_op(alpha, beta1):
+    '''
+    alpha is the learning rate
+
+    beta1 is the momentum weight
+
+    Returns: momentum optimization operation
+    '''
+
+    return tf.train.MomentumOptimizer(alpha, beta1)

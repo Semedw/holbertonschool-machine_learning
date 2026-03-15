@@ -22,4 +22,5 @@ def learning_rate_decay(alpha, decay_rate, decay_step):
     return tf.keras.optimizers.schedules.InverseTimeDecay(
             alpha,
             decay_step,
-            decay_rate)
+            decay_rate,
+            staircase=True)

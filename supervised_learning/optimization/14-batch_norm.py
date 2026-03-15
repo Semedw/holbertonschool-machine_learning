@@ -27,6 +27,7 @@ def create_batch_norm_layer(prev, n, activation):
     dense_layer = tf.keras.layers.Dense(
             n,
             activation=None,
+            use_bias=False,
             kernel_initializer=initializer)
 
     # Apply the dense layer to the input

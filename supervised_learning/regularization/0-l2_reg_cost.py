@@ -15,9 +15,8 @@ def l2_reg_cost(cost, lambd, weights, L, m):
     m - the number of data points used
     '''
     sq_weights = 0
-    for key in weights:
-        if 'W' in key:
-            sq_weights += np.sum(np.square(weights[key]))
+    for i in range(1, L+1):
+        sq_weights += np.sum(np.square(weights[f"W{i}"]))
 
-    l2_cost = (lambd / (2*m)) * sq_weights
-    return l2_cost
+    l2_penalty = (lambd / (2*m)) * sq_weights
+    return cost + l2_penalty

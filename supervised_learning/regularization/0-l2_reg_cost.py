@@ -4,7 +4,6 @@ l2 (ridge) regularization
 '''
 
 import numpy as np
-import tensorflow as tf
 
 
 def l2_reg_cost(cost, lambd, weights, L, m):
@@ -16,8 +15,9 @@ def l2_reg_cost(cost, lambd, weights, L, m):
     m - the number of data points used
     '''
     sq_weights = 0
-    for i in range(L):
-        sq_weights += np.sum(np.square(weights[i]))
+    for key in weights:
+        if 'W' in key:
+            sq_weights += np.sum(np.square(weights[key]))
 
     l2_cost = (lambd / (2*m)) * sq_weights
     return l2_cost

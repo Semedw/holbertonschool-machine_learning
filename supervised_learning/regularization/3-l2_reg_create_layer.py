@@ -13,9 +13,10 @@ def l2_reg_create_layer(prev, n, activation, lambd):
     activation - the activation function that should be used on the layer
     lambd - the L2 regularization parameter
     '''
+
     layer = tf.keras.layers.Dense(
         n,
         activation=activation,
         kernel_regularizer=tf.keras.regularizers.L2(lambd)
     )
-    return layer
+    return layer(prev)

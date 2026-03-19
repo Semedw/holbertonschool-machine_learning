@@ -27,7 +27,8 @@ def dropout_forward_prop(X, weights, L, keep_prop):
             A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
         else:
             A = np.tanh(Z)
-            D = (np.random.rand(A.shape[0], A.shape[1])<keep_prop).astype(int)
+            D = (np.random.rand(A.shape[0], 
+                                A.shape[1]) < keep_prop).astype(int)
             A *= D
             A /= keep_prop
             cache['D' + str(i)] = D

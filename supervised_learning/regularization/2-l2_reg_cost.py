@@ -15,4 +15,4 @@ def l2_reg_cost(cost, model):
             layer of the network, accounting for L2 regularization
     '''
     reg_losses = [tf.add_n(layer.losses) for layer in model.layers if layer.losses]
-    return cost + tf.add_n(reg_losses) if reg_losses else cost
+    return cost + tf.stack(reg_losses)

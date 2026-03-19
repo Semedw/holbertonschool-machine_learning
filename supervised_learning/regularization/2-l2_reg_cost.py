@@ -15,4 +15,7 @@ def l2_reg_cost(cost, model):
             layer of the network, accounting for L2 regularization
     '''
     l2_costs = [tf.nn.l2_loss(weight) for weight in model.trainable_weights]
-    return cost + tf.add_n(l2_costs)
+
+    total_l2_cost = tf.add_n(l2_costs)
+
+    return cost + total_l2_cost

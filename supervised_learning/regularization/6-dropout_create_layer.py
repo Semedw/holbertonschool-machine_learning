@@ -21,4 +21,4 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
         activation=activation,
         kernel_regularizer=tf.keras.layers.Dropout(keep_prob)
     )
-    return layer[prev]
+    return layer(prev)

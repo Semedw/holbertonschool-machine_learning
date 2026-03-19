@@ -18,7 +18,7 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
     '''
     layer = tf.keras.layers.Dense(
         n,
-        activation=activation
+        activation=activation,
+        kernel_regularizer=tf.keras.layers.Dropout(keep_prob)
     )
-    layer = tf.keras.layers.Dropout(keep_prob)
     return layer[prev]

@@ -19,6 +19,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambd, L):
     L - the number of layers of the network
     '''
 
+
     for i in range(1, L+1):
-        weights[f'W{i}'] = weights[f'W{i}'] - alpha * cache[f'A{i-1}']
+        weights[f'W{i}'] = weights[f'W{i}'] - alpha * lambd * weights[f'W{i}'] / Y.shape[1]
+
     

@@ -18,9 +18,14 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambd, L):
     lambd - the L2 regularization parameter
     L - the number of layers of the network
     '''
-
-
-    for i in range(1, L+1):
-        weights[f'W{i}'] = weights[f'W{i}'] - alpha * lambd * weights[f'W{i}'] / Y.shape[1]
-
-    
+    m = Y.shape[1]
+    dZ = cache['A' + str(L)] - Y
+    for i in range(L, 0, -1):
+        A_prev = cache['A' + str(i - 1)]
+        W = weights['W' + str(i)]
+        dW = (1 / m) * np.matmul(dZ, A_prev.T) + (lambd / m) * W
+        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+        if i > 1:
+            dZ = np.matmul(W.T, dZ) * (A_prev * (1 - A_prev))
+        weights['W' + str(i)] -= alpha * dW
+        weights['b' + str(i)] -= alpha * db

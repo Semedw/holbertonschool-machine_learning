@@ -16,9 +16,9 @@ def dropout_create_layer(prev, n, activation, keep_prob, training=True):
 
     Returns: the output of the new layer
     '''
-    initializer = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    layer = tf.layers.Dense(units=n, activation=activation,
+    initializer = tf.keras.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+    layer = tf.keras.layers.Dense(units=n, activation=activation,
                             kernel_initializer=initializer)
     output = layer(prev)
-    output = tf.layers.Dropout(rate=1 - keep_prob)(output, training=training)
+    output = tf.keras.layers.Dropout(rate=1 - keep_prob)(output, training=training)
     return output

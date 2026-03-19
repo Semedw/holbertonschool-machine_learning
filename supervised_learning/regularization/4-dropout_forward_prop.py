@@ -27,5 +27,5 @@ def dropout_forward_prop(X, weights, L, keep_prop):
         # A *= D
         A /= keep_prop
         cache['A' + str(i)] = A
-        cache['D' + str(i)] = D
+        # cache['D' + str(i)] = D
     return cache

@@ -14,16 +14,5 @@ def l2_reg_cost(cost, model):
     Returns: a tensor containing the total cost for each
             layer of the network, accounting for L2 regularization
     '''
-    model = tf.keras.models.Sequential([
-        tf.keras.layers.Dense(
-            200,
-            activation = 'tanh',
-            kernel_regularizer = tf.keras.regularizers.L2(0.01)),
-
-        tf.keras.layers.Dense(
-            10,
-            activation = 'sigmoid',
-            kernel_regularizer = tf.keras.regularizers.L2(0.01))
-    ])
-
-    return model
+    l2_costs = [tf.nn.l2_loss(weight) for weight in model.trainable_weights]
+    return cost + tf.add_n(l2_costs)

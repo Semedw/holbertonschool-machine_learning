@@ -27,7 +27,7 @@ def convolve_grayscale_valid(images, kernel):
     kh, kw = kernel.shape
 
     h_out = h - kh + 1
-    w_out = wi - kw + 1
+    w_out = w - kw + 1
 
     convolved = np.zeros((m, h_out, w_out))
 

@@ -8,7 +8,8 @@ import numpy as np
 
 def convolve_grayscale_padding(images, kernel, padding):
     '''
-    images - a numpy.ndarray with shape (m, h, w) containing multiple grayscale images
+    images - a numpy.ndarray with shape (m, h, w) containing
+             multiple grayscale images
         m - the number of images
         h - the height in pixels of the images
         w - the width in pixels of the images

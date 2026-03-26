@@ -6,6 +6,16 @@ convolve channels
 import numpy as np
 
 
+def ceil(a):
+    """
+    ceil function
+    """
+    b = a // 1
+    if a != b:
+        return int(b + 1)
+    return int(a)
+
+
 def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     '''
     images - a numpy.ndarray with shape (m, h, w, c) containing multiple images
@@ -35,8 +45,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == 'same':
-        ph = np.ceil(((h - 1) * sh + kh - h) / 2)
-        pw = np.ceil(((w - 1) * sw + kw - w) / 2)
+        ph = ceil(((h - 1) * sh + kh - h) / 2)
+        pw = ceil(((w - 1) * sw + kw - w) / 2)
     elif padding == 'valid':
         ph, pw = 0, 0
     else:

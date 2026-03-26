@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Defines `convolve_grayscale`"""
+"""
+convolve_grayscale
+"""
 import numpy as np
 
 
 def ceil(a):
-    """Custom cieling function."""
+    '''
+    ceil function that rounds a up to the nearest integer.
+    '''
     b = a // 1
     if a != b:
         return int(b + 1)

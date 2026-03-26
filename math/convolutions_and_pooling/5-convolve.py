@@ -17,7 +17,7 @@ def ceil(a):
     return int(a)
 
 
-def convolve_channels(images, kernels, padding='same', stride=(1, 1)):
+def convolve(images, kernels, padding='same', stride=(1, 1)):
     '''
     images - a numpy.ndarray with shape (m, h, w, c) containing multiple images
         m - the number of images

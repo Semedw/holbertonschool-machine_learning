@@ -35,8 +35,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == 'same':
-        ph = max(kh - sh, 0) // 2
-        pw = max(kw - sw, 0) // 2
+        ph = kh - 1
+        pw = kw - 1
     elif padding == 'valid':
         ph, pw = 0, 0
     else:

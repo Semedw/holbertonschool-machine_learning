@@ -28,41 +28,34 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1,1)):
 
     Returns: a numpy.ndarray containing the convolved images
     '''
-
     m, h, w = images.shape
     kh, kw = kernel.shape
-
     sh, sw = stride
 
-    if padding == 'same':
-        h_out = int(np.ceil(h / sh))
-        w_out = int(np.ceil(w / sw))
-
-        ph = max(0, (h_out - 1) * sh + kh - h)
-        pw = max(0, (w_out - 1) * sw + kw - w)
-
-    elif padding == 'valid':
-        ph, pw = 0, 0
-        h_out = (h - kh) // sh + 1
-        w_out = (w - kw) // sw + 1
-    else:
+    if type(padding) is tuple:
         ph, pw = padding
-        h_out = (h + 2 * ph - kh) // sh + 1
-        w_out = (w + 2 * pw - kw) // sw + 1
-
-    padded_imgs = np.pad(images, ((0, 0), (ph, ph), (pw, pw)), 
-                        mode='constant', constant_values=0)
+    elif padding == 'same':
+        ph = int(((h - kh) / sh + 1 - 1) / 2) + 1
+        pw = int(((w - kw) / sw + 1 - 1) / 2) + 1
+    elif padding == 'valid':
+        ph = 0
+        pw = 0
     
-    convolved = np.zeros((m, h_out, w_out))
-
+    # Pad the images
+    images_padded = np.pad(images, ((0, 0), (ph, ph), (pw, pw)), mode='constant')
+    # Calculate the dimensions of the output
+    h_out = int(((h + 2 * ph - kh) / sh) + 1)
+    w_out = int(((w + 2 * pw - kw) / sw) + 1)
+    # Initialize the output array    
+    output = np.zeros((m, h_out, w_out))
+    # Perform the convolution
     for i in range(h_out):
         for j in range(w_out):
-            start_h = i * sh
-            start_w = j * sw
-
-            patch = padded_imgs[:,
-                                start_h: start_h + kh,
-                                start_w: start_w + kw]
-            convolved[:, i, j] = np.sum(patch*kernel, axis=(1, 2))
-
-    return convolved
+            # Define the region of interest
+            h_start = i * sh
+            h_end = h_start + kh
+            w_start = j * sw
+            w_end = w_start + kw
+            # Extract the region of interest and perform element-wise multiplication with the kernel
+            output[:, i, j] = np.sum(images_padded[:, h_start:h_end, w_start:w_end] * kernel, axis=(1, 2))
+    return output

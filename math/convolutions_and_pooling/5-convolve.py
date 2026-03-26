@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 '''
-convolve channels
+convolve the image
 '''
 
 import numpy as np
 
 
 def ceil(a):
-    """
+    '''
     ceil function
-    """
+    '''
+
     b = a // 1
     if a != b:
-        return int(b + 1)
+        return int(b+1)
     return int(a)
 
 
-def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
+def convolve_channels(images, kernels, padding='same', stride=(1, 1)):
     '''
     images - a numpy.ndarray with shape (m, h, w, c) containing multiple images
         m - the number of images
         h - the height in pixels of the images
         w - the width in pixels of the images
         c - the number of channels in the image
-    kernel - a numpy.ndarray with shape (kh, kw, nc) containing
+    kernels - a numpy.ndarray with shape (kh, kw, c, nc) containing
             the kernel for the convolution
         kh - the height of the kernel
         kw - the width of the kernel
+        nc - the number of kernels
     padding - either a tuple of (ph, pw), 'same', or 'valid'
         if 'same', performs a same convolution
         if 'valid', performs a valid convolution
@@ -42,7 +44,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     '''
 
     m, h, w, c = images.shape
-    kh, kw, _ = kernel.shape
+    kh, kw, _, nc = kernels.shape
     sh, sw = stride
 
     if padding == 'same':
@@ -61,9 +63,10 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
 
     output = np.zeros((m, out_h, out_w))
 
-    for i in range(out_h):
-        for j in range(out_w):
-            region = padded[:, i*sh:i*sh+kh, j*sw:j*sw+kw, :]
-            output[:, i, j] = np.sum(region * kernel, axis=(1, 2, 3))
+    for kernel in kernels:
+        for i in range(out_h):
+            for j in range(out_w):
+                region = padded[:, i*sh:i*sh+kh, j*sw:j*sw+kw, :]
+                output[:, i, j] = np.sum(region * kernel, axis=(1, 2, 3))
 
     return output

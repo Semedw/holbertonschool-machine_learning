@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-convolve_grayscale
+convolve grayscale
 """
 import numpy as np
 
 
 def ceil(a):
-    '''
-    ceil function that rounds a up to the nearest integer.
-    '''
+    """
+    ceil function
+    """
     b = a // 1
     if a != b:
         return int(b + 1)
@@ -40,30 +40,42 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
 
     Returns: A numpy.ndarray containing the convolved images.
     """
-
-    m, h, w = images.shape
-    kh, kw = kernel.shape
-    sh, sw = stride
+    kernel_height, kernel_width = kernel.shape
+    image_count, image_height, image_width = images.shape
+    stride_height, stride_width = stride
 
     if padding == 'same':
-        ph = max((h - 1) * sh + kh - h, 0) // 2
-        pw = max((w - 1) * sw + kw - w, 0) // 2
-    elif padding == 'valid':
-        ph, pw = 0, 0
+        pad_height = ceil((
+            stride_height * (image_height - 1) - image_height + kernel_height
+            ) / 2)
+        pad_width = ceil((
+            stride_width * (image_width - 1) - image_width + kernel_width) / 2)
+
+        convolved_shape = images.shape
     else:
-        ph, pw = padding
+        if type(padding) is tuple:
+            pad_height, pad_width = padding
+        elif padding == 'valid':
+            pad_width = pad_height = 0
 
-    padded = np.pad(images, ((0, 0), (ph, ph), (pw, pw), (0, 0)),
-                    mode='constant')
+        convolved_shape = (
+            image_count,
+            (image_height + 2 * pad_height - kernel_height)
+            // stride_height + 1,
+            (image_width + 2 * pad_width - kernel_width) // stride_width + 1,
+        )
 
-    out_h = (h + 2 * ph - kh) // sh + 1
-    out_w = (w + 2 * pw - kw) // sw + 1
+    pad_params = (0, pad_height, pad_width)
+    pad_params = tuple(zip(pad_params, pad_params))
+    padded_images = np.pad(images, pad_params)
 
-    output = np.zeros((m, out_h, out_w))
+    # Matrix of convolved images, zero-initialized:
+    convolved = np.zeros(convolved_shape)
+    for top in range(convolved_shape[1]):
+        for left in range(convolved_shape[2]):
+            y = top * stride_height
+            x = left * stride_width
+            view = padded_images[:, y:y + kernel_height, x:x + kernel_width]
+            convolved[:, top, left] = np.sum(view * kernel, axis=(1, 2))
 
-    for i in range(out_h):
-        for j in range(out_w):
-            region = padded[:, i*sh:i*sh+kh, j*sw:j*sw+kw, :]
-            output[:, i, j] = np.sum(region * kernel, axis=(1, 2, 3))
-
-    return output
+    return convolved

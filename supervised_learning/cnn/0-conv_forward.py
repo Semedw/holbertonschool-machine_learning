@@ -27,7 +27,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
 
     W - a numpy.ndarray of shape (kh, kw, c_prev, c_new) containing
         the kernels for the convolution
- 
+
     b - a numpy.ndarray of shape (1, 1, 1, c_new) containing
         the biases for the convolution
 
@@ -60,7 +60,8 @@ Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
     nw = ((w_prev + 2 * pw - kw)) // sw + 1
 
     A_prev_padded = np.pad(A_prev,
-                           ((0, 0), (ph, ph), (pw, pw), (0, 0)), mode='constant')
+                           ((0, 0), (ph, ph), (pw, pw), (0, 0)),
+                           mode='constant')
 
     Z = np.zeros((m, nh, nw, c_new))
 
@@ -74,8 +75,10 @@ Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
                     horiz_start = w * sw
                     hortiz_end = horiz_start + kw
 
-                    a_slice = a_prev_pad[vert_start:vert_end, horiz_start:hortiz_end]
+                    a_slice = a_prev_pad[vert_start:vert_end,
+                                         horiz_start:hortiz_end]
 
-                    Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
+                    Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + \ 
+                                    b[0, 0, 0, c]
 
     return activation(Z)

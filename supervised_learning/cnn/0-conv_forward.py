@@ -56,8 +56,8 @@ Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
         ph, pw = 0, 0
 
     # output dimensions
-    nh = ((h_prev + 2 * ph - kh)) + 1
-    nw = ((w_prev + 2 * pw - kw)) + 1
+    nh = ((h_prev + 2 * ph - kh)) // sh + 1
+    nw = ((w_prev + 2 * pw - kw)) // sw + 1
 
     A_prev_padded = np.pad(A_prev,
                            ((0, 0), (ph, ph), (pw, pw), (0, 0)), mode='constant')

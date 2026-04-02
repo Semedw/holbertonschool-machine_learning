@@ -56,7 +56,7 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode="max"):
                            mode='constant')
 
     for i in range(m):
-        a_prev = A_prev[i]
+        a_prev = A_prev_padded[i]
         for h in range(nh):
             for w in range(nw):
                 for c in range(c_prev):

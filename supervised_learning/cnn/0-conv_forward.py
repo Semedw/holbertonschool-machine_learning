@@ -79,8 +79,8 @@ Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
                                          horiz_start:hortiz_end]
 
                     Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0,
-                                                                         0,
-                                                                         0,
-                                                                         c]
+                                                                        0,
+                                                                        0,
+                                                                        c]
 
     return activation(Z)

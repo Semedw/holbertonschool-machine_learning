@@ -49,7 +49,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
     nw = ((w_prev + 2 * pw - kw)) + 1
 
     A_prev_padded = np.pad(A_prev,
-                           ((0, 0), (ph, ph), (pw, pw), (0, 0),
+                           ((0, 0), (ph, ph), (pw, pw), (0, 0)),
                             mode='constant')
                            )
 

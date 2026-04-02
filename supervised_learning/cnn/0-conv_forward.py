@@ -78,7 +78,9 @@ Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
                     a_slice = a_prev_pad[vert_start:vert_end,
                                          horiz_start:hortiz_end]
 
-                    Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + \ 
-                                    b[0, 0, 0, c]
+                    Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) +  b[0,
+                                                                         0,
+                                                                         0,
+                                                                         c]
 
     return activation(Z)

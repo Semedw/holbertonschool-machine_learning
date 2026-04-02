@@ -43,8 +43,8 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode="max"):
                 for c in range(c_prev):
                     patch = a_prev[:, h * sh: h * sh + kh, w * sw: w * sw + kw]
                     if mode == 'max':
-                        output[i, h, w, c] = np.max(patch, axis=(1,2))
+                        output[i, h, w, c] = np.max(patch, axis=(1, 2, 3, 4))
                     elif mode == 'mean':
-                        output[i, h, w, c] = np.mean(patch, axis=(1,2))
+                        output[i, h, w, c] = np.mean(patch, axis=(1, 2, 3, 4))
 
     return output

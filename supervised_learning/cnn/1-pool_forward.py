@@ -32,8 +32,9 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode="max"):
         sh - the stride for the height
         sw - the stride for the width
     mode - a string containing either max or avg,
-            indicating whether to perform maximum or average pooling, respectively
-    
+            indicating whether to perform maximum or
+            average pooling, respectively
+
     Returns: the output of pooling layer
     '''
 

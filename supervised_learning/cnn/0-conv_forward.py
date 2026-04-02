@@ -6,6 +6,16 @@ convolutional forward prop
 import numpy as np
 
 
+def ceil(a):
+    """
+    ceil function
+    """
+    b = a // 1
+    if a != b:
+        return int(b + 1)
+    return int(a)
+
+
 def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
     '''
     A_prev - a numpy.ndarray of shape (m, h_prev, w_prev, c_prev) containing
@@ -25,6 +35,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
 
     padding - a string that is either same or valid,
             indicating the type of padding used
+Z[i, h, w, c] = np.sum(a_slice * W[:, :, :, c]) + b[0, 0, 0, c]
 
     stride - a tuple of (sh, sw) containing the strides for the convolution
             sh - the stride for the height
@@ -38,8 +49,8 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
     sh, sw = stride
 
     if padding == 'same':
-        ph = int(np.ceil(((h_prev - 1) * sh + kh - h_prev) / 2))
-        pw = int(np.ceil(((w_prev - 1) * sw + kw - w_prev) / 2))
+        ph = ceil(((h_prev - 1) * sh + kh - h_prev) / 2)
+        pw = ceil(((w_prev - 1) * sw + kw - w_prev) / 2)
 
     elif padding == 'valid':
         ph, pw = 0, 0

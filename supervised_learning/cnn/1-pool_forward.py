@@ -41,26 +41,17 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode="max"):
     kh, kw = kernel_shape
     sh, sw = stride
 
-    ph = max(kh - sh, 0)
-    pw = max(kw - sw, 0)
-    ph = ceil(ph / 2)
-    pw = ceil(pw / 2)
-
     nh = (h_prev - kh) // sh + 1
     nw = (w_prev - kw) // sw + 1
 
     output = np.zeros((m, nh, nw, c_prev))
 
-    A_prev_padded = np.pad(A_prev,
-                           ((0, 0), (ph, ph), (pw, pw), (0, 0)),
-                           mode='constant')
-
     for i in range(m):
-        a_prev = A_prev_padded[i]
+        a_prev = A_prev[i]
         for h in range(nh):
             for w in range(nw):
                 for c in range(c_prev):
-                    patch = a_prev[h * sh: h * sh + kh, w * sw: w * sw + kw]
+                    patch = a_prev[h * sh: h * sh + kh, w * sw: w * sw + kw, c]
                     if mode == 'max':
                         output[i, h, w, c] = np.max(patch)
                     elif mode == 'avg':

@@ -58,7 +58,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
         for h in range(nh):
             for w in range(nw):
                 for c in range(c_new):
-                    vert_start = h * s
+                    vert_start = h * sh
                     vert_end = vert_start + kh
                     horiz_start = w * sw
                     hortiz_end = horiz_start + kw

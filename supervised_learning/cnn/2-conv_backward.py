@@ -33,7 +33,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         sw - the stride for the width
 
     Returns: dA_prev, dW, db
-    dA_prev is a numpy.ndarray containing the partial derivatives with respect to A_prev,
+    dA_prev is a numpy.ndarray containing
+    the partial derivatives with respect to A_prev,
                 has the same shape as A_prev
     dW is a numpy.ndarray containing the partial derivatives with respect to W,
                 has the same shape as W
@@ -49,7 +50,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         pw = ((w_prev - 1) * sw + kw - w_prev) // 2 + 1
     else:
         ph, pw = 0, 0
-    
+
     A_prev_pad = np.pad(A_prev, ((0,), (ph,), (pw,), (0,)), mode='constant')
     dA_prev_pad = np.zeros_like(A_prev_pad)
     dA_prev = np.zeros_like(A_prev)
@@ -66,8 +67,16 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     horiz_start = w * sw
                     horiz_end = horiz_start + kw
 
-                    a_slice = a_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :]
-                    da_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :] += W[:, :, :, c] * dZ[i, h, w, c]
+                    a_slice = a_prev_pad[vert_start:vert_end,
+                                         horiz_start:horiz_end, :]
+                    da_prev_pad[vert_start:vert_end,
+                                horiz_start:horiz_end, :] += W[:,
+                                                               :,
+                                                               :,
+                                                               c] * dZ[i,
+                                                                       h,
+                                                                       w,
+                                                                       c]
                     dW[:, :, :, c] += a_slice * dZ[i, h, w, c]
                     db[:, :, :, c] += dZ[i, h, w, c]
 
@@ -75,5 +84,5 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
             dA_prev[i, :, :, :] = da_prev_pad[ph:-ph, pw:-pw, :]
         else:
             dA_prev[i, :, :, :] = da_prev_pad
-    
+
     return dA_prev, dW, db

@@ -32,7 +32,7 @@ def lenet5(X):
                             padding='valid',
                             activation='relu',
                             kernel_initializer=initializer)(pool1)
-    pool2 = K.layers.AveragePooling2D(pool_size=2,
+    pool2 = K.layers.MaxPooling2D(pool_size=2,
                                       strides=2)(conv2)
     flatten = K.layers.Flatten()(pool2)
     fc1 = K.layers.Dense(units=120, 

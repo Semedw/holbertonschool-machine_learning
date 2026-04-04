@@ -33,7 +33,7 @@ def lenet5(X):
     flatten = K.layers.Flatten()(pool2)
     fc1 = K.layers.Dense(units=120, activation='relu')(flatten)
     fc2 = K.layers.Dense(units=84, activation='relu')(fc1)
-    output = K.layers.Dense(units=10, activation='softmax')(fc2)
+    output = K.layers.Dense(units=10, activation='relu')(fc2)
 
     model = K.Model(inputs=X, outputs=output)
 

@@ -18,22 +18,32 @@ def lenet5(X):
     Returns: a K.Model compiled to use Adam optimization and accuracy
                 metrics with categorical crossentropy loss
     '''
+    initializer = K.initializers.HeNormal(seed=0)
+
     conv1 = K.layers.Conv2D(filters=6,
                             kernel_size=5,
                             padding='same',
-                            activation='relu')(X)
+                            activation='relu',
+                            kernel_initializer=initializer)(X)
     pool1 = K.layers.AveragePooling2D(pool_size=2,
                                       strides=2)(conv1)
     conv2 = K.layers.Conv2D(filters=16,
                             kernel_size=5,
                             padding='valid',
-                            activation='relu')(pool1)
+                            activation='relu',
+                            kernel_initializer=initializer)(pool1)
     pool2 = K.layers.AveragePooling2D(pool_size=2,
                                       strides=2)(conv2)
     flatten = K.layers.Flatten()(pool2)
-    fc1 = K.layers.Dense(units=120, activation='relu')(flatten)
-    fc2 = K.layers.Dense(units=84, activation='relu')(fc1)
-    output = K.layers.Dense(units=10, activation='relu')(fc2)
+    fc1 = K.layers.Dense(units=120, 
+                         activation='relu',
+                         kernel_initializer=initializer)(flatten)
+    fc2 = K.layers.Dense(units=84,
+                         activation='relu',
+                         kernel_initializer=initializer)(fc1)
+    output = K.layers.Dense(units=10,
+                            activation='softmax',
+                            kernel_initializer=initializer)(fc2)
 
     model = K.Model(inputs=X, outputs=output)
 

@@ -25,7 +25,7 @@ def lenet5(X):
                             padding='same',
                             activation='relu',
                             kernel_initializer=initializer)(X)
-    pool1 = K.layers.AveragePooling2D(pool_size=2,
+    pool1 = K.layers.MaxPooling2D(pool_size=2,
                                       strides=2)(conv1)
     conv2 = K.layers.Conv2D(filters=16,
                             kernel_size=5,

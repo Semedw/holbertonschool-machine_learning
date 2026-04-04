@@ -1,4 +1,4 @@
-#!/usr/bionv/env python3
+#!/usr/bin/env python3
 '''
 pooling back propogation
 '''

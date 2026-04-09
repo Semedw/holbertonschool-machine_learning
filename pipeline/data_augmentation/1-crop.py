@@ -11,4 +11,4 @@ def crop_image(image, size):
     image - 3D tf.Tensor containing the image to crop
     size - a tuple containing the size of the crop
     '''
-    return tf.image.crop_and_resize(image, size)
+    return tf.image.random_crop(image, size=size)

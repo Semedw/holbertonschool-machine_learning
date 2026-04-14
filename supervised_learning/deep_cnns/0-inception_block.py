@@ -26,10 +26,10 @@ def inception_block(A_prev, filters):
     branch1 = K.layers.Conv2D(F1, (1, 1), padding='same', activation='relu')(A_prev)
 
     branch2 = K.layers.Conv2D(F3R, (1, 1), padding='same', activation='relu')(A_prev)
-    branch2 = K.layers.Conv2D(F3, (1, 1), padding='same', activation='relu')(branch2)
+    branch2 = K.layers.Conv2D(F3, (3, 3), padding='same', activation='relu')(branch2)
 
     branch3 = K.layers.Conv2D(F5R, (1, 1), padding='same', activation='relu')(A_prev)
-    branch3 = K.layers.Conv2D(F5, (1, 1), padding='same', activation='relu')(branch3)
+    branch3 = K.layers.Conv2D(F5, (5, 5), padding='same', activation='relu')(branch3)
 
     branch4 = K.layers.MaxPooling2D((3, 3), strides=(1, 1), padding='same', activation='relu')(A_prev)
     branch4 = K.layers.Conv2D(FPP, (1, 1), padding='same', activation='relu')(branch4)

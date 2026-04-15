@@ -17,7 +17,7 @@ def inception_network():
     Returns: the keras model
     '''
 
-     X = K.Input(shape=(224, 224, 3))
+    X = K.Input(shape=(224, 224, 3))
     init = K.initializers.he_normal()
     activation = 'relu'
 

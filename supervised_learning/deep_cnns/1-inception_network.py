@@ -79,16 +79,15 @@ def inception_network():
     # AvgPool 7×7 / stride 1  →  1×1×1024
     Y = K.layers.AveragePooling2D(pool_size=7, strides=1, padding='valid')(Y)
  
-    # Dropout 40 %
-    Y = K.layers.Dropout(rate=0.4)(Y)
- 
     # Flatten  →  1024
     Y = K.layers.Flatten()(Y)
+ 
+    # Dropout 40 %
+    Y = K.layers.Dropout(rate=0.4)(Y)
  
     # Softmax  →  1000
     Y = K.layers.Dense(1000, activation='softmax')(Y)
  
     model = K.Model(inputs=X, outputs=Y)
-    
     return model
  

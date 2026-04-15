@@ -21,7 +21,7 @@ def identity_block(A_prev, filters):
     Returns: the activated output of the identity block
     '''
 
-    init = K.initializers.he_normal()
+    init = K.initializers.he_normal(seed=0)
     activation = 'relu'
     F11, F3, F12 = filters
 

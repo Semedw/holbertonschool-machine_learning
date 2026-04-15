@@ -31,14 +31,14 @@ def projection_block(A_prev, filters, s=2):
 
     relu1 = K.layers.activation(activation)(batch1)
 
-    conv2 = K.layers.Conv2D(F3, kernel_size=3,
+    conv2 = K.layers.Conv2D(F3, kernel_size=3, strides=1,
                             padding='same', kernel_initializer=init)(relu1)
     
     batch2 = K.layers.BatchNormalization(axis=3)(conv2)
 
     relu2 = K.layers.activation(activation)(batch2)
 
-    conv3 = K.layers.Conv2D(F12, kernel_size=1,
+    conv3 = K.layers.Conv2D(F12, kernel_size=1, strides=1,
                             padding='same', kernel_initializer=init)(relu2)
     
     conv1_proj = K.layers.Conv2D(F12, kernel_size=1, strides=s,

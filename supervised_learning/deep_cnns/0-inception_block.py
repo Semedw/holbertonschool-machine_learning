@@ -62,4 +62,4 @@ def inception_block(A_prev, filters):
         [branch1, branch2, branch3, branch4]
         )
 
-    return output
+    

@@ -17,7 +17,7 @@ def dense_block(X, nb_filters, growth_rate, layers):
     The seed for the he_normal initializer should be set to zero
     All convolutions should be preceded by Batch Normalization and a rectified
     linear activation (ReLU), respectively
-    
+
     Returns: The concatenated output of each layer within the Dense Block and
     the number of filters within the concatenated outputs, respectively
     '''
@@ -35,7 +35,7 @@ def dense_block(X, nb_filters, growth_rate, layers):
                                      kernel_initializer=init)(relu1)
 
         batch2 = K.layers.BatchNormalization()(bottleneck)
-        
+
         relu2 = K.layers.Activation('relu')(batch2)
 
         X_conv = K.layers.Conv2D(filters=growth_rate,

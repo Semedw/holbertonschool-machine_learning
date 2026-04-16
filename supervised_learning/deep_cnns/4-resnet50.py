@@ -16,7 +16,7 @@ def resnet50():
 
     """
     X = K.Input(shape=(224, 224, 3))
-    init = K.initializers.he_normal()
+    init = K.initializers.he_normal(seed=0)
 
     conv1 = K.layers.Conv2D(filters=64, kernel_size=7, padding='same',
                             strides=2, kernel_initializer=init)(X)

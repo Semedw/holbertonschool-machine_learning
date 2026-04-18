@@ -1,36 +1,32 @@
 #!/usr/bin/env python3
-'''
-transition layer
-'''
+"""Script to create an inception block"""
 
 from tensorflow import keras as K
 
 
 def transition_layer(X, nb_filters, compression):
-    '''
-    X - the output from the previous layer
-    nb_filters - an integer representing the number of filters in X
-    compression - the compression factor for the transition layer
-    Your code should implement compression as used in DenseNet-C
-    All weights should use he normal initialization
-    The seed for the he_normal initializer should be set to zero
-    All convolutions should be preceded by Batch Normalization and
-    a rectified linear activation (ReLU), respectively
+    """
+    Function to create  a transition layer
+    Args:
+        X: the output from the previous layer
+        nb_filters: integer representing the number
+                    of filters in X
+        compression: compression factor for the transition layer
 
-    Returns: The output of the transition layer and
-    the number of filters within the output, respectively
-    '''
-    init = K.initializer.he_normal(seed=0)
-    filters = int(compression * nb_filters)
+    Returns: The output of the transition layer and the number
+             of filters within the output, respectively
 
-    batch_normal = K.layers.BatchNormalization()(X)
-    relu = K.layers.Activation('relu')(batch_normal)
-    conv2d = K.layers.Conv2D(
-            filters=filters,
-            kernel_size=1,
-            kernel_initializer=init,
-            padding='same'
-            )(relu)
-    avgpool = K.layers.AveragePooling2D()(conv2d)
+    """
+    init = K.initializers.he_normal()
+    nfilter = int(nb_filters * compression)
 
-    return avgpool, filters
+    batch1 = K.layers.BatchNormalization()(X)
+
+    relu1 = K.layers.Activation('relu')(batch1)
+
+    conv = K.layers.Conv2D(filters=nfilter,
+                           kernel_size=1, padding='same',
+                           kernel_initializer=init)(relu1)
+    avg_pool = K.layers.AveragePooling2D(pool_size=2, strides=2,
+                                         padding='same')(conv)
+    return avg_pool, nfilter

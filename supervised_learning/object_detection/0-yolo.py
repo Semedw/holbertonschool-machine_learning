@@ -6,7 +6,7 @@ Initialize Yolo
 from tensorflow import Keras as K
 
 
-class Yolo():
+class Yolo:
     '''
     Yolo class
     '''

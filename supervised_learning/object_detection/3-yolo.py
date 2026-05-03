@@ -221,7 +221,15 @@ class Yolo:
                 predicted_box_scores.append(s[0])
                 if len(b) == 1:
                     break
-                ious = self.iou(b[0], b[1:])
+                x1 = np.maximum(b[0, 0], b[1:, 0])
+                y1 = np.maximum(b[0, 1], b[1:, 1])
+                x2 = np.minimum(b[0, 2], b[1:, 2])
+                y2 = np.minimum(b[0, 3], b[1:, 3])
+                intersection = np.maximum(x2 - x1, 0) * np.maximum(y2 - y1, 0)
+                area1 = (b[0, 2] - b[0, 0]) * (b[0, 3] - b[0, 1])
+                area2 = (b[1:, 2] - b[1:, 0]) * (b[1:, 3] - b[1:, 1])
+                union = area1 + area2 - intersection
+                ious = intersection / union
                 b = b[1:][ious < self.nms_t]
                 s = s[1:][ious < self.nms_t]
         box_predictions = np.array(box_predictions)

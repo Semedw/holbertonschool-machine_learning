@@ -55,7 +55,7 @@ class Yolo:
         '''
         return 1 / (1 + np.exp(-z))
 
-    def process_output(self, outputs, image_size):
+    def process_outputs(self, outputs, image_size):
         '''
         outputs - a list of ndarrays containing the predictions from
         Darknet model for a single image:

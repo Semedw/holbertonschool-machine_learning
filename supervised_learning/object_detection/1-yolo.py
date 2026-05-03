@@ -63,13 +63,13 @@ class Yolo:
             (grid_height, grid_width, anchor_boxes, 4 + 1 + classes)
                 grid_height & grid_width =>
                 the height and width of the grid used for the output
-                
+
                 anchor_boxes => the number of anchor boxes used
-                
+
                 4 => (t_x, t_y, t_w, t_h)
-                
+
                 1 => box_confidence
-                
+
                 classes => class probabilities for all classes
 
         image_size is a numpy.ndarray containing
@@ -83,11 +83,11 @@ class Yolo:
                 4 => (x1, y1, x2, y2)
                 (x1, y1, x2, y2) should represent the
                 boundary box relative to original image
-            
+
             box_confidences: a list of numpy.ndarrays of shape
             (grid_height, grid_width, anchor_boxes, 1)
             containing the box confidences for each output, respectively
-            
+
             box_class_probs: a list of numpy.ndarrays of shape
             (grid_height, grid_width, anchor_boxes, classes)
             containing the box's class probabilities for each output,
@@ -107,23 +107,23 @@ class Yolo:
 
                     anchor_tensor = self.anchors[ipred].astype(float)
                     anchor_tensor[:, 0] *= \
-                            np.exp(pred[grid_h, grid_w, :,
+                        np.exp(pred[grid_h, grid_w, :,
                                         2]) / self.model.input.shape[1]
                     anchor_tensor[:, 1] *= \
-                            np.exp(pred[grid_h, grid_w, :,
+                        np.exp(pred[grid_h, grid_w, :,
                                         3]) / self.model.input.shape[2]
 
                     pred[grid_h, grid_w, :, 0] = \
-                            (bx - (anchor_tensor[:, 0] / 2)) * \
+                        (bx - (anchor_tensor[:, 0] / 2)) * \
                             image_size[1]
                     pred[grid_h, grid_w, :, 1] = \
-                            (by - (anchor_tensor[:, 1] / 2)) * \
+                        (by - (anchor_tensor[:, 1] / 2)) * \
                             image_size[0]
                     pred[grid_h, grid_w, :, 2] = \
-                            (bx + (anchor_tensor[:, 0] / 2)) * \
+                        (bx + (anchor_tensor[:, 0] / 2)) * \
                             image_size[1]
                     pred[grid_h, grid_w, :, 3] = \
-                            (by + (anchor_tensor[:, 1] / 2)) * \
+                        (by + (anchor_tensor[:, 1] / 2)) * \
                             image_size[0]
 
         box_confidences = [self.sigmoid(pred[:, :, :,

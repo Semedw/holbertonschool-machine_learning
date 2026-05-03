@@ -120,10 +120,10 @@ class Yolo:
                             (by - (anchor_tensor[:, 1] / 2)) * \
                             image_size[0]
                     pred[grid_h, grid_w, :, 2] = \
-                            (bx - (anchor_tensor[:, 0] / 2)) * \
+                            (bx + (anchor_tensor[:, 0] / 2)) * \
                             image_size[1]
                     pred[grid_h, grid_w, :, 3] = \
-                            (by - (anchor_tensor[:, 1] / 2)) * \
+                            (by + (anchor_tensor[:, 1] / 2)) * \
                             image_size[0]
 
         box_confidences = [self.sigmoid(pred[:, :, :,

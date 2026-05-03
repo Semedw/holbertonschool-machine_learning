@@ -276,16 +276,18 @@ class Yolo:
             image_shapes: a numpy.ndarray of shape (ni, 2) containing the
             original height and width of the images, respectively
         '''
-        input_h = self.model.input.shape[1]
-        input_w = self.model.input.shape[2]
         pimages = []
-        image_shapes = []
-        for img in images:
-            image_shapes.append(img.shape[:2])
-            pimg = cv2.resize(img, (input_w, input_h),
-                              interpolation=cv2.INTER_CUBIC)
-            pimg = pimg / 255
-            pimages.append(pimg)
+        shapes = []
+        input_h = self.model.input.shape[2].value
+        input_w = self.model.input.shape[1].value
+        for i in images:
+            img_shape = i.shape[0], i.shape[1]
+            shapes.append(img_shape)
+            image = cv2.resize(i, (input_w, input_h),
+                               interpolation=cv2.INTER_CUBIC)
+            image = image / 255
+            pimages.append(image)
         pimages = np.array(pimages)
-        image_shapes = np.array(image_shapes)
+        image_shapes = np.array(shapes)
+
         return pimages, image_shapes

@@ -278,8 +278,8 @@ class Yolo:
         '''
         pimages = []
         shapes = []
-        input_h = self.model.input.shape[2].value
-        input_w = self.model.input.shape[1].value
+        input_h = self.model.input.shape[2]
+        input_w = self.model.input.shape[1]
         for i in images:
             img_shape = i.shape[0], i.shape[1]
             shapes.append(img_shape)

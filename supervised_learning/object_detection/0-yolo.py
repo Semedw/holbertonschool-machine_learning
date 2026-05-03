@@ -23,7 +23,7 @@ class Yolo:
 
         nms_t is a float representing the IOU
         threshold for non-max suppression
-        
+
         anchors is a numpy.ndarray of shape (outputs, anchor_boxes, 2)
         containing all of the anchor boxes:
             outputs is the number of outputs (predictions)

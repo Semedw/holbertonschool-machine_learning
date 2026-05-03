@@ -247,14 +247,11 @@ class Yolo:
             image_paths: a list of paths to the individual images in images
         '''
         import glob
-        from PIL import Image
+        import cv2
 
-        image_paths = glob.glob(folder_path + '/*')
         images = []
+        image_paths = glob.glob(folder_path + '/*')
         for path in image_paths:
-            img = Image.open(path)
-            img = img.resize((self.model.input.shape[1],
-                              self.model.input.shape[2]))
-            img_array = np.array(img) / 255.
-            images.append(img_array)
+            img = cv2.imread(path)
+            images.append(img)
         return images, image_paths

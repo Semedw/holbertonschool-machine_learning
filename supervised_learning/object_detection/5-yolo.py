@@ -5,6 +5,8 @@ Initialize Yolo
 
 from tensorflow import keras as K
 import numpy as np
+import glob
+import cv2
 
 
 class Yolo:
@@ -246,8 +248,6 @@ class Yolo:
             images: a list of images as numpy.ndarrays
             image_paths: a list of paths to the individual images in images
         '''
-        import glob
-        import cv2
 
         images = []
         image_paths = glob.glob(folder_path + '/*')

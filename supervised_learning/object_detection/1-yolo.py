@@ -108,23 +108,23 @@ class Yolo:
                     anchor_tensor = self.anchors[ipred].astype(float)
                     anchor_tensor[:, 0] *= \
                         np.exp(pred[grid_h, grid_w, :,
-                                        2]) / self.model.input.shape[1]
+                                2]) / self.model.input.shape[1]
                     anchor_tensor[:, 1] *= \
                         np.exp(pred[grid_h, grid_w, :,
-                                        3]) / self.model.input.shape[2]
+                                3]) / self.model.input.shape[2]
 
                     pred[grid_h, grid_w, :, 0] = \
                         (bx - (anchor_tensor[:, 0] / 2)) * \
-                            image_size[1]
+                        image_size[1]
                     pred[grid_h, grid_w, :, 1] = \
                         (by - (anchor_tensor[:, 1] / 2)) * \
-                            image_size[0]
+                        image_size[0]
                     pred[grid_h, grid_w, :, 2] = \
                         (bx + (anchor_tensor[:, 0] / 2)) * \
-                            image_size[1]
+                        image_size[1]
                     pred[grid_h, grid_w, :, 3] = \
                         (by + (anchor_tensor[:, 1] / 2)) * \
-                            image_size[0]
+                        image_size[0]
 
         box_confidences = [self.sigmoid(pred[:, :, :,
                                             4:5]) for pred in outputs]

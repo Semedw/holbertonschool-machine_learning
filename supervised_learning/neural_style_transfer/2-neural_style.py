@@ -43,6 +43,7 @@ class NST:
         self.alpha = alpha
         self.beta = beta
         self.load_model()
+        self.gram_style_features, self.content_feature = self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -127,3 +128,15 @@ class NST:
         n = tf.shape(a)[1]
         gram = tf.matmul(a, a, transpose_a=True)
         return gram / tf.cast(n, input_layer.dtype)
+
+    def generate_features(self):
+        """Extracts the features used to calculate the style and content cost"""
+        style_outputs = self.model(self.style_image)[:-1]
+        content_output = self.model(self.content_image)[-1]
+
+        style_features = [self.gram_matrix(style_output)
+                          for style_output in style_outputs]
+
+        content_features = content_output
+
+        return style_features, content_features

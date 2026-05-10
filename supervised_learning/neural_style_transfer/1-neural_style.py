@@ -85,7 +85,7 @@ class NST:
 
         inputs = vgg.input
         x = inputs
-        
+
         # Lists to hold the specific tensors we want to output
         style_outputs = []
         content_output = None
@@ -101,7 +101,7 @@ class NST:
                 )(x)
             else:
                 x = layer(x)
-            
+
             # Capture the outputs as we build the graph
             if layer.name in self.style_layers:
                 style_outputs.append(x)
@@ -109,6 +109,7 @@ class NST:
                 content_output = x
 
         model_outputs = style_outputs + [content_output]
-        
+
         # Instantiate the model exactly once
-        self.model = tf.keras.models.Model(inputs=inputs, outputs=model_outputs)
+        self.model = tf.keras.models.Model(inputs=inputs,
+                                           outputs=model_outputs)

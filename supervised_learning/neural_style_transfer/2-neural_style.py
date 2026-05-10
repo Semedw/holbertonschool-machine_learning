@@ -117,14 +117,13 @@ class NST:
     @staticmethod
     def gram_matrix(input_layer):
         """Calculates the gram matrix of an input layer"""
-        if not isinstance(input_layer, tf.Tensor) or \
-            not isinstance(input_layer, tf.Variable) or \
+        if not isinstance(input_layer, (tf.Tensor, tf.Variable)) or \
                 len(input_layer.shape) != 4:
             raise TypeError("input_layer must be a tensor of rank 4")
 
         channels = int(input_layer.shape[-1])
-        batch_size = int(input_layer.shape[0])
+        batch_size = tf.shape(input_layer)[0]
         a = tf.reshape(input_layer, [batch_size, -1, channels])
         n = tf.shape(a)[1]
         gram = tf.matmul(a, a, transpose_a=True)
-        return gram / tf.cast(n, tf.float32)
+        return gram / tf.cast(n, input_layer.dtype)

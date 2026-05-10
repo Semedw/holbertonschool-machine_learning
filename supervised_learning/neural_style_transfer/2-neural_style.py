@@ -117,8 +117,10 @@ class NST:
     @staticmethod
     def gram_matrix(input_layer):
         """Calculates the gram matrix of an input layer"""
-        if not isinstance(input_layer, tf.Tensor):
-            raise TypeError("input_layer must be a tf.Tensor")
+        if not isinstance(input_layer, tf.Tensor) or \
+            not isinstance(input_layer, tf.Variable) or \
+                len(input_layer.shape) != 4:
+            raise TypeError("input_layer must be a tensor of rank 4")
 
         channels = int(input_layer.shape[-1])
         a = tf.reshape(input_layer, [-1, channels])

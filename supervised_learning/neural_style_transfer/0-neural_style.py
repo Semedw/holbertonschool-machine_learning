@@ -21,17 +21,17 @@ class NST:
         alpha is the weight for the content cost
         beta is the weight for the style cost"""
 
-        if isinstance(style_image, np.ndarray) or style_image.shape[2] != 3 or len(style_image.shape) != 3:
+        if not isinstance(style_image, np.ndarray) or style_image.shape[2] != 3 or len(style_image.shape) != 3:
             raise TypeError("style_image must be a numpy.ndarray with shape (h, w, 3)")
-        if isinstance(content_image, np.ndarray) or content_image.shape[2] != 3 or len(content_image.shape) != 3:
+        if not isinstance(content_image, np.ndarray) or content_image.shape[2] != 3 or len(content_image.shape) != 3:
             raise TypeError("content_image must be a numpy.ndarray with shape (h, w, 3)")
         if alpha < 0:
             raise TypeError("alpha must be a non-negative number")
         if beta < 0:
             raise TypeError("beta must be a non-negative number")
 
-        self.style_image = style_image
-        self.content_image = content_image
+        self.style_image = self.scale_image(style_image)
+        self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
         self.model = self.load_model()
@@ -43,7 +43,7 @@ class NST:
         image is a tf.Tensor of shape (h, w, 3) containing the image to scale
         Returns: the scaled image as a tf.Tensor of shape (1, h_new, w_new, 3)"""
 
-        if not isinstance(image, np.ndarray) or np.ndarray(image).shape[2] != 3 or len(np.ndarray(image).shape) != 3:
+        if not isinstance(image, np.ndarray) or image.shape[2] != 3 or len(image.shape) != 3:
             raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
 
         max_side = max(image.shape[0], image.shape[1])

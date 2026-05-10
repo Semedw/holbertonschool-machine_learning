@@ -53,4 +53,4 @@ class NST:
         resized_image = tf.image.resize(image, (new_height, new_width))
         scaled_image = resized_image / 255.0
 
-        return tf.expand_dims(scaled_image, axis=0)
+        return tf.expand_dims(scaled_image, tf.float32)

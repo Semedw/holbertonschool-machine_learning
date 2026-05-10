@@ -43,7 +43,8 @@ class NST:
         self.alpha = alpha
         self.beta = beta
         self.load_model()
-        self.gram_style_features, self.content_feature = self.generate_features()
+        self.gram_style_features = self.generate_features()[0]
+        self.content_feature = self.generate_features()[1]
 
     @staticmethod
     def scale_image(image):
@@ -130,9 +131,12 @@ class NST:
         return gram / tf.cast(n, input_layer.dtype)
 
     def generate_features(self):
-        """Extracts the features used to calculate the style and content cost"""
-        preprocessed_style = tf.keras.applications.vgg19.preprocess_input(self.style_image * 255)
-        preprocessed_content = tf.keras.applications.vgg19.preprocess_input(self.content_image * 255)
+        """Extracts the features used to calculate the style and
+        content cost"""
+        preprocessed_style = tf.keras.applications.vgg19.preprocess_input(
+            self.style_image * 255)
+        preprocessed_content = tf.keras.applications.vgg19.preprocess_input(
+            self.content_image * 255)
 
         style_outputs = self.model(preprocessed_style)[:-1]
         content_output = self.model(preprocessed_content)[-1]

@@ -46,11 +46,20 @@ class NST:
         if not isinstance(image, np.ndarray) or image.shape[2] != 3 or len(image.shape) != 3:
             raise TypeError("image must be a numpy.ndarray with shape (h, w, 3)")
 
-        max_side = max(image.shape[0], image.shape[1])
-        scale = 512 / max_side
-        new_height = int(image.shape[0] * scale)
-        new_width = int(image.shape[1] * scale)
-        resized_image = tf.image.resize(image, (new_height, new_width))
-        scaled_image = resized_image / 255.0
+        h, w, _ = image.shape
 
-        return tf.expand_dims(scaled_image, axis=0)
+        if h > w:
+            h_new = 512
+            w_new = int(w * (512 / h))
+        else:
+            w_new = 512
+            h_new = int(h * (512 / w))
+        
+        new_shape = (h_new, w_new)
+
+        image = np.expand_dims(image, axis=0)
+        scaled_image = tf.image.resize(image, new_shape, preserve_aspect_ratio=True)
+
+        scaled_image = tf.clip_by_value(scaled_image / 255.0, 0.0, 1.0)
+
+        return scaled_image

@@ -131,8 +131,11 @@ class NST:
 
     def generate_features(self):
         """Extracts the features used to calculate the style and content cost"""
-        style_outputs = self.model(self.style_image)[:-1]
-        content_output = self.model(self.content_image)[-1]
+        preprocessed_style = tf.keras.applications.vgg19.preprocess_input(self.style_image * 255)
+        preprocessed_content = tf.keras.applications.vgg19.preprocess_input(self.content_image * 255)
+
+        style_outputs = self.model(preprocessed_style)[:-1]
+        content_output = self.model(preprocessed_content)[-1]
 
         style_features = [self.gram_matrix(style_output)
                           for style_output in style_outputs]

@@ -142,4 +142,7 @@ class NST:
 
         content_features = content_output
 
-        return style_features, content_features
+        self.gram_style_features = style_features
+        self.content_feature = content_features
+
+        return self.gram_style_features, self.content_feature

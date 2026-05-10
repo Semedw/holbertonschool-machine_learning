@@ -153,6 +153,7 @@ class NST:
 
     def layer_style_cost(self, style_output, gram_target):
         """Calculates the style cost for a single layer"""
+        _, c, _ = gram_target.shape
         if not isinstance(style_output, (tf.Tensor, tf.Variable)) or \
                 len(style_output.shape) != 4:
             raise TypeError("style_output must be a tensor of rank 4")

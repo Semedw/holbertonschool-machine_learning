@@ -34,10 +34,10 @@ def expectation(X, pi, m, S):
         return None, None
     if not isinstance(S, np.ndarray) or len(S.shape) != 3:
         return None, None
-    if (X.shape[1] != m.shape[1] or 
-            m.shape[0] != pi.shape[0] or 
-            S.shape[0] != pi.shape[0] or 
-            S.shape[1] != m.shape[1] or 
+    if (X.shape[1] != m.shape[1] or
+            m.shape[0] != pi.shape[0] or
+            S.shape[0] != pi.shape[0] or
+            S.shape[1] != m.shape[1] or
             S.shape[2] != m.shape[1]):
         return None, None
     if np.any(pi <= 0) or np.any(pi >= 1) or not np.isclose(np.sum(pi), 1):
@@ -51,5 +51,5 @@ def expectation(X, pi, m, S):
     if np.any(g_sum == 0):
         return None, None
     g /= g_sum
-    l = np.sum(np.log(g_sum))
-    return g, l
+    log = np.sum(np.log(g_sum))
+    return g, log

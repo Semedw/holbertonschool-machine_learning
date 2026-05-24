@@ -1,38 +1,11 @@
 #!/usr/bin/env python3
-'''
-BIC calculation for a GMM.
-'''
-
+"""A module that does the trick"""
 import numpy as np
-
 expectation_maximization = __import__('8-EM').expectation_maximization
 
 
 def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
-    '''
-    Calculates the BIC for a GMM.
-
-    Args:
-        X: numpy.ndarray of shape (n, d) containing the dataset
-            - n is the number of data points
-            - d is the number of dimensions for each data point
-        k: positive integer, the number of clusters
-        iterations: positive integer, the maximum number of iterations for the
-        algorithm
-        tol: non-negative float, the tolerance of the log likelihood, used to
-        determine early stopping of the algorithm based on the change in log
-        likelihood of the model
-        verbose: boolean, determines if the log likelihood should be printed
-        during each iteration of the algorithm
-    Returns:
-        k_best: positive integer, the best value for k based on its BIC
-        best_res: tuple containing the best (pi, m, S) for the best value of
-        k
-        log_l: numpy.ndarray of shape (kmax - kmin + 1,) containing the log
-        likelihood for each cluster size tested
-        bic: numpy.ndarray of shape (kmax - kmin + 1,) containing the BIC for
-        each cluster size tested, or None on failure
-    '''
+    """A function that does the trick"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
     if not isinstance(kmin, int) or kmin <= 0 or kmin >= X.shape[0]:

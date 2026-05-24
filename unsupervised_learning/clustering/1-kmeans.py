@@ -24,40 +24,34 @@ def kmeans(X, k, iterations=1000):
     '''
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
-    if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
+    if not isinstance(k, int) or k <= 0:
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
-
     n, d = X.shape
-    
-    # 1. Initialize Centroids uniformly within data bounds
-    C = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=(k, d))
-    
-    # Initialize labels with a placeholder that won't trigger premature convergence
-    clss = np.full(n, -1)
 
-    # The ONLY loop allowed in the entire function
-    for _ in range(iterations):
-        # 2. Distance Matrix Calculation
-        # Transposing the subtraction resolves axis broadcasting precision quirks
-        distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
-        new_clss = np.argmin(distances, axis=1)
+    X_min = X.min(axis=0)
+    X_max = X.max(axis=0)
 
-        # 3. Check for Convergence
-        if np.array_equal(clss, new_clss):
+    C = np.random.uniform(X_min, X_max, (k, d))
+
+    for i in range(iterations):
+        centroids = np.copy(C)
+        centroids_2 = C[:, np.newaxis]
+
+        dist = np.sqrt(np.sum((X - centroids_2)**2, axis=2))
+        clss = np.argmin(dist, axis=0)
+
+        for c in range(k):
+            if X[clss == c].size == 0:
+                C[c] = np.random.uniform(X_min, X_max, size=(1, d))
+            else:
+                C[c] = X[clss == c].mean(axis=0)
+
+        centroids_2 = C[:, np.newaxis]
+        dist = np.sqrt(np.sum((X - centroids_2)**2, axis=2))
+        clss = np.argmin(dist, axis=0)
+
+        if (centroids == C).all():
             break
-        clss = new_clss
-
-        # 4. Fully Vectorized Centroid Update (Zero Loops)
-        # Count occurrences of each cluster label
-        counts = np.bincount(clss, minlength=k)[:, np.newaxis]
-        
-        # Sum coordinates belonging to each cluster using advanced indexing
-        sums = np.zeros((k, d))
-        np.add.at(sums, clss, X)
-        
-        # Update centroids, avoiding division-by-zero for empty clusters
-        C = np.where(counts > 0, sums / counts, C)
-
     return C, clss

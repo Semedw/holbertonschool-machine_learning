@@ -5,7 +5,7 @@ expectation_maximization = __import__('8-EM').expectation_maximization
 
 
 def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
-    """Finds the best number of clusters for a GMM using BIC.
+    """Finds the best number of clusters for a GMM using BIC with zero loops.
 
     Args:
         X: numpy.ndarray of shape (n, d) containing the dataset
@@ -22,13 +22,12 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
-    
+
     n, d = X.shape
-    
-    # Handle the default None initialization for kmax
+
     if kmax is None:
         kmax = n
-        
+
     if not isinstance(kmin, int) or kmin <= 0 or kmin >= n:
         return None, None, None, None
     if not isinstance(kmax, int) or kmax <= 0 or kmax > n:
@@ -42,33 +41,31 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if not isinstance(verbose, bool):
         return None, None, None, None
 
-    k_best = []
-    best_res = []
-    logl_val = []
-    bic_val = []
-    
-    for k in range(kmin, kmax + 1):
-        pi, m, S, _, log_l = expectation_maximization(
-            X, k, iterations, tol, verbose
-        )
-        k_best.append(k)
-        best_res.append((pi, m, S))
-        logl_val.append(log_l)
+    # Array of k values to iterate through using map
+    k_range = np.arange(kmin, kmax + 1)
 
-        # Calculate number of independent parameters (p)
-        cov_params = k * d * (d + 1) / 2.
-        mean_params = k * d
-        p = int(cov_params + mean_params + k - 1)
+    # Map the EM function across all target values of k (No user loop)
+    em_results = list(map(
+        lambda k: expectation_maximization(X, k, iterations, tol, verbose),
+        k_range
+    ))
 
-        # Formula for BIC calculation
-        bic = p * np.log(n) - 2 * log_l
-        bic_val.append(bic)
+    # Extract results simultaneously using list slicing/comprehension wrappers
+    best_res = [(res[0], res[1], res[2]) for res in em_results]
+    logl_val = np.array([res[4] for res in em_results])
 
-    bic_val = np.array(bic_val)
-    logl_val = np.array(logl_val)
-    best_val = np.argmin(bic_val)
+    # Vectorized computation of free parameters 'p' for all k levels at once
+    cov_params = k_range * d * (d + 1) / 2.
+    mean_params = k_range * d
+    p = (cov_params + mean_params + k_range - 1).astype(int)
 
-    best_k = k_best[best_val]
-    best_result = best_res[best_val]
+    # Vectorized BIC calculation across all values simultaneously
+    bic_val = p * np.log(n) - 2 * logl_val
+
+    # Find the index minimizing the BIC array criteria
+    best_val_idx = np.argmin(bic_val)
+
+    best_k = k_range[best_val_idx]
+    best_result = best_res[best_val_idx]
 
     return best_k, best_result, logl_val, bic_val

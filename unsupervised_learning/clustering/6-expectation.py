@@ -5,6 +5,8 @@ Expectation step in the EM algorithm for a GMM.
 
 import numpy as np
 
+pdf = __import__('5-pdf').pdf
+
 
 def expectation(X, pi, m, S):
     '''
@@ -42,13 +44,10 @@ def expectation(X, pi, m, S):
     k = pi.shape[0]
     g = np.zeros((k, n))
     for i in range(k):
-        diff = X - m[i]
-        inv_S = np.linalg.inv(S[i])
-        exponent = -0.5 * np.sum(diff @ inv_S * diff, axis=1)
-        coeff = pi[i] / np.sqrt((2 * np.pi) ** d * np.linalg.det(S[i]))
-        g[i] = coeff * np.exp(exponent)
+        g[i] = pi[i] * pdf(X, m[i], S[i])
     g_sum = np.sum(g, axis=0)
-    g_sum[g_sum == 0] = 1e-300
+    if np.any(g_sum == 0):
+        return None, None
     g /= g_sum
     l = np.sum(np.log(g_sum))
     return g, l

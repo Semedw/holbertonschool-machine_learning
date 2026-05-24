@@ -40,6 +40,8 @@ def expectation(X, pi, m, S):
             S.shape[1] != m.shape[1] or 
             S.shape[2] != m.shape[1]):
         return None, None
+    if np.any(pi <= 0) or np.any(pi >= 1) or not np.isclose(np.sum(pi), 1):
+        return None, None
     n, d = X.shape
     k = pi.shape[0]
     g = np.zeros((k, n))

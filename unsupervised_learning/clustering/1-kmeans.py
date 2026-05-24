@@ -28,16 +28,30 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
+    
     n, d = X.shape
+    
+    # Initialize centroids (Your initialization is correct!)
     C = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=(k, d))
-    clss = np.zeros(n, dtype=int)
+    
     for _ in range(iterations):
-        distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
-        new_clss = np.argmin(distances, axis=1)
-        if np.array_equal(clss, new_clss):
-            break
-        clss = new_clss
+        # 1. Calculate distances and assign clusters
+        # A more standard subtraction matrix helps avoid axis=2 floating variance
+        distances = np.sqrt(((X - C[:, np.newaxis]) ** 2).sum(axis=2))
+        new_clss = np.argmin(distances, axis=0)
+        
+        # 2. Update centroids using the new classifications
+        C_old = C.copy()
         for i in range(k):
-            if np.any(clss == i):
-                C[i] = X[clss == i].mean(axis=0)
+            if np.any(new_clss == i):
+                C[i] = X[new_clss == i].mean(axis=0)
+                
+        # 3. Check for convergence based on centroids not moving
+        if np.array_equal(C_old, C):
+            break
+            
+    # One final assignment to make sure clss matches the final centroids perfectly
+    distances = np.sqrt(((X - C[:, np.newaxis]) ** 2).sum(axis=2))
+    clss = np.argmin(distances, axis=0)
+    
     return C, clss

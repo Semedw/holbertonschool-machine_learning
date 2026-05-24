@@ -19,23 +19,18 @@ def variance(X, C):
     Returns:
         var: total intra-cluster variance, or None on failure
     """
+    # no loops allowed
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
     if not isinstance(C, np.ndarray) or len(C.shape) != 2:
         return None
-
-    n, d = X.shape
-    k, d_c = C.shape
-
-    if d != d_c:
+    if X.shape[1] != C.shape[1]:
         return None
 
+    n, d = X.shape
     centroids_2 = C[:, np.newaxis]
-    dist = np.sqrt(np.sum((X - centroids_2)**2, axis=2))
-    clss = np.argmin(dist, axis=0)
+    dist = np.sqrt(np.sum((X - centroids_2) ** 2, axis=2))
+    min_dist = np.min(dist, axis=0)
 
-    var = 0
-    for c in range(k):
-        var += np.sum((X[clss == c] - C[c])**2)
-
-    return var
+    variance = np.sum(min_dist ** 2)
+    return variance

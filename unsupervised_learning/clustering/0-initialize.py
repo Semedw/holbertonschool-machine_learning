@@ -20,9 +20,9 @@ def initialize(X, k):
     if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
         return None
 
-    n, d = X.shape
-    centroids = np.empty((k, d))
-    # no loops
-    random_indices = np.random.choice(n, size=k, replace=False)
-    centroids = X[random_indices]
+    low = np.min(X, axis=0)
+    high = np.max(X, axis=0)
+    
+    centroids = np.random.uniform(low, high, size=(k, X.shape[1]))
+    
     return centroids

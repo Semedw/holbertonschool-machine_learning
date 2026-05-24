@@ -22,8 +22,6 @@ def initialize(X, k):
 
     n, d = X.shape
     centroids = np.empty((k, d))
-    for i in range(k):
-        random_index = np.random.choice(n, replace=False)
-        centroids[i] = X[random_index]
-
+    indices = np.random.choice(n, size=k, replace=False)
+    centroids = X[indices]
     return centroids

@@ -8,7 +8,7 @@ import numpy as np
 expectation_maximization = __import__('8-EM').expectation_maximization
 
 
-def BIC(X, k, iterations=1000, tol=1e-5, verbose=False):
+def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     '''
     Calculates the BIC for a GMM.
 
@@ -37,11 +37,31 @@ def BIC(X, k, iterations=1000, tol=1e-5, verbose=False):
         return None
     if not isinstance(verbose, bool):
         return None
+
+    k_best = []
+    best_res = []
+    logl_val = []
+    bic_val = []
     n, d = X.shape
-    pi, m, S, g = expectation_maximization(X, k, iterations, tol, verbose)
-    if pi is None or m is None or S is None or g is None:
-        return None
-    p = k * d * (d + 1) / 2 + k * d + k - 1
-    loglikelihood = np.sum(np.log(np.sum(pi[:, np.newaxis] * g, axis=0)))
-    BIC = p * np.log(n) - 2 * loglikelihood
-    return BIC
+    for k in range(kmin, kmax + 1):
+        pi, m, S, _, log_l = expectation_maximization(X, k, iterations, tol,
+                                                      verbose)
+        k_best.append(k)
+        best_res.append((pi, m, S))
+        logl_val.append(log_l)
+
+        cov_params = k * d * (d + 1) / 2.
+        mean_params = k * d
+        p = int(cov_params + mean_params + k - 1)
+
+        bic = p * np.log(n) - 2 * log_l
+        bic_val.append(bic)
+
+    bic_val = np.array(bic_val)
+    logl_val = np.array(logl_val)
+    best_val = np.argmin(bic_val)
+
+    k_best = k_best[best_val]
+    best_res = best_res[best_val]
+
+    return k_best, best_res, logl_val, bic_val

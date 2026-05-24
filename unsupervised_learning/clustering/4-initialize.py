@@ -26,7 +26,7 @@ def initialize(X, k):
         return None
 
     n, d = X.shape
-    pi = np.full(k, 1 / k)
+    phi = np.ones(k) / k
     m, _ = kmeans(X, k)
-    S = np.array([np.eye(d) for _ in range(k)])
-    return pi, m, S
+    S = np.tile(np.identity(d), (k, 1)).reshape(k, d, d)
+    return phi, m, S

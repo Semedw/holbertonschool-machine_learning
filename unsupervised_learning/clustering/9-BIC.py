@@ -1,71 +1,81 @@
 #!/usr/bin/env python3
-"""Bayesian Information Criterion for GMM cluster selection."""
+""" Bayesian Information Criterion """
+
 import numpy as np
 expectation_maximization = __import__('8-EM').expectation_maximization
 
 
 def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
-    """Finds the best number of clusters for a GMM using BIC with zero loops.
-
+    """
+    BIC function
     Args:
-        X: numpy.ndarray of shape (n, d) containing the dataset
-        kmin: positive integer, minimum number of clusters to check
-        kmax: positive integer, maximum number of clusters to check
-        iterations: positive integer, maximum number of EM iterations
-        tol: non-negative float, EM tolerance threshold
-        verbose: boolean, determines if EM output logs to stdout
-    Returns:
-        best_k: the best value for k based on BIC
-        best_result: tuple containing (pi, m, S) of the best k GMM model
-        l: numpy.ndarray of shape (kmax - kmin + 1,) with log likelihoods
-        b: numpy.ndarray of shape (kmax - kmin + 1,) with BIC values
+        X: numpy.ndarray of shape (n, d) containing the data set
+        kmin: positive integer containing the minimum number of clusters
+              to check for (inclusive)
+        kmax: positive integer containing the maximum number of clusters
+              to check for (inclusive)
+        iterations: Positive integer containing the maximum number of
+                    iterations for the EM algorithm
+        tol: non-negative float containing the tolerance for the EM algorithm
+        verbose: boolean that determines if the EM algorithm should print
+                 information to the standard output
+    Returns: best_k, best_result, l, b, or None, None, None, None on failure
+             best_k: best value for k based on its BIC
+             best_result : tuple containing pi, m, S
+                           pi: numpy.ndarray of shape (k,) containing the
+                               luster priors for the best number of clusters
+                           m: numpy.ndarray of shape (k, d) containing the
+                              centroid means for the best number of clusters
+                           S: numpy.ndarray of shape (k, d, d) containing the
+                              covariance matrices for the best number of
+                              clusters
+             l: numpy.ndarray of shape (kmax - kmin + 1) containing the log
+                likelihood for each cluster size tested
+             b: numpy.ndarray of shape (kmax - kmin + 1) containing the BIC
+                value for each cluster size tested
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
+    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+        return None, None, None, None
+    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+        return None, None, None, None
+    if kmin >= kmax:
+        return None, None, None, None
+    if type(iterations) != int or iterations <= 0:
+        return None, None, None, None
+    if type(tol) != float or tol <= 0:
+        return None, None, None, None
+    if type(verbose) != bool:
+        return None, None, None, None
 
+    k_best = []
+    best_res = []
+    logl_val = []
+    bic_val = []
     n, d = X.shape
+    for k in range(kmin, kmax + 1):
+        pi, m, S,  _, log_l = expectation_maximization(X, k, iterations, tol,
+                                                       verbose)
+        k_best.append(k)
+        best_res.append((pi, m, S))
+        logl_val.append(log_l)
 
-    if kmax is None:
-        kmax = n
+        # Formula pf paramaters: https://bit.ly/33Cw8lH
+        # code based on gaussian mixture source code n_parameters source code
+        cov_params = k * d * (d + 1) / 2.
+        mean_params = k * d
+        p = int(cov_params + mean_params + k - 1)
 
-    if not isinstance(kmin, int) or kmin <= 0 or kmin >= n:
-        return None, None, None, None
-    if not isinstance(kmax, int) or kmax <= 0 or kmax > n:
-        return None, None, None, None
-    if kmin > kmax:
-        return None, None, None, None
-    if not isinstance(iterations, int) or iterations <= 0:
-        return None, None, None, None
-    if not isinstance(tol, (int, float)) or tol < 0:
-        return None, None, None, None
-    if not isinstance(verbose, bool):
-        return None, None, None, None
+        # Formula for this task BIC = p * ln(n) - 2 * l
+        bic = p * np.log(n) - 2 * log_l
+        bic_val.append(bic)
 
-    # Array of k values to iterate through using map
-    k_range = np.arange(kmin, kmax + 1)
+    bic_val = np.array(bic_val)
+    logl_val = np.array(logl_val)
+    best_val = np.argmin(bic_val)
 
-    # Map the EM function across all target values of k (No user loop)
-    em_results = list(map(
-        lambda k: expectation_maximization(X, k, iterations, tol, verbose),
-        k_range
-    ))
+    k_best = k_best[best_val]
+    best_res = best_res[best_val]
 
-    # Extract results simultaneously using list slicing/comprehension wrappers
-    best_res = [(res[0], res[1], res[2]) for res in em_results]
-    logl_val = np.array([res[4] for res in em_results])
-
-    # Vectorized computation of free parameters 'p' for all k levels at once
-    cov_params = k_range * d * (d + 1) / 2.
-    mean_params = k_range * d
-    p = (cov_params + mean_params + k_range - 1).astype(int)
-
-    # Vectorized BIC calculation across all values simultaneously
-    bic_val = p * np.log(n) - 2 * logl_val
-
-    # Find the index minimizing the BIC array criteria
-    best_val_idx = np.argmin(bic_val)
-
-    best_k = k_range[best_val_idx]
-    best_result = best_res[best_val_idx]
-
-    return best_k, best_result, logl_val, bic_val
+    return k_best, best_res, logl_val, bic_val

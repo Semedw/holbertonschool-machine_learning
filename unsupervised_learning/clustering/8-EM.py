@@ -47,45 +47,22 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5,
         return None, None, None, None
     if not isinstance(verbose, bool):
         return None, None, None, None
+
     pi, m, S = initialize(X, k)
-    if pi is None or m is None or S is None:
-        return None, None, None, None, None
-
-    # Run initial E-step to get starting log-likelihood
-    g, log_likelihood = expectation(X, pi, m, S)
-    if g is None or log_likelihood is None:
-        return None, None, None, None, None
-
-    if verbose:
-        print("Log Likelihood after 0 iterations: {:.5f}".format(log_likelihood))
-
-    # Save initial likelihood to check for early convergence differences
-    l_old = log_likelihood
-
-    # 2. Main EM Loop
-    for i in range(iterations):
-        # M-Step
-        pi, m, S = maximization(X, g)
-        if pi is None or m is None or S is None:
-            return None, None, None, None, None
-
-        # E-Step
-        g, log_likelihood = expectation(X, pi, m, S)
-        if g is None or log_likelihood is None:
-            return None, None, None, None, None
-
-        # Print layout matches: every 10 iterations
-        if verbose and (i + 1) % 10 == 0:
-            print("Log Likelihood after {} iterations: {:.5f}".format(i + 1, log_likelihood))
-
-        # Check for convergence based on tolerance
-        if abs(log_likelihood - l_old) <= tol:
-            # If we break early and haven't just printed this iteration, print it now
-            if verbose and (i + 1) % 10 != 0:
-                print("Log Likelihood after {} iterations: {:.5f}".format(i + 1, log_likelihood))
+    loglikelihood = 0
+    i = 0
+    while i < iterations:
+        g, loglikelihood_new = expectation(X, pi, m, S)
+        if verbose is True and (i % 10 == 0):
+            print("Log Likelihood after {} iterations: {}".format(
+                i, loglikelihood_new.round(5)))
+        if abs(loglikelihood_new - loglikelihood) <= tol:
             break
-            
-        l_old = log_likelihood
-
-    # Return exactly 5 values to prevent the unpack ValueError
-    return pi, m, S, g, log_likelihood
+        pi, m, S = maximization(X, g)
+        i += 1
+        loglikelihood = loglikelihood_new
+    g, loglikelihood_new = expectation(X, pi, m, S)
+    if verbose is True:
+        print("Log Likelihood after {} iterations: {}".format(
+            i, loglikelihood_new.round(5)))
+    return pi, m, S, g, loglikelihood_new

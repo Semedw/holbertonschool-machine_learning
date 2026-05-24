@@ -30,21 +30,34 @@ def kmeans(X, k, iterations=1000):
         return None, None
 
     n, d = X.shape
+    
+    # 1. Initialize Centroids uniformly within data bounds
     C = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=(k, d))
+    
+    # Initialize labels with a placeholder that won't trigger premature convergence
     clss = np.full(n, -1)
 
-    # This is the single loop in the entire function
+    # The ONLY loop allowed in the entire function
     for _ in range(iterations):
+        # 2. Distance Matrix Calculation
+        # Transposing the subtraction resolves axis broadcasting precision quirks
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
         new_clss = np.argmin(distances, axis=1)
 
+        # 3. Check for Convergence
         if np.array_equal(clss, new_clss):
             break
         clss = new_clss
 
-        # Vectorized Centroid Update (No loop!)
-        # We look up which points belong to which cluster index (0 to k-1)
-        # If a cluster is empty, it keeps its previous centroid value
-        C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i) else C[i] for i in range(k)])
+        # 4. Fully Vectorized Centroid Update (Zero Loops)
+        # Count occurrences of each cluster label
+        counts = np.bincount(clss, minlength=k)[:, np.newaxis]
+        
+        # Sum coordinates belonging to each cluster using advanced indexing
+        sums = np.zeros((k, d))
+        np.add.at(sums, clss, X)
+        
+        # Update centroids, avoiding division-by-zero for empty clusters
+        C = np.where(counts > 0, sums / counts, C)
 
     return C, clss

@@ -21,6 +21,8 @@ def pdf(X, m, S):
         P: numpy.ndarray of shape (n,) containing the PDF values for each data
         point, or None on failure
     '''
+    #min value of x = 1e-300 to avoid underflow
+    X = np.maximum(X, 1e-300)
 
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None

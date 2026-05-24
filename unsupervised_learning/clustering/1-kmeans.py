@@ -31,23 +31,20 @@ def kmeans(X, k, iterations=1000):
 
     n, d = X.shape
     C = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=(k, d))
-    
-    # Initialize clss to a value that won't accidentally trigger np.array_equal
     clss = np.full(n, -1)
 
+    # This is the single loop in the entire function
     for _ in range(iterations):
-        # Broadcasted distance calculation (No loops)
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
         new_clss = np.argmin(distances, axis=1)
 
-        # Check for convergence based on the updated classifications
         if np.array_equal(clss, new_clss):
             break
         clss = new_clss
 
-        # Loop 1: Update the centroids based on the new classifications
-        for i in range(k):
-            if np.any(clss == i):
-                C[i] = X[clss == i].mean(axis=0)
+        # Vectorized Centroid Update (No loop!)
+        # We look up which points belong to which cluster index (0 to k-1)
+        # If a cluster is empty, it keeps its previous centroid value
+        C = np.array([X[clss == i].mean(axis=0) if np.any(clss == i) else C[i] for i in range(k)])
 
     return C, clss

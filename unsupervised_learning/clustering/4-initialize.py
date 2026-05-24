@@ -23,7 +23,7 @@ def initialize(X, k):
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
     if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
-        return None
+        return None, None, None
 
     n, d = X.shape
     phi = np.ones(k) / k

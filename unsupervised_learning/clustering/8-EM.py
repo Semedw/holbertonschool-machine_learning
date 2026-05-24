@@ -38,15 +38,15 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5,
         for each data point in each cluster, or None on failure
     '''
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None, None, None, None
-    if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
-        return None, None, None, None
+        return None, None, None, None, None
+    if not isinstance(k, int) or k <= 0 or X.shape[0] < k:
+        return None, None, None, None, None
     if not isinstance(iterations, int) or iterations <= 0:
-        return None, None, None, None
-    if not isinstance(tol, (int, float)) or tol < 0:
-        return None, None, None, None
+        return None, None, None, None, None
+    if not isinstance(tol, float) or tol < 0:
+        return None, None, None, None, None
     if not isinstance(verbose, bool):
-        return None, None, None, None
+        return None, None, None, None, None
 
     pi, m, S = initialize(X, k)
     loglikelihood = 0

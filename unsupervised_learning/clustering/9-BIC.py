@@ -36,46 +36,54 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
-    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+    
+    n, d = X.shape
+
+    if kmax is None:
+        kmax = n
+
+    if type(kmin) != int or kmin <= 0 or kmin >= n:
         return None, None, None, None
-    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+    if type(kmax) != int or kmax <= 0 or kmax > n:
         return None, None, None, None
-    if kmin >= kmax:
+    if kmin > kmax:
         return None, None, None, None
     if type(iterations) != int or iterations <= 0:
         return None, None, None, None
-    if type(tol) != float or tol <= 0:
+    if not isinstance(tol, (int, float)) or tol < 0:
         return None, None, None, None
     if type(verbose) != bool:
         return None, None, None, None
 
-    k_best = []
+    # Arrays to store outputs corresponding to each k
+    # We pre-allocate arrays or use standard list appends for the single loop
     best_res = []
-    logl_val = []
-    bic_val = []
-    n, d = X.shape
-    for k in range(kmin, kmax + 1):
-        pi, m, S,  _, log_l = expectation_maximization(X, k, iterations, tol,
-                                                       verbose)
-        k_best.append(k)
-        best_res.append((pi, m, S))
-        logl_val.append(log_l)
+    logl_val = np.zeros(kmax - kmin + 1)
+    bic_val = np.zeros(kmax - kmin + 1)
+    
+    # Track position index for assigning values to our pre-allocated arrays
+    idx = 0
 
-        # Formula pf paramaters: https://bit.ly/33Cw8lH
-        # code based on gaussian mixture source code n_parameters source code
+    # THIS IS THE ONLY ALLOWED LOOP
+    for k in range(kmin, kmax + 1):
+        pi, m, S, _, log_l = expectation_maximization(X, k, iterations, tol,
+                                                      verbose)
+        # Store results for this specific model
+        best_res.append((pi, m, S))
+        logl_val[idx] = log_l
+
+        # Vector math inside the loop is fine because it calculates scalars
         cov_params = k * d * (d + 1) / 2.
         mean_params = k * d
         p = int(cov_params + mean_params + k - 1)
 
-        # Formula for this task BIC = p * ln(n) - 2 * l
-        bic = p * np.log(n) - 2 * log_l
-        bic_val.append(bic)
+        # Formula for BIC: BIC = p * ln(n) - 2 * l
+        bic_val[idx] = p * np.log(n) - 2 * log_l
+        idx += 1
 
-    bic_val = np.array(bic_val)
-    logl_val = np.array(logl_val)
-    best_val = np.argmin(bic_val)
+    # Use NumPy to find the index minimizing the BIC array criteria (Zero loops)
+    best_val_idx = np.argmin(bic_val)
+    best_k = kmin + best_val_idx
+    best_result = best_res[best_val_idx]
 
-    k_best = k_best[best_val]
-    best_res = best_res[best_val]
-
-    return k_best, best_res, logl_val, bic_val
+    return best_k, best_result, logl_val, bic_val

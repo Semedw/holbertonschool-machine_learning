@@ -23,7 +23,8 @@ def initialize(X, k):
             the centroid means for each cluster, initialized with K-means
 
             - S is a numpy.ndarray of shape (k, d, d) containing
-            the covariance matrices for each cluster, initialized as identity matrices
+            the covariance matrices for each cluster,
+            initialized as identity matrices
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None

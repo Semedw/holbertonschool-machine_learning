@@ -3,10 +3,10 @@
 K-optimum clustering.
 '''
 
+import numpy as np
+
 kmeans = __import__('1-kmeans').kmeans
 variance = __import__('2-variance').variance
-
-import numpy as np
 
 
 def optimum_k(X, kmin=1, kmax=None, iterations=1000):
@@ -30,8 +30,8 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         return None, None
     if not isinstance(kmin, int) or kmin <= 0:
         return None, None
-    if kmax is not None and (not isinstance(kmax, int) or kmax
-        <= 0 or kmax <= kmin):
+    if kmax is not None and (not isinstance(kmax, int) or 
+                             kmax <= 0 or kmax <= kmin):
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None

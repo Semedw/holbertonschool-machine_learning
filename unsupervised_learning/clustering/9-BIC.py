@@ -25,18 +25,28 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         verbose: boolean, determines if the log likelihood should be printed
         during each iteration of the algorithm
     Returns:
-        BIC: the BIC of the model, or None on failure
+        k_best: positive integer, the best value for k based on its BIC
+        best_res: tuple containing the best (pi, m, S) for the best value of
+        k
+        log_l: numpy.ndarray of shape (kmax - kmin + 1,) containing the log
+        likelihood for each cluster size tested
+        bic: numpy.ndarray of shape (kmax - kmin + 1,) containing the BIC for
+        each cluster size tested, or None on failure
     '''
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
-    if not isinstance(k, int) or k <= 0 or X.shape[0]:
-        return None
+        return None, None, None, None
+    if not isinstance(kmin, int) or kmin <= 0 or kmin >= X.shape[0]:
+        return None, None, None, None
+    if not isinstance(kmax, int) or kmax <= 0 or kmax >= X.shape[0]:
+        return None, None, None, None
+    if kmin >= kmax:
+        return None, None, None, None
     if not isinstance(iterations, int) or iterations <= 0:
-        return None
-    if not isinstance(tol, float) or tol < 0:
-        return None
+        return None, None, None, None
+    if not isinstance(tol, float) or tol <= 0:
+        return None, None, None, None
     if not isinstance(verbose, bool):
-        return None
+        return None, None, None, None
 
     k_best = []
     best_res = []

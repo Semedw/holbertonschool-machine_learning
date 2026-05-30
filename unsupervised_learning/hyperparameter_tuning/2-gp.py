@@ -81,6 +81,6 @@ class GaussianProcess:
         X_new (np.ndarray): New input data of shape (n_samples, n_features).
         y_new (np.ndarray): New output data of shape (n_samples,).
         '''
-        self.X = np.vstack((self.X, X_new))
-        self.Y = np.hstack((self.Y, y_new))
+        self.X = np.append(self.X, X_new, axis=0)
+        self.Y = np.append(self.Y, y_new, axis=0)
         self.K = self.kernel(self.X, self.X)

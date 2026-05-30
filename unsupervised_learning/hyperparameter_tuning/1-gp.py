@@ -67,6 +67,8 @@ class GaussianProcess:
         '''
         K_s = self.kernel(self.X, X_s)
         K_ss = self.kernel(X_s, X_s)
-        mu = K_s.T @ np.linalg.inv(self.K) @ self.Y
-        sigma = np.diag(K_ss - K_s.T @ np.linalg.inv(self.K) @ K_s)
-        return mu, sigma
+        K_inv = np.linalg.inv(self.K)
+        mu_s = K_s.T.dot(K_inv).dot(self.Y)
+        mu_s = np.reshape(mu_s, -1)
+        sigma = np.diag(K_ss - K_s.T.dot(K_inv).dot(K_s))
+        return mu_s, sigma

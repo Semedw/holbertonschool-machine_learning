@@ -46,5 +46,7 @@ class GaussianProcess:
         K = np.zeros((n1, n2))
         for i in range(n1):
             for j in range(n2):
-                K[i, j] = np.exp(-0.5 * np.sum((X1[i] - X2[j]) ** 2) / self.l ** 2)
+                K[i, j] = np.exp(
+                    -0.5 * np.sum((X1[i] - X2[j]) ** 2) / self.l ** 2
+                )
         return K * self.sigma_f ** 2

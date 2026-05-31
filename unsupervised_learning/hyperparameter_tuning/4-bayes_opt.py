@@ -55,12 +55,15 @@ class BayesianOptimization:
 
     def acquisition(self):
         """
-        Public instance method def acquisition(self): that calculates the next best sample location:
+        Public instance method def acquisition(self):
+            that calculates the next best sample location:
             - Uses the Expected Improvement acquisition function
 
             - Returns: X_next, EI
-                X_next is a numpy.ndarray of shape (1,) representing the next best sample point
-                EI is a numpy.ndarray of shape (ac_samples,) containing the expected improvement of each potential sample
+                X_next is a numpy.ndarray of shape (1,) representing
+                the next best sample point
+                EI is a numpy.ndarray of shape (ac_samples,) containing
+                the expected improvement of each potential sample
         """
         means, standard_deviations = self.gp.predict(self.X_s)
         if self.minimize:

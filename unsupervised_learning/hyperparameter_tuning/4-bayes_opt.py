@@ -53,7 +53,7 @@ class BayesianOptimization:
         # minimization versus maximization
         self.minimize = minimize
 
-    def acquisition(self, X):
+    def acquisition(self):
         """
         Public instance method def acquisition(self): that calculates the next best sample location:
             - Uses the Expected Improvement acquisition function
@@ -62,24 +62,21 @@ class BayesianOptimization:
                 X_next is a numpy.ndarray of shape (1,) representing the next best sample point
                 EI is a numpy.ndarray of shape (ac_samples,) containing the expected improvement of each potential sample
         """
-        mu, sigma = self.gp.predict(self.X_s)
-        if self.minimize is True:
-            Y_sample = np.min(self.gp.Y)
-            imp = Y_sample - mu - self.xsi
+        means, standard_deviations = self.gp.predict(self.X_s)
+        if self.minimize:
+            best_sample = min(self.gp.Y)
+            improvement = best_sample - means - self.xsi
         else:
-            Y_sample = np.max(self.gp.Y)
-            imp = mu - Y_sample - self.xsi
+            best_sample = max(self.gp.Y)
+            improvement = means - best_sample - self.xsi
 
-        Z = np.zeros(sigma.shape[0])
-        for i in range(sigma.shape[0]):
-            # formula if σ(x)>0 : μ(x)−f(x+)−ξ / σ(x)
-            if sigma[i] > 0:
-                Z[i] = imp[i] / sigma[i]
-            # formula if σ(x)=0
-            else:
-                Z[i] = 0
-            ei = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
+        with np.errstate(divide='ignore'):
+            Z = improvement / standard_deviations
+            expected_improvement = (
+                improvement * norm.cdf(Z) + standard_deviations * norm.pdf(Z)
+            )
+            expected_improvement[standard_deviations == 0.0] = 0.0
 
-        X_next = self.X_s[np.argmax(ei)]
+        X_next = self.X_s[np.argmax(expected_improvement)]
 
-        return X_next, ei
+        return X_next, expected_improvement

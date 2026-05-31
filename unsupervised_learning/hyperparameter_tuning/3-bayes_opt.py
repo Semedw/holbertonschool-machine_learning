@@ -39,7 +39,7 @@ class BayesianOptimization:
         self.f = f
 
         # Gaussian Process
-        self.gp = GP(X_init, Y_init, l, sigma_f)
+        self.gp = GP(X_init, y_init, l, sigma_f)
 
         # X_s all acquisition sample
         X_s = np.linspace(bounds[0], bounds[1], num=ac_samples)

@@ -93,31 +93,31 @@ class BayesianOptimization:
             - Returns the optimal point and its expected improvement
         """
         X_all_s = []
-            for i in range(iterations):
-                # Find the next sampling point xt by optimizing the acquisition
-                # function over the GP: xt = argmaxx μ(x | D1:t−1)
-    
-                x_opt, _ = self.acquisition()
-                # If the next proposed point is one that has already been sampled,
-                # optimization should be stopped early
-                if x_opt in X_all_s:
-                    break
-    
-                y_opt = self.f(x_opt)
-    
-                # Add the sample to previous samples
-                # D1: t = {D1: t−1, (xt, yt)} and update the GP
-                self.gp.update(x_opt, y_opt)
-                X_all_s.append(x_opt)
-    
-            if self.minimize is True:
-                index = np.argmin(self.gp.Y)
-            else:
-                index = np.argmax(self.gp.Y)
-    
-            self.gp.X = self.gp.X[:-1]
-    
-            x_opt = self.gp.X[index]
-            y_opt = self.gp.Y[index]
-    
-            return x_opt, y_opt
+        for i in range(iterations):
+            # Find the next sampling point xt by optimizing the acquisition
+            # function over the GP: xt = argmaxx μ(x | D1:t−1)
+
+            x_opt, _ = self.acquisition()
+            # If the next proposed point is one that has already been sampled,
+            # optimization should be stopped early
+            if x_opt in X_all_s:
+                break
+
+            y_opt = self.f(x_opt)
+
+            # Add the sample to previous samples
+            # D1: t = {D1: t−1, (xt, yt)} and update the GP
+            self.gp.update(x_opt, y_opt)
+            X_all_s.append(x_opt)
+
+        if self.minimize is True:
+            index = np.argmin(self.gp.Y)
+        else:
+            index = np.argmax(self.gp.Y)
+
+        self.gp.X = self.gp.X[:-1]
+
+        x_opt = self.gp.X[index]
+        y_opt = self.gp.Y[index]
+
+        return x_opt, y_opt

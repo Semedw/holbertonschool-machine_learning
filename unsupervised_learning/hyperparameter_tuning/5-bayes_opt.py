@@ -87,9 +87,11 @@ class BayesianOptimization:
     def optimize(self, iterations=100):
         """
         Public instance method def optimize(self, iterations=100):
-            that performs Bayesian optimization for a given number of iterations:
+            that performs Bayesian optimization for
+            a given number of iterations:
             - Calls acquisition() to find the next best sample point
-            - Updates the Gaussian Process with the new sample point and its output
+            - Updates the Gaussian Process with the new
+              sample point and its output
             - Returns the optimal point and its expected improvement
         """
         X_all_s = []

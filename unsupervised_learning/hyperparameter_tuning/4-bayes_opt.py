@@ -62,14 +62,24 @@ class BayesianOptimization:
                 X_next is a numpy.ndarray of shape (1,) representing the next best sample point
                 EI is a numpy.ndarray of shape (ac_samples,) containing the expected improvement of each potential sample
         """
-        mu, sigma = self.gp.predict(X)
-        if self.minimize:
-            ei = norm.pdf(mu, sigma)
-            X_next = X[np.argmin(ei)]
-            ei = ei[np.argmin(ei)]
+        mu, sigma = self.gp.predict(self.X_s)
+        if self.minimize is True:
+            Y_sample = np.min(self.gp.Y)
+            imp = Y_sample - mu - self.xsi
         else:
-            ei = norm.pdf(mu, sigma)
-            X_next = X[np.argmax(ei)]
-            ei = ei[np.argmax(ei)]        
+            Y_sample = np.max(self.gp.Y)
+            imp = mu - Y_sample - self.xsi
+
+        Z = np.zeros(sigma.shape[0])
+        for i in range(sigma.shape[0]):
+            # formula if σ(x)>0 : μ(x)−f(x+)−ξ / σ(x)
+            if sigma[i] > 0:
+                Z[i] = imp[i] / sigma[i]
+            # formula if σ(x)=0
+            else:
+                Z[i] = 0
+            ei = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
+
+        X_next = self.X_s[np.argmax(ei)]
 
         return X_next, ei
